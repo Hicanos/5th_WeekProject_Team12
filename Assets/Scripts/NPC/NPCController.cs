@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class NPCController : MonoBehaviour
 {
-    protected Rigidbody2D _npcRigidbody;
+
     [SerializeField] private SpriteRenderer npcRenderer; //npc 이미지 인스펙터에서 넣게끔
     [SerializeField] private GameObject interactionPopup; //npc 앞에서 F누르게 끔
 
@@ -14,8 +14,7 @@ public class NPCController : MonoBehaviour
 
     protected virtual void Awake()
     {
-        _npcRigidbody = GetComponent<Rigidbody2D>();
-
+    
     }
 
     protected void Update()
