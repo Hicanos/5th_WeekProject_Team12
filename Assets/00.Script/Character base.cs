@@ -168,9 +168,7 @@ public abstract class Characterbase: MonoBehaviour
 
             if (currentJumpCount < maxJumpCount)
             {
-                //Vector3 v = rb.velocity;
-                //v.y +=  jumpPower;
-                //rb.velocity = v;
+                
                 rb.velocity = new Vector2(rb.velocity.x, 0f); // Y 속도 초기화
                 rb.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
 
