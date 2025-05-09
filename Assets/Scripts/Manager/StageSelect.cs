@@ -16,7 +16,7 @@ public class StageSelect : MonoBehaviour
     }
     public void OnClikOneOne()
     {
-        SceneManager.LoadScene("Tutorial"); // 원하는 씬 이름
+        SceneManager.LoadScene("Stage 1-1"); // 원하는 씬 이름
     }
 
 
