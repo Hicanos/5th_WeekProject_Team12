@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Burst.CompilerServices;
@@ -82,7 +83,7 @@ public class NPCController : MonoBehaviour
                 break;
 
             default:
-
+                _dialogText.text = "아직 유물을 가진게 없구나. 유물을 얻고 다시 찾아오렴";
                 break;
         }
 
