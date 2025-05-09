@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: map_tuto_box_3
+  m_Name: map_ver1_box_95
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 21300000, guid: b56400983651246d6b94f8f7f2f0cde7, type: 2}
+  m_Sprite: {fileID: -2027079664, guid: 36f76164e78004048b14bc8af6b4745e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1
