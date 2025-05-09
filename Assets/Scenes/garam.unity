@@ -2110,7 +2110,7 @@ GameObject:
   - component: {fileID: 460309572}
   - component: {fileID: 460309571}
   - component: {fileID: 460309570}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Dog
   m_TagString: Untagged
   m_Icon: {fileID: 0}
