@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Experimental.Rendering;
 using UnityEngine;
@@ -12,11 +12,11 @@ public class StageSelect : MonoBehaviour
 
     public void OnClickTutorial()
     {
-        SceneManager.LoadScene("Tutorial"); // ¿øÇÏ´Â ¾À ÀÌ¸§
+        SceneManager.LoadScene("Tutorial"); // ì›í•˜ëŠ” ì”¬ ì´ë¦„
     }
     public void OnClikOneOne()
     {
-        SceneManager.LoadScene("Stage 1-1"); // ¿øÇÏ´Â ¾À ÀÌ¸§
+        SceneManager.LoadScene("Stage 1-1"); // ì›í•˜ëŠ” ì”¬ ì´ë¦„
     }
 
 

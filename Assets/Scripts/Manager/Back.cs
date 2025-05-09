@@ -8,7 +8,6 @@ public class Back : MonoBehaviour
 {
     public void OnClickExitStageSelect()
     {
-        //Debug.Log("Back 버튼 클릭됨!");
         SceneManager.LoadScene("StageSelect");
     }
 }
