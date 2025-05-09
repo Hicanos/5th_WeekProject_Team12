@@ -4,15 +4,11 @@ using UnityEngine;
 
 public class ObjManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public static Dictionary<int, string> LegacyList = new Dictionary<int, string>()
+        {
+            {1, "스카라베"}, {2, "황금 지팡이"}, {3, "앙크"}, 
+            {4, "페르세포네의 석류"}, {5, "삼지창"}, {6, "헤르메스의 팬티"}, 
+            {7, "메긴요르드"}, {8, "묠니르"}, {9, "궁그닐"},
+        };
 }
