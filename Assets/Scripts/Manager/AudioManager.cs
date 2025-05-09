@@ -8,13 +8,13 @@ public class AudioManager : MonoBehaviour
     private AudioSource audioSource;
 
     public bool IsAudioSourceChanged { get; set; } = false;
-    
+
     private static AudioManager m_instance;
     public static AudioManager Instance
     {
         get
         {
-            if(m_instance == null) 
+            if (m_instance == null)
                 m_instance = GameObject.FindWithTag("AudioManager").GetComponent<AudioManager>();
             return m_instance;
         }
@@ -23,14 +23,21 @@ public class AudioManager : MonoBehaviour
     void Awake()
     {
         // Prevent Double Init. of AudioManager
-        if (Instance != this) Destroy(gameObject);
-        else DontDestroyOnLoad(gameObject);
+        if (m_instance != null && m_instance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            m_instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        audioSource = GetComponent<AudioSource>();
+        audioSource = Helper.GetComponentHelper<AudioSource>(gameObject);
         audioSource.clip = _mainBGMs[0];
         audioSource.volume = 1f;
         audioSource.Play();
@@ -40,7 +47,7 @@ public class AudioManager : MonoBehaviour
     {
         float startVolume = audioSource.volume;
         float time = 0f;
-        while(time < duration)
+        while (time < duration)
         {
             time += Time.deltaTime;
             audioSource.volume = Mathf.Lerp(startVolume, 0f, time / duration);
