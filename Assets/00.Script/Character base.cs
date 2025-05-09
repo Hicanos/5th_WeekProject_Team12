@@ -183,6 +183,15 @@ public abstract class Characterbase: MonoBehaviour
         }
     }
 
+    protected void CheckLanding()
+    {
+        if (Mathf.Abs(rb.velocity.y) < 0.01f && currentJumpCount > 0 && IsGrounded())
+        {
+            currentJumpCount = 0;
+            Anim.SetJump(false);
+            Debug.Log("ÂøÁö!");
+        }
+    }
 
 }
 
