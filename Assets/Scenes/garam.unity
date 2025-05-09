@@ -729,7 +729,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.15906, y: -0.1635263}
+  m_Offset: {x: 0.11315775, y: 0.0014541149}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -740,7 +740,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.5011487, y: 1.3270526}
+  m_Size: {x: 1.1216936, y: 0.99709177}
   m_EdgeRadius: 0
 --- !u!50 &104655557
 Rigidbody2D:
@@ -781,15 +781,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb6bbd84d5c959546a665521b01bbae7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  helmet: {fileID: 1021175438}
-  moveSpeed: 7
+  enumChar: 1
   leftKey: 97
   rightKey: 100
   jumpKey: 119
-  SkillKey: 101
-  headPivot: {fileID: 0}
-  jumpPower: 5
+  SkillKey: 115
+  moveSpeed: 7
+  groundCheck: {fileID: 550297275}
+  rayRange: 0.4
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  jumpPower: 8
   maxJumpCount: 2
+  headPivot: {fileID: 1021175439}
 --- !u!4 &104655559
 Transform:
   m_ObjectHideFlags: 0
@@ -804,7 +809,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1458698554}
-  - {fileID: 550297275}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &134507966
@@ -2283,8 +2287,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 352501952}
   - {fileID: 827609837}
+  - {fileID: 352501952}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &460309570
@@ -2319,7 +2323,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.15906, y: -0.1635263}
+  m_Offset: {x: 0.26576483, y: -0.1635263}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -2330,7 +2334,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.5011487, y: 1.3270526}
+  m_Size: {x: 1.0639498, y: 1.3270526}
   m_EdgeRadius: 0
 --- !u!50 &460309571
 Rigidbody2D:
@@ -2371,15 +2375,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f22b6b4ff31c6cf449516fead2fe89e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  helmet: {fileID: 0}
-  moveSpeed: 5
+  enumChar: 0
   leftKey: 276
   rightKey: 275
   jumpKey: 273
   SkillKey: 274
-  headPivot: {fileID: 134507967}
+  moveSpeed: 5
+  groundCheck: {fileID: 827609837}
+  rayRange: 0.6
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 8
   jumpPower: 5
   maxJumpCount: 1
+  headPivot: {fileID: 134507967}
 --- !u!1 &550297274
 GameObject:
   m_ObjectHideFlags: 0
@@ -2390,9 +2399,9 @@ GameObject:
   m_Component:
   - component: {fileID: 550297275}
   - component: {fileID: 550297276}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: GroundCheck
-  m_TagString: GroundCheck
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2405,12 +2414,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 550297274}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.1, y: -1.25, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.100000024, y: -1.25, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 104655559}
+  m_Father: {fileID: 1458698554}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &550297276
 BoxCollider2D:
@@ -2467,9 +2476,9 @@ GameObject:
   m_Component:
   - component: {fileID: 827609837}
   - component: {fileID: 827609838}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: GroundCheck
-  m_TagString: GroundCheck
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2483,7 +2492,7 @@ Transform:
   m_GameObject: {fileID: 827609836}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.1, y: -1.25, z: 0}
+  m_LocalPosition: {x: 0.18, y: -1.26, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2521,7 +2530,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.15940928, y: -0.06892657}
+  m_Offset: {x: -0.0070319176, y: 0.13424301}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -2532,7 +2541,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.68118143, y: 1.1378531}
+  m_Size: {x: 0.98593616, y: 0.60961246}
   m_EdgeRadius: 0
 --- !u!1 &1021175438
 GameObject:
@@ -2598,6 +2607,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1021175439}
+  - {fileID: 550297275}
   m_Father: {fileID: 104655559}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1458698555
