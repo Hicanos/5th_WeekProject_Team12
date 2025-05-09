@@ -23,6 +23,6 @@ public class GaramCharacterCat : Characterbase
               
         Move(input); // BaseController의 이동 처리 호출
         HandleJump();   // 점프 입력 처리
-        CheckLanding();
+        CheckLanding();//착지 판정
      }
 }
