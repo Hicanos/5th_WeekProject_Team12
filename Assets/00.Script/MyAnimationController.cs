@@ -13,15 +13,10 @@ public class MyAnimationController : MonoBehaviour
     /// 방향 전환을 위한 SpriteRenderer (필요할 경우)
     /// </summary>
     private SpriteRenderer spriteRenderer;
-    public static MyAnimationController instance { get; private set; }
+   
     private void Awake()
     {
-        if (instance == null)
-            instance = this;
-        else
-        {
-            Destroy(gameObject);
-        }
+        
         _animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
