@@ -69,20 +69,25 @@ public class GaramCharacterDog : Characterbase
         HandleInput();         // 이동 입력 감지
         HandleAnimation();     // 이동 애니메이션 처리
         HeadSpriteFlip();    // 캐릭터 좌우 반전
-        
+
         Vector2 input = new Vector2(moveX, moveY);
 
-
+        bool gr = IsGrounded();
         Move(input); // BaseController의 이동 처리 호출
         HandleJump();   // 점프 입력 처리
-        if (Mathf.Abs(rb.velocity.y) < 0.01f && currentJumpCount > 0 && IsGrounded())
+        if (Mathf.Abs(rb.velocity.y) < 0.01f && currentJumpCount > 0 && gr)
         {
             currentJumpCount = 0;
             Anim.SetJump(false);
             Debug.Log("착지!");
         }
+       
+        
 
+        if (gr) { 
+            Debug.Log("ㅗㅗㅗ"); }
     }
+        
 
     /// <summary>
     /// FixedUpdate: 고정 시간마다 호출되며, 물리 기반 이동 처리
@@ -153,11 +158,23 @@ public class GaramCharacterDog : Characterbase
             
         }
     }
-
+    
     //점프 착지 판정용 불값 필요 시 사용
     private bool IsGrounded()
-    {
+    {/*Debug.Log($"ground");*/
         return Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
+        
+    }
+
+    //OverlapCircle 시각화 디버깅용 
+    private void OnDrawGizmosSelected()
+    {
+        Debug.Log("null");
+        if (groundCheck == null) return;
+
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
+        //Debug.Log("기즈모");
     }
     //벽에 붙기위한 콜라이더 감지
     /*  private void OnTriggerEnter2D(Collider2D other)
