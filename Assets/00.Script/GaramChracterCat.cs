@@ -19,6 +19,8 @@ public class GaramCharacterCat : Characterbase
     [SerializeField] private KeyCode rightKey = KeyCode.D;
     [SerializeField] private KeyCode jumpKey = KeyCode.W;
     [SerializeField]private KeyCode SkillKey = KeyCode.S;
+    
+   
     // 입력값 저장
     private float moveX;
     private float moveY;
@@ -30,9 +32,9 @@ public class GaramCharacterCat : Characterbase
 
     
     [Header("횡스크롤 물리 기반 점프 시스템")]
-   /* [SerializeField] private Transform groundCheck;      // 바닥 판정 위치
+    [SerializeField] private Transform groundCheck;      // 바닥 판정 위치
     [SerializeField] private float groundCheckRadius = 0.1f; // 바닥 체크 범위
-    [SerializeField] private LayerMask groundLayer;      // 바닥 레이어*/
+    [SerializeField] private LayerMask groundLayer;      // 바닥 레이어
     [SerializeField] private float jumpPower = 5f;       // 점프 힘
     [SerializeField] private int maxJumpCount = 2;
     private int currentJumpCount = 0;
@@ -79,19 +81,19 @@ public class GaramCharacterCat : Characterbase
         /*bool gr = IsGrounded();*/
         Move(input); // BaseController의 이동 처리 호출
         HandleJump();   // 점프 입력 처리
-        if (Mathf.Abs(rb.velocity.y) < 0.01f && currentJumpCount > 0 /*&& gr*/)
+        if (Mathf.Abs(rb.velocity.y) < 0.01f && currentJumpCount > 0 && IsGrounded())
         {
             currentJumpCount = 0;
             Anim.SetJump(false);
             Debug.Log("착지!");
         }
 
+        
 
-
-    /*    if (gr)
-        {
-            Debug.Log("ㅗㅗㅗ");
-        }*/
+        /*    if (gr)
+            {
+                Debug.Log("ㅗㅗㅗ");
+            }*/
     }
 
 
@@ -149,7 +151,7 @@ public class GaramCharacterCat : Characterbase
     /// </summary>
     private void HandleJump()
     {
-        if (Input.GetKeyDown(jumpKey) /*&& IsGrounded()*/)
+        if (Input.GetKeyDown(jumpKey) && IsGrounded())
         {
 
             if (currentJumpCount < maxJumpCount)
@@ -170,13 +172,14 @@ public class GaramCharacterCat : Characterbase
     }
 
     //점프 착지 판정용 불값 필요 시 사용
-   /* private bool IsGrounded()
-    {*//*Debug.Log($"ground");*//*
+    private bool IsGrounded()
+    {
+        Debug.Log($"ground");
         return Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
 
-    }*/
+    }
 
-   /* //OverlapCircle 시각화 디버깅용 
+    //OverlapCircle 시각화 디버깅용 
     private void OnDrawGizmosSelected()
     {
         Debug.Log("null");
@@ -185,7 +188,7 @@ public class GaramCharacterCat : Characterbase
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
         //Debug.Log("기즈모");
-    }*/
+    }
     //벽에 붙기위한 콜라이더 감지
     /*  private void OnTriggerEnter2D(Collider2D other)
       {
