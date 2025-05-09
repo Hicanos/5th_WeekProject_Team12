@@ -8,7 +8,7 @@ public class NPCController : MonoBehaviour
 {
 
     [SerializeField] private SpriteRenderer npcRenderer; //npc 이미지 인스펙터에서 넣게끔
-    [SerializeField] private GameObject interactionPopup; //npc 앞에서 F누르게 끔
+    [SerializeField] private GameObject interactionPopup; //npc 앞에서 F누르라고 안내하는 팝업을 인스펙터에서 관리
     [SerializeField] private Text _dialogText;
 
 
