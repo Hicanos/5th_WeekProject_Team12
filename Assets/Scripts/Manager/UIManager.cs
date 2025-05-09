@@ -5,7 +5,6 @@ public enum UIState
 {
     Home,
     Game,
-    Score,
 }
 
 public class UIManager : MonoBehaviour
