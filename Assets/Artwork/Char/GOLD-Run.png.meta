@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 63da1b7cff89fcd48a22f42be589f6dc
+guid: 598e296acdf56d044b3d4004872385a9
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 15
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -121,7 +121,133 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: GOLD-Run_0
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 18
+        width: 40
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 05216610695a7814aa39d5d2369be111
+      internalID: -1725971081
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GOLD-Run_1
+      rect:
+        serializedVersion: 2
+        x: 51
+        y: 15
+        width: 40
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1336b7b89191cd54d9a134e9bb46c4c8
+      internalID: -476820658
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GOLD-Run_2
+      rect:
+        serializedVersion: 2
+        x: 103
+        y: 13
+        width: 40
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1f3ca6961829d13479c4f72c0f37a788
+      internalID: -1083608913
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GOLD-Run_3
+      rect:
+        serializedVersion: 2
+        x: 157
+        y: 10
+        width: 40
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 986c89eadf0251f4cbac28304f1ff38b
+      internalID: -1807466064
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GOLD-Run_4
+      rect:
+        serializedVersion: 2
+        x: 207
+        y: 16
+        width: 40
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dc753f7d67b712945833e15ba2cbc3b3
+      internalID: 1395037236
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GOLD-Run_5
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 18
+        width: 40
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eb77534da62c3074294b979a924184e1
+      internalID: -1691177377
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -132,7 +258,15 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      GOLD-Run_0: -1725971081
+      GOLD-Run_1: -476820658
+      GOLD-Run_2: -1083608913
+      GOLD-Run_3: -1807466064
+      GOLD-Run_4: 1395037236
+      GOLD-Run_5: -1691177377
+      GOLD-Run_6: 258385358
+      GOLD-Run_7: 560737378
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
