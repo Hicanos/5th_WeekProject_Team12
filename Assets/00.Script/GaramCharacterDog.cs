@@ -12,9 +12,14 @@ using UnityEngine.SceneManagement;
 /// </summary>
 public class GaramCharacterDog : Characterbase
 {
-    /// <summary> 전역에서 접근 가능한 인스턴스 (싱글톤) </summary>
-    public static GaramCharacterDog Instance { get; private set; }
-
+   /* /// <summary> 전역에서 접근 가능한 인스턴스 (싱글톤) </summary>
+    public static GaramCharacterDog Instance { get; private set; }*/
+   
+    [Header("조작키 설정")]
+    [SerializeField] private KeyCode leftKey = KeyCode.LeftArrow;
+    [SerializeField] private KeyCode rightKey = KeyCode.RightArrow;
+    [SerializeField] private KeyCode jumpKey = KeyCode.UpArrow;
+    [SerializeField] private KeyCode SkillKey = KeyCode.DownArrow;
     // 입력값 저장
     private float moveX;
     private float moveY;
@@ -24,11 +29,11 @@ public class GaramCharacterDog : Characterbase
     [Header("헬멧 피벗")]
     [SerializeField] private Transform headPivot;
 
-    private float lastJumpTime = -999f; // 마지막 점프 시간 기록
+   
     [Header("횡스크롤 물리 기반 점프 시스템")]
-    [SerializeField] private Transform groundCheck;      // 바닥 판정 위치
+   /* [SerializeField] private Transform groundCheck;      // 바닥 판정 위치
     [SerializeField] private float groundCheckRadius = 0.1f; // 바닥 체크 범위
-    [SerializeField] private LayerMask groundLayer;      // 바닥 레이어
+    [SerializeField] private LayerMask groundLayer;      // 바닥 레이어*/
     [SerializeField] private float jumpPower = 5f;       // 점프 힘
     [SerializeField] private int maxJumpCount = 1;
     private int currentJumpCount = 0;
@@ -50,7 +55,7 @@ public class GaramCharacterDog : Characterbase
 
 
         // 싱글톤 인스턴스 설정
-        if (Instance == null)
+        /*if (Instance == null)
         {
             Instance = this;
             DontDestroyOnLoad(gameObject); // 씬 전환 시 파괴 방지
@@ -58,7 +63,7 @@ public class GaramCharacterDog : Characterbase
         else
         {
             Destroy(gameObject); // 중복 인스턴스 제거
-        }
+        }*/
     }
 
     /// <summary>
@@ -72,10 +77,10 @@ public class GaramCharacterDog : Characterbase
 
         Vector2 input = new Vector2(moveX, moveY);
 
-        bool gr = IsGrounded();
+      /*  bool gr = IsGrounded();*/
         Move(input); // BaseController의 이동 처리 호출
         HandleJump();   // 점프 입력 처리
-        if (Mathf.Abs(rb.velocity.y) < 0.01f && currentJumpCount > 0 && gr)
+        if (Mathf.Abs(rb.velocity.y) < 0.01f && currentJumpCount > 0 /*&& gr*/)
         {
             currentJumpCount = 0;
             Anim.SetJump(false);
@@ -84,8 +89,8 @@ public class GaramCharacterDog : Characterbase
        
         
 
-        if (gr) { 
-            Debug.Log("ㅗㅗㅗ"); }
+      /*  if (gr) { 
+            Debug.Log(""); }*/
     }
         
 
@@ -103,7 +108,10 @@ public class GaramCharacterDog : Characterbase
     /// </summary>
     private void HandleInput()
     {
-        moveX = Input.GetAxisRaw("Horizontal");
+        moveX = 0;
+
+        if (Input.GetKey(leftKey)) moveX -= 1;
+        if (Input.GetKey(rightKey)) moveX += 1;
         moveInput = new Vector2(moveX, moveY).normalized;
     }
     /// <summary>
@@ -139,7 +147,7 @@ public class GaramCharacterDog : Characterbase
     /// </summary>
     private void HandleJump()
     {
-        if (Input.GetKeyDown(KeyCode.C) && IsGrounded())
+        if (Input.GetKeyDown(jumpKey) /*&& IsGrounded()*/)
         {
 
             if (currentJumpCount < maxJumpCount)
@@ -158,24 +166,22 @@ public class GaramCharacterDog : Characterbase
             
         }
     }
-    
-    //점프 착지 판정용 불값 필요 시 사용
-    private bool IsGrounded()
-    {/*Debug.Log($"ground");*/
-        return Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
-        
-    }
 
-    //OverlapCircle 시각화 디버깅용 
-    private void OnDrawGizmosSelected()
-    {
-        Debug.Log("null");
-        if (groundCheck == null) return;
+    /*   //점프 착지 판정용 불값 필요 시 사용
+       private bool IsGrounded()
+       {*//*Debug.Log($"ground");*//*
+           return Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
+           */
+    /*  //OverlapCircle 시각화 디버깅용 
+  private void OnDrawGizmosSelected()
+  {
+      Debug.Log("null");
+      if (groundCheck == null) return;
 
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
-        //Debug.Log("기즈모");
-    }
+      Gizmos.color = Color.yellow;
+      Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
+      //Debug.Log("기즈모");
+  }*/
     //벽에 붙기위한 콜라이더 감지
     /*  private void OnTriggerEnter2D(Collider2D other)
       {
@@ -184,5 +190,6 @@ public class GaramCharacterDog : Characterbase
 
           }
       }*/
-
 }
+
+
