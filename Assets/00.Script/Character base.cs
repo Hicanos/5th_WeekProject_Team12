@@ -59,8 +59,8 @@ public abstract class Characterbase: MonoBehaviour
     [SerializeField]protected float rayRange = 0.1f; // 바닥 체크 범위(raycast길이)
     [SerializeField]protected LayerMask groundLayer;      // 바닥 레이어
     [SerializeField]protected float jumpPower = 5f;       // 점프 힘
-    [SerializeField]protected int maxJumpCount = 2;
-    protected int currentJumpCount = 0;
+    [SerializeField]protected int maxJumpCount = 2;//다중점프 최대 횟수
+    protected int currentJumpCount = 0;//현재 점프수 저장 할 변수
    
     [Header("헬멧 피벗")]
     [SerializeField] protected Transform headPivot;
