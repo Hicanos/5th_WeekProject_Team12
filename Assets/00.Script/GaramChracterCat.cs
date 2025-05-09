@@ -7,26 +7,22 @@ public class GaramCharacterCat : Characterbase
 {
     protected override void Awake()
     {
+        enumChar = CHAR.CAT;
         base.Awake();
+        ControlKey();
     }
 
     private void Update()
     {
-        enumChar = CHAR.CAT;
+        
         HandleInput();         // 이동 입력 감지
         HandleAnimation();     // 이동 애니메이션 처리
         HeadSpriteFlip();    // 캐릭터 좌우 반전
 
         Vector2 input = new Vector2(moveX, moveY);
-
-        /*bool gr = IsGrounded();*/
+              
         Move(input); // BaseController의 이동 처리 호출
         HandleJump();   // 점프 입력 처리
-        if (Mathf.Abs(rb.velocity.y) < 0.01f && currentJumpCount > 0 && IsGrounded())
-        {
-            currentJumpCount = 0;
-            Anim.SetJump(false);
-            Debug.Log("착지!");
-        }
+        CheckLanding();
      }
 }
