@@ -9,7 +9,7 @@ using UnityEngine;
 /// </summary>
 
 
-public abstract class Characterbase: MonoBehaviour
+public abstract class Characterbase : MonoBehaviour
 {
     // 입력값 저장
     protected float moveX;
@@ -19,13 +19,13 @@ public abstract class Characterbase: MonoBehaviour
     protected Rigidbody2D rb;                    // 이동을 위한 리지드바디
     protected SpriteRenderer spriteRenderer;     // 좌우 반전을 위한 스프라이트 렌더러
     protected MyAnimationController Anim;
-   protected enum CHAR
+    protected enum CHAR
     {
         DOG,
         CAT
     }
     [Header("조작 스타일")]
-    [SerializeField]protected  CHAR enumChar;
+    [SerializeField] protected CHAR enumChar;
     protected void ControlKey()
     {
         switch (enumChar)
@@ -48,24 +48,26 @@ public abstract class Characterbase: MonoBehaviour
     }
 
     [Header("조작키 설정")]
-    [SerializeField]protected KeyCode leftKey ;
-    [SerializeField]protected KeyCode rightKey ;
-    [SerializeField]protected KeyCode jumpKey ;
-    [SerializeField]protected KeyCode SkillKey ;
-    [SerializeField]protected int moveSpeed=5;
-       
+    [SerializeField] protected KeyCode leftKey;
+    [SerializeField] protected KeyCode rightKey;
+    [SerializeField] protected KeyCode jumpKey;
+    [SerializeField] protected KeyCode SkillKey;
+    [SerializeField] protected int moveSpeed = 5;
+
     [Header("횡스크롤 물리 기반 점프 시스템")]
-    [SerializeField]protected Transform groundCheck;      // 바닥 판정 위치
-    [SerializeField]protected float rayRange = 0.1f; // 바닥 체크 범위(raycast길이)
-    [SerializeField]protected LayerMask groundLayer;      // 바닥 레이어
-    [SerializeField]protected float jumpPower = 5f;       // 점프 힘
-    [SerializeField]protected int maxJumpCount = 2;//다중점프 최대 횟수
+    [SerializeField] protected Transform groundCheck;      // 바닥 판정 위치
+    [SerializeField] protected float rayRange = 0.1f; // 바닥 체크 범위(raycast길이)
+    [SerializeField] protected LayerMask groundLayer;      // 바닥 레이어
+    [SerializeField] protected float jumpPower = 5f;       // 점프 힘
+    [SerializeField] protected int maxJumpCount = 2;//다중점프 최대 횟수
     protected int currentJumpCount = 0;//현재 점프수 저장 할 변수
-   
+
     [Header("헬멧 피벗")]
     [SerializeField] protected Transform headPivot;
-     protected GameObject helmet;
+    protected GameObject helmet;
 
+    [Header("스킬 쿨타임")]
+    [SerializeField] protected float SkillCoolTime = 1f;
     /// <summary> 초기화: 리지드바디, 스프라이트 찾고 스탯 초기화 </summary>
     protected virtual void Awake()
     {
@@ -82,19 +84,52 @@ public abstract class Characterbase: MonoBehaviour
         velocity.x = input.x * moveSpeed;
         rb.velocity = velocity;
 
-        
-            // 좌우 반전 처리
-       /*     if (input.x != 0)
-                spriteRenderer.flipX = input.x < 0; */
 
-     }
-   
-   protected virtual void Skill()
-    { 
-        
-    
+        // 좌우 반전 처리
+        /*     if (input.x != 0)
+                 spriteRenderer.flipX = input.x < 0; */
+
+    }
+    //스킬용 변수
+    protected bool SkillReq = false;
+    protected bool skillReady = true;
+    protected virtual void SkillCall()
+    {
+        if (Input.GetKeyDown(SkillKey) && skillReady/*&&IsGrounded()&&Mathf.Abs(rb.velocity.y) < 0.01f && currentJumpCount > 0*/)
+        {
+            
+            StartCoroutine(SkillCoolDown(SkillCoolTime));
+            SkillReq = true;
+            Debug.Log("스킬 키 입력");
+        }
+
+    }
+    protected virtual void SkillActivate()
+    {
+        if (SkillReq)
+        {
+            SkillReq = false;
+            Skill();
+            
+            Debug.Log("스킬발동");
+        }
+
     }
 
+    protected virtual void Skill()
+    {
+
+
+    }
+    protected virtual IEnumerator SkillCoolDown(float cooldown)
+    {
+        Debug.Log("쿨타임 발동");
+        cooldown = SkillCoolTime;
+        skillReady = false;
+        yield return new WaitForSeconds(cooldown);
+        skillReady = true;
+        Debug.Log("쿨타임 끝");
+    }
 
 
 
@@ -168,7 +203,7 @@ public abstract class Characterbase: MonoBehaviour
 
             if (currentJumpCount < maxJumpCount)
             {
-                
+
                 rb.velocity = new Vector2(rb.velocity.x, 0f); // Y 속도 초기화
                 rb.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
 
