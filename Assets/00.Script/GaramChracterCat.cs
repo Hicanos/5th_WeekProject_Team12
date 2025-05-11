@@ -43,26 +43,30 @@ public class GaramCharacterCat : Characterbase
     {
         if (!spriteRenderer.flipX)
         {
-            GRC.SetActive(false);
+            spriteRenderer.transform.localPosition = new Vector3(0.2f, 0f, 0f);
+
             spriteRenderer.transform.rotation = Quaternion.Euler(0f, 0f, 90f); //벽에 붙듯이 보여주기 위해 z축 회전
             rb.gravityScale = 0f; //중력 0으로 만들기 
             isClimb = true;
+            Anim.SetMove(false);
         }
         else
         {
-            GRC.SetActive(false);
+            
             spriteRenderer.transform.rotation = Quaternion.Euler(0f, 0f, -90f); //벽에 붙듯이 보여주기 위해 z축 회전
             rb.gravityScale = 0f; //중력 0으로 만들기 
             isClimb = true;
+            Anim.SetMove(false);
         }
     }
     protected override void ToggleSkillOff()
     {
-        GRC.SetActive(true);
+        spriteRenderer.transform.localPosition = new Vector3(0f, 0f, 0f);
         spriteRenderer. transform.rotation = Quaternion.identity; // 각도 초기값 (0,0,0)
         rb.gravityScale = 1f;
         isClimb = false;
-        
+        Anim.SetSkill(false);
+
     }
 
     protected override void MoveCall()//벽에 붙었을 시에 조작 방향 변경을 위한 재정의
@@ -119,7 +123,7 @@ public class GaramCharacterCat : Characterbase
     protected override void HandleJumpAnim()
     {
 
-        bool isJump = currentJumpCount > 0&&!isClimb || (!isClimb&&currentJumpCount == 0 && !IsGrounded());
+        bool isJump = (currentJumpCount > 0&&!isClimb) || (!isClimb&&currentJumpCount == 0 && !IsGrounded());
         Anim.SetJump(isJump);
 
     }

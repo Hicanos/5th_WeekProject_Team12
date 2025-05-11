@@ -4,15 +4,26 @@ using TMPro.EditorUtilities;
 using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Playables;
 
 /// <summary>
 /// 모든 캐릭터(플레이어/몬스터 등)의 공통 기능을 담당하는 추상 컨트롤러
 /// 이동, 체력 처리, 스프라이트 반전 등 기본 행동 제공
 /// </summary>
+public enum PLAYERSTATE
+{
+    IDLE,
+    MOVE,
+    JUMP,
+    DASH,
+    WALL
+}
 
 
 public abstract class Characterbase : MonoBehaviour
 {
+    protected PLAYERSTATE currentState;
+   
     // 입력값 저장
     protected float moveX;
     protected float moveY;
@@ -69,7 +80,7 @@ public abstract class Characterbase : MonoBehaviour
     protected int currentJumpCount = 0;//현재 점프수 저장 할 변수
 
     [Header("고양이 용 벽탐지")]
-    [SerializeField] protected GameObject GRC;//벽타기때 그라운드체크 끄기용
+    
     [SerializeField] protected Transform WallCheck;//벽 판정 위치
     [SerializeField] protected float wallRayRange = 0.1f; //벽  체크 범위(raycast길이)
     [SerializeField] protected LayerMask wallLayer;//벽 레이어
@@ -90,6 +101,13 @@ public abstract class Characterbase : MonoBehaviour
         Anim = GetComponentInChildren<MyAnimationController>();
     }
 
+    protected void ChangeState(PLAYERSTATE newState)
+    {
+        if (currentState == newState) return;
+
+        Debug.Log($"상태 전이: {currentState} -> {newState}");
+        currentState = newState;
+    }
 
     //스킬용 변수
     protected bool SkillReq = false; //스킬 요청할 불
@@ -280,9 +298,12 @@ public abstract class Characterbase : MonoBehaviour
 
     //점프 착지 판정용 불값 필요 시 사용
     protected bool IsGrounded()//땅에 붙어있는지 감지할 불값
-    {
-        RaycastHit2D hit = Physics2D.Raycast(groundCheck.position, Vector2.down, groundRayRange, groundLayer);
-        return hit.collider != null;
+    {if (!isClimb)
+        {
+            RaycastHit2D hit = Physics2D.Raycast(groundCheck.position, Vector2.down, groundRayRange, groundLayer);
+            return hit.collider != null;
+        }
+    else {return false;}
     }
     //벽 감지용 불값
     protected bool IsWallClimb()//벽타기 가능한 상태인지 감지할 불 값
