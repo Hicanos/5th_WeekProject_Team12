@@ -69,14 +69,12 @@ public abstract class Characterbase : MonoBehaviour
     protected int currentJumpCount = 0;//현재 점프수 저장 할 변수
 
     [Header("고양이 용 벽탐지")]
+    [SerializeField] protected GameObject GRC;//벽타기때 그라운드체크 끄기용
     [SerializeField] protected Transform WallCheck;//벽 판정 위치
     [SerializeField] protected float wallRayRange = 0.1f; //벽  체크 범위(raycast길이)
     [SerializeField] protected LayerMask wallLayer;//벽 레이어
 
     [Header("파괴가능오브젝트")]
-    [SerializeField] protected GameObject DestroyAbleObj;//강아지 돌진으로 파괴되는 오브젝트 
-    [SerializeField] protected Transform DestroyCheck;//파괴 감지
-    [SerializeField] protected float DestroyRange = 0.1f; //파괴  체크 범위(raycast길이)
     [SerializeField] protected LayerMask DestroyLayer;//파괴할 오브젝트 레이어
     [Header("헬멧 피벗")]
     [SerializeField] protected Transform headPivot;
@@ -317,40 +315,26 @@ public abstract class Characterbase : MonoBehaviour
         if (groundCheck == null) return;
         Gizmos.color = Color.green;
         Gizmos.DrawLine(groundCheck.position, groundCheck.position + Vector3.down * groundRayRange);
+       
         if (WallCheck == null || spriteRenderer == null) return;
 
         if (!spriteRenderer.flipX)
         {
             Gizmos.color = Color.red;
             Gizmos.DrawLine(WallCheck.position, WallCheck.position + Vector3.right * wallRayRange);
+            
         }
         else
         {
             Gizmos.color = Color.red;
             Gizmos.DrawLine(WallCheck.position, WallCheck.position + Vector3.left * wallRayRange);
+           
         }
-
+       
 
     }
 
-    protected bool IsDestroy()//파괴가능 감지 불 값
-    {
-        if (DestroyCheck == null) return false;
-        else
-        {
-            if (!spriteRenderer.flipX)
-            {
-                RaycastHit2D hit = Physics2D.Raycast(DestroyCheck.position, Vector2.right, DestroyRange, DestroyLayer);
-                return hit.collider != null;
-            }
-            else
-            {
-                RaycastHit2D hit = Physics2D.Raycast(DestroyCheck.position, Vector2.left, DestroyRange, DestroyLayer);
-                return hit.collider != null;
-            }
-        }
-
-    }
+    
 
 }
 

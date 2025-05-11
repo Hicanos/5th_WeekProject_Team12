@@ -43,20 +43,23 @@ public class GaramCharacterCat : Characterbase
     {
         if (!spriteRenderer.flipX)
         {
-            transform.rotation = Quaternion.Euler(0f, 0f, 90f); //벽에 붙듯이 보여주기 위해 z축 회전
+            GRC.SetActive(false);
+            spriteRenderer.transform.rotation = Quaternion.Euler(0f, 0f, 90f); //벽에 붙듯이 보여주기 위해 z축 회전
             rb.gravityScale = 0f; //중력 0으로 만들기 
             isClimb = true;
         }
         else
         {
-            transform.rotation = Quaternion.Euler(0f, 0f, -90f); //벽에 붙듯이 보여주기 위해 z축 회전
+            GRC.SetActive(false);
+            spriteRenderer.transform.rotation = Quaternion.Euler(0f, 0f, -90f); //벽에 붙듯이 보여주기 위해 z축 회전
             rb.gravityScale = 0f; //중력 0으로 만들기 
             isClimb = true;
         }
     }
     protected override void ToggleSkillOff()
     {
-        transform.rotation = Quaternion.identity; // 각도 초기값 (0,0,0)
+        GRC.SetActive(true);
+        spriteRenderer. transform.rotation = Quaternion.identity; // 각도 초기값 (0,0,0)
         rb.gravityScale = 1f;
         isClimb = false;
         
@@ -116,7 +119,7 @@ public class GaramCharacterCat : Characterbase
     protected override void HandleJumpAnim()
     {
 
-        bool isJump = currentJumpCount > 0&&!isClimb || (isClimb&&currentJumpCount == 0 && !IsGrounded());
+        bool isJump = currentJumpCount > 0&&!isClimb || (!isClimb&&currentJumpCount == 0 && !IsGrounded());
         Anim.SetJump(isJump);
 
     }
@@ -124,7 +127,7 @@ public class GaramCharacterCat : Characterbase
     {
         if (isClimb) {
             bool isMoving = moveY != 0;
-            Anim.SetMove(isMoving);
+            Anim.SetSkill(isMoving);
         }
         else
         {
@@ -132,14 +135,15 @@ public class GaramCharacterCat : Characterbase
             Anim.SetMove(isMoving);
         }
     }
-    protected virtual void SpriteFlip() // 좌우반전 위한 매서드
+    /*protected virtual void SpriteFlip() // 좌우반전 위한 매서드
     {
         if (isClimb)
         {
             if (moveY != 0)
             { bool updown = moveY >0;
                 if (spriteRenderer != null)
-                    spriteRenderer.flipY = updown;
+                    spriteRenderer.flipY = !updown;
+                
             }
             if (moveY != 0)
                 if (headPivot != null)
@@ -156,8 +160,7 @@ public class GaramCharacterCat : Characterbase
                 {
                     headPivot.localScale = new Vector3(moveX < 0 ? -1f : 1f, 1f, 1f);
                 }
-        }
+        }*/
 
     }
 
-}

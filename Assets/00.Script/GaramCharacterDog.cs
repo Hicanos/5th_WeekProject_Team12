@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using UnityEngine;
+using UnityEngine.Playables;
 using UnityEngine.SceneManagement;
 
 public class GaramCharacterDog : Characterbase
@@ -116,7 +117,18 @@ public class GaramCharacterDog : Characterbase
 
     }
 
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        // 돌진 중이 아닐 때는 무시
+        if (!isDash) return;
 
+        // 레이어 체크: 감지할 레이어에 해당하는지 확인
+        if (((1 << other.gameObject.layer) & DestroyLayer) != 0)
+        {
+            Destroy(other.gameObject);
+            Debug.Log(" 돌진으로 파괴됨: " + other.name);
+        }
+    }
 }
 
 
