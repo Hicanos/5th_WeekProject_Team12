@@ -46,6 +46,7 @@ public class MyAnimationController : MonoBehaviour
 
     public void SetSkill(bool isSkill)
     {
-        _animator.SetBool("IsSkill", isSkill);
+        _animator.SetBool("IsSkill",isSkill);
     }
+    
 }

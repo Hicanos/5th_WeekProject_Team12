@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro.EditorUtilities;
 using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -50,8 +51,8 @@ public abstract class Characterbase : MonoBehaviour
 
 
     [Header("이름")]
-    [SerializeField]protected string Name = string.Empty; 
-    
+    [SerializeField] protected string Name = string.Empty;
+
     [Header("조작키 설정")]
     [SerializeField] protected KeyCode leftKey;
     [SerializeField] protected KeyCode rightKey;
@@ -71,7 +72,12 @@ public abstract class Characterbase : MonoBehaviour
     [SerializeField] protected Transform WallCheck;//벽 판정 위치
     [SerializeField] protected float wallRayRange = 0.1f; //벽  체크 범위(raycast길이)
     [SerializeField] protected LayerMask wallLayer;//벽 레이어
-    
+
+    [Header("파괴가능오브젝트")]
+    [SerializeField] protected GameObject DestroyAbleObj;//강아지 돌진으로 파괴되는 오브젝트 
+    [SerializeField] protected Transform DestroyCheck;//파괴 감지
+    [SerializeField] protected float DestroyRange = 0.1f; //파괴  체크 범위(raycast길이)
+    [SerializeField] protected LayerMask DestroyLayer;//파괴할 오브젝트 레이어
     [Header("헬멧 피벗")]
     [SerializeField] protected Transform headPivot;
     protected GameObject helmet;
@@ -90,46 +96,66 @@ public abstract class Characterbase : MonoBehaviour
     //스킬용 변수
     protected bool SkillReq = false; //스킬 요청할 불
     protected bool skillReady = true;//스킬 쿨타임용 불
-    protected virtual void SkillCall() // 스킬 입력 받을 매서드
+    protected virtual void InstantSkillCall() // 스킬 입력 받을 매서드
     {
         if (Input.GetKeyDown(SkillKey) && skillReady)
         {
 
             StartCoroutine(SkillCoolDown(SkillCoolTime));//쿨타임 시작 
             SkillReq = true;
-            Debug.Log("스킬 키 입력");
+            Debug.Log($"{Name}스킬 키 입력");
         }
-        
+
 
     }
+
+
     protected virtual void InstantSkillActivate()      //단발성 스킬호출
     {
         if (SkillReq)
         {
             SkillReq = false;
-            Skill();
+            InstantSkill();
 
-            Debug.Log("스킬발동");
+            Debug.Log($"{Name}스킬발동");
         }
 
     }
-    protected virtual void ToggleSkillActivate() //on/off형 스킬 호출
+    protected virtual void InstantSkill() // 단발성 스킬
     {
-        if (SkillReq)
+
+
+    }
+    protected virtual void ToggleSkillCall()//토글형 스킬 입력 감지
+    {
+        if (Input.GetKeyDown(SkillKey) && !isToggled && IsWallClimb())
         {
-            
-            Skill();
-
-            Debug.Log("스킬발동");
+            StartCoroutine(SkillCoolDown(SkillCoolTime));//쿨타임 시작 
+            isToggled = true;
+            ToggleSkillOn();
+            Debug.Log($"{Name}스킬 키 입력");
+            Debug.Log($"{Name}토글스킬발동");
         }
-        
+        else if (Input.GetKeyDown(SkillKey) && isToggled)
+        {
+
+            isToggled = false;
+            ToggleSkillOff();
+            Debug.Log($"{Name}스킬 키 입력");
+            Debug.Log($"{Name}토글스킬해제");
+        }
     }
 
-    protected virtual void Skill()
-    {
+    protected bool isToggled = false;
+   
+
+    protected virtual void ToggleSkillOn()
+    { }
+
+    protected virtual void ToggleSkillOff()
+    { }
 
 
-    }
     protected virtual IEnumerator SkillCoolDown(float cooldown)//스킬 쿨타임용 코루틴
     {
         Debug.Log("쿨타임 발동");
@@ -147,8 +173,8 @@ public abstract class Characterbase : MonoBehaviour
     }
 
 
-    
-    
+
+
     /// <summary>
     /// 이동 키 입력을 받아 방향 벡터 계산
     /// </summary>
@@ -179,12 +205,12 @@ public abstract class Characterbase : MonoBehaviour
     /// <summary>
     /// 이동 중 여부에 따라 애니메이션 파라미터 설정
     /// </summary>
-    protected void HandleMoveAnim()
+    protected virtual void HandleMoveAnim()
     {
         bool isMoving = moveX != 0;
         Anim.SetMove(isMoving);
     }
-    protected void SpriteFlip() // 좌우반전 위한 매서드
+    protected virtual void SpriteFlip() // 좌우반전 위한 매서드
     {
         if (moveX != 0)
             Anim.SetFlip(moveX < 0);
@@ -193,17 +219,7 @@ public abstract class Characterbase : MonoBehaviour
             {
                 headPivot.localScale = new Vector3(moveX < 0 ? -1f : 1f, 1f, 1f);
             }
-        if (WallCheck != null) //WallCheck - raycast기준점이 되는 오브젝트 뒤집기 
-        {
-            if (spriteRenderer.flipX)
-            {
-                WallCheck.localPosition = new Vector3(-wallRayRange, 0f, 0f); // 왼쪽  
-            }
-            else
-            {
-                WallCheck.localPosition = new Vector3(wallRayRange, 0f, 0f); // 오른쪽
-            }
-        }
+       
     }
 
 
@@ -220,14 +236,14 @@ public abstract class Characterbase : MonoBehaviour
     /// </summary>
     protected void JumpCall()//점프키 입력 감지
     {
-        if ((Input.GetKeyDown(jumpKey) && currentJumpCount < maxJumpCount)&&!isClimb)//키 입력, 점프 횟수가 최대 점프보다 작을 때,벽타기 중이 아닐 때 
+        if ((Input.GetKeyDown(jumpKey) && currentJumpCount < maxJumpCount) && !isClimb)//키 입력, 점프 횟수가 최대 점프보다 작을 때,벽타기 중이 아닐 때 
         {
             if (currentJumpCount == 0 && !IsGrounded())// 단순 낙하중에 점프 방지
             { return; }
             jumpReq = true;
         }
     }
-    protected void JumpAtivate()//점프 호출
+    protected virtual void JumpAtivate()//점프 호출
     {
         if (jumpReq)
         {
@@ -245,10 +261,12 @@ public abstract class Characterbase : MonoBehaviour
 
     }
 
-    protected void HandleJumpAnim()
+    protected virtual void HandleJumpAnim()
     {
-        bool isJump = currentJumpCount > 0 || (currentJumpCount == 0 && !IsGrounded());
-        Anim.SetJump(isJump);
+      
+            bool isJump = currentJumpCount > 0 || (currentJumpCount == 0 && !IsGrounded());
+            Anim.SetJump(isJump);
+        
     }
 
     protected void CheckLanding()//땅에 착지했는지 감지하는 매서드
@@ -268,34 +286,71 @@ public abstract class Characterbase : MonoBehaviour
         RaycastHit2D hit = Physics2D.Raycast(groundCheck.position, Vector2.down, groundRayRange, groundLayer);
         return hit.collider != null;
     }
-   //벽 감지용 불값
+    //벽 감지용 불값
     protected bool IsWallClimb()//벽타기 가능한 상태인지 감지할 불 값
     {
         if (!spriteRenderer.flipX)
-        { RaycastHit2D hit = Physics2D.Raycast(WallCheck.position, Vector2.right, wallRayRange, wallLayer);
-            return hit.collider != null; }
-        else 
+        {
+            RaycastHit2D hit = Physics2D.Raycast(WallCheck.position, Vector2.right, wallRayRange, wallLayer);
+            return hit.collider != null;
+        }
+        else
         {
             RaycastHit2D hit = Physics2D.Raycast(WallCheck.position, Vector2.left, wallRayRange, wallLayer);
-            return hit.collider != null; 
+            return hit.collider != null;
         }
 
 
+    }
+    protected void IsNotClimb() //벽을 초과하여 움직일때 토클 스킬 끄기
+    { 
+        if(isToggled && !IsWallClimb())
+        {
+         
+            ToggleSkillOff();
+               
         }
+    }
     protected bool isClimb = false; //벽타기 중인지 확인할 불
     protected void OnDrawGizmosSelected() //raycast 기즈모 시각화하기 위한 매서드
     {
         if (groundCheck == null) return;
         Gizmos.color = Color.green;
         Gizmos.DrawLine(groundCheck.position, groundCheck.position + Vector3.down * groundRayRange);
-        if (WallCheck == null) return;
-        Gizmos.color = Color.red;
-        Gizmos.DrawLine(WallCheck.position, WallCheck.position + Vector3.right * wallRayRange);
+        if (WallCheck == null || spriteRenderer == null) return;
+
+        if (!spriteRenderer.flipX)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawLine(WallCheck.position, WallCheck.position + Vector3.right * wallRayRange);
+        }
+        else
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawLine(WallCheck.position, WallCheck.position + Vector3.left * wallRayRange);
+        }
+
+
     }
-    
-    //밥먹으로 갔음메 
-    //먹고 와서 할것, 토글형 스킬 구분 한것 마무리 하기 
-    //벽에 달라붙게 하기 
-    //
+
+    protected bool IsDestroy()//파괴가능 감지 불 값
+    {
+        if (DestroyCheck == null) return false;
+        else
+        {
+            if (!spriteRenderer.flipX)
+            {
+                RaycastHit2D hit = Physics2D.Raycast(DestroyCheck.position, Vector2.right, DestroyRange, DestroyLayer);
+                return hit.collider != null;
+            }
+            else
+            {
+                RaycastHit2D hit = Physics2D.Raycast(DestroyCheck.position, Vector2.left, DestroyRange, DestroyLayer);
+                return hit.collider != null;
+            }
+        }
+
+    }
+
 }
 
