@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -56,12 +57,17 @@ public abstract class Characterbase : MonoBehaviour
 
     [Header("횡스크롤 물리 기반 점프 시스템")]
     [SerializeField] protected Transform groundCheck;      // 바닥 판정 위치
-    [SerializeField] protected float rayRange = 0.1f; // 바닥 체크 범위(raycast길이)
+    [SerializeField] protected float groundRayRange = 0.1f; // 바닥 체크 범위(raycast길이)
     [SerializeField] protected LayerMask groundLayer;      // 바닥 레이어
     [SerializeField] protected float jumpPower = 5f;       // 점프 힘
     [SerializeField] protected int maxJumpCount = 2;//다중점프 최대 횟수
     protected int currentJumpCount = 0;//현재 점프수 저장 할 변수
 
+    [Header("고양이 용 벽탐지")]
+    [SerializeField] protected Transform WallCheck;//벽 판정 위치
+    [SerializeField] protected float wallRayRange = 0.1f; //벽  체크 범위(raycast길이)
+    [SerializeField] protected LayerMask wallLayer;//벽 레이어
+    
     [Header("헬멧 피벗")]
     [SerializeField] protected Transform headPivot;
     protected GameObject helmet;
@@ -76,28 +82,15 @@ public abstract class Characterbase : MonoBehaviour
         Anim = GetComponentInChildren<MyAnimationController>();
     }
 
-    /// <summary> 이동 처리: 속도 적용 및 방향 반전 </summary>
-    protected virtual void Move(Vector2 input)
-    {
 
-        Vector2 velocity = rb.velocity;
-        velocity.x = input.x * moveSpeed;
-        rb.velocity = velocity;
-
-
-        // 좌우 반전 처리
-        /*     if (input.x != 0)
-                 spriteRenderer.flipX = input.x < 0; */
-
-    }
     //스킬용 변수
     protected bool SkillReq = false;
     protected bool skillReady = true;
     protected virtual void SkillCall()
     {
-        if (Input.GetKeyDown(SkillKey) && skillReady/*&&IsGrounded()&&Mathf.Abs(rb.velocity.y) < 0.01f && currentJumpCount > 0*/)
+        if (Input.GetKeyDown(SkillKey) && skillReady)
         {
-            
+
             StartCoroutine(SkillCoolDown(SkillCoolTime));
             SkillReq = true;
             Debug.Log("스킬 키 입력");
@@ -110,7 +103,7 @@ public abstract class Characterbase : MonoBehaviour
         {
             SkillReq = false;
             Skill();
-            
+
             Debug.Log("스킬발동");
         }
 
@@ -130,20 +123,25 @@ public abstract class Characterbase : MonoBehaviour
         skillReady = true;
         Debug.Log("쿨타임 끝");
     }
+    protected virtual void HandleSkillAnim()
+    {
+        bool isSkill = SkillReq;
+        Anim.SetSkill(isSkill);
 
+    }
 
 
     //점프 착지 판정용 불값 필요 시 사용
     protected bool IsGrounded()
     {
-        RaycastHit2D hit = Physics2D.Raycast(groundCheck.position, Vector2.down, rayRange, groundLayer);
+        RaycastHit2D hit = Physics2D.Raycast(groundCheck.position, Vector2.down, groundRayRange, groundLayer);
         return hit.collider != null;
     }
     protected void OnDrawGizmosSelected()
     {
         if (groundCheck == null) return;
         Gizmos.color = Color.green;
-        Gizmos.DrawLine(groundCheck.position, groundCheck.position + Vector3.down * rayRange);
+        Gizmos.DrawLine(groundCheck.position, groundCheck.position + Vector3.down * groundRayRange);
     }
     //벽에 붙기위한 콜라이더 감지
     /*  private void OnTriggerEnter2D(Collider2D other)
@@ -165,22 +163,29 @@ public abstract class Characterbase : MonoBehaviour
         if (Input.GetKey(rightKey)) moveX += 1;
         moveInput = new Vector2(moveX, moveY).normalized;
     }
+    /// <summary> 이동 처리: 속도 적용 및 방향 반전 </summary>
+    protected virtual void Move(Vector2 input)
+    {
+
+        Vector2 velocity = rb.velocity;
+        velocity.x = input.x * moveSpeed;
+
+        rb.velocity = velocity;
+
+
+        // 좌우 반전 처리
+        /*     if (input.x != 0)
+                 spriteRenderer.flipX = input.x < 0; */
+
+    }
     /// <summary>
     /// 이동 중 여부에 따라 애니메이션 파라미터 설정
     /// </summary>
-    protected void HandleAnimation()
+    protected void HandleMoveAnim()
     {
         bool isMoving = moveX != 0;
         Anim.SetMove(isMoving);
     }
-
-
-
-
-    /// <summary>
-    /// 캐릭터 좌우 반전 (flipX) 처리
-    /// 무기에는 적용하지 않음
-    /// </summary>
     protected void HeadSpriteFlip()
     {
         if (moveX != 0)
@@ -193,27 +198,48 @@ public abstract class Characterbase : MonoBehaviour
     }
 
 
+
+    /// <summary>
+    /// 캐릭터 좌우 반전 (flipX) 처리
+    /// 무기에는 적용하지 않음
+    /// </summary>
+
+
+    protected bool jumpReq = false;//점프 콜을 위한 불
     /// <summary>
     /// 점프 키 입력 감지 및 쿨타임 확인 후 점프 실행
     /// </summary>
-    protected void HandleJump()
+    protected void JumpCall()
     {
-        if (Input.GetKeyDown(jumpKey))
+        if ((Input.GetKeyDown(jumpKey) && currentJumpCount < maxJumpCount))
         {
+            if (currentJumpCount == 0 && !IsGrounded())
+            { return; }
+            jumpReq = true;
+        }
+    }
+    protected void JumpAtivate()
+    {
+        if (jumpReq)
+        {
+            rb.velocity = new Vector2(rb.velocity.x, 0f); // Y 속도 초기화
+            rb.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
 
             if (currentJumpCount < maxJumpCount)
             {
-
-                rb.velocity = new Vector2(rb.velocity.x, 0f); // Y 속도 초기화
-                rb.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
-
                 currentJumpCount++;
-                Anim.SetJump(true);
                 Debug.Log($"점프 {currentJumpCount}/{maxJumpCount}");
             }
-
-
+            jumpReq = false;
         }
+
+
+    }
+
+    protected void HandleJumpAnim()
+    {
+        bool isJump = currentJumpCount > 0 || (currentJumpCount == 0 && !IsGrounded());
+        Anim.SetJump(isJump);
     }
 
     protected void CheckLanding()
@@ -222,6 +248,7 @@ public abstract class Characterbase : MonoBehaviour
         {
             currentJumpCount = 0;
             Anim.SetJump(false);
+
             Debug.Log("착지!");
         }
     }
