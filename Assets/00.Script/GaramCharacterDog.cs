@@ -8,16 +8,16 @@ public class GaramCharacterDog : Characterbase
 
     protected override void Awake()
     {
-        enumChar = CHAR.DOG;
+        enumChar = CHAR.DOG;//캐릭터 분류
         base.Awake();
-        ControlKey();
+        ControlKey();//조작키할당
     }
     /// <summary>
     /// 입력매서드는 여기에
     /// </summary>
     private void Update()
     {
-        HandleInput();         // 이동 입력 
+        MoveCall();         // 이동 입력 
         SkillCall(); //스킬 키 입력
         JumpCall();   // 점프 입력 
     }
@@ -30,26 +30,29 @@ public class GaramCharacterDog : Characterbase
         HandleJumpAnim();//점프 애니메이션
         CheckLanding();//착지 판정
         
-        Move(moveInput); // 이동 호출 
-        HeadSpriteFlip();    // 캐릭터 좌우 반전
+        MoveActivate(moveInput); // 이동 호출 
+        SpriteFlip();    // 캐릭터 좌우 반전
         HandleMoveAnim();     // 이동 애니메이션 
-        SkillActivate(); //스킬발동
+        InstantSkillActivate(); //스킬발동
     }
 
     protected override void SkillCall()
     {
-        if (IsGrounded() && IsGrounded() && currentJumpCount == 0)
+        if (IsGrounded() &&  currentJumpCount == 0) //착지상태일때만 스킬 사용 가능 하게 하기
             base.SkillCall();
     }
     protected override void Skill()
     {
 
-        Vector2 currentLook; /*= new Vector2(moveX, 0).normalized;*/
+        Vector2 currentLook; //방향을 잡기위한 백터값
         if (this.spriteRenderer.flipX == false)
         {
             currentLook = new Vector2(1, 0);
         }
-        else { currentLook = new Vector2(-1, 0); }
+        else 
+        { 
+            currentLook = new Vector2(-1, 0); 
+        }
         rb.velocity = Vector2.zero; //  속도 초기화
         rb.AddForce(currentLook * 50f, ForceMode2D.Impulse);
 

@@ -729,7 +729,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.11315775, y: 0.016919613}
+  m_Offset: {x: 0.11315775, y: 0.03705573}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -740,7 +740,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.1216936, y: 0.9661608}
+  m_Size: {x: 1.1216936, y: 0.92588854}
   m_EdgeRadius: 0
 --- !u!50 &104655557
 Rigidbody2D:
@@ -782,18 +782,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enumChar: 1
+  Name: "\uACE0\uBA10\uBBF8"
   leftKey: 97
   rightKey: 100
   jumpKey: 119
   SkillKey: 115
   moveSpeed: 7
   groundCheck: {fileID: 550297275}
-  rayRange: 0.4
+  groundRayRange: 0.6
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
   jumpPower: 8
   maxJumpCount: 2
+  WallCheck: {fileID: 837312176}
+  wallRayRange: 0.7
+  wallLayer:
+    serializedVersion: 2
+    m_Bits: 256
   headPivot: {fileID: 1021175439}
   SkillCoolTime: 1
 --- !u!4 &104655559
@@ -805,11 +811,10 @@ Transform:
   m_GameObject: {fileID: 104655555}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.7, y: -6.47, z: 0}
+  m_LocalPosition: {x: 12.23, y: -6.51, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 837312176}
   - {fileID: 550297275}
   - {fileID: 1458698554}
   m_Father: {fileID: 0}
@@ -2234,7 +2239,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 100
+  m_SortingOrder: 110
   m_Sprite: {fileID: 970878016, guid: 83e59a2c689bb1646b5b5a9d96c78504, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -2326,7 +2331,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.26576483, y: -0.15117192}
+  m_Offset: {x: 0.26576483, y: -0.11673379}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -2337,7 +2342,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.0639498, y: 1.3023438}
+  m_Size: {x: 1.0639498, y: 1.2334676}
   m_EdgeRadius: 0
 --- !u!50 &460309571
 Rigidbody2D:
@@ -2379,18 +2384,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enumChar: 0
+  Name: "\uACE8\uB315\uC774"
   leftKey: 276
   rightKey: 275
   jumpKey: 273
   SkillKey: 274
   moveSpeed: 5
   groundCheck: {fileID: 827609837}
-  rayRange: 0.6
+  groundRayRange: 0.6
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
   jumpPower: 5
   maxJumpCount: 1
+  WallCheck: {fileID: 0}
+  wallRayRange: 0.1
+  wallLayer:
+    serializedVersion: 2
+    m_Bits: 0
   headPivot: {fileID: 134507967}
   SkillCoolTime: 1
 --- !u!1 &550297274
@@ -2419,7 +2430,7 @@ Transform:
   m_GameObject: {fileID: 550297274}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.100000024, y: -1.25, z: 0}
+  m_LocalPosition: {x: 0.3, y: -0.99, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2572,12 +2583,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 837312175}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.997, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 1.3, y: -0.15999985, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 104655559}
+  m_Father: {fileID: 1458698554}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &837312177
 BoxCollider2D:
@@ -2688,6 +2699,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1021175439}
+  - {fileID: 837312176}
   m_Father: {fileID: 104655559}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1458698555
@@ -2763,7 +2775,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 100
+  m_SortingOrder: 110
   m_Sprite: {fileID: -48916865, guid: e8cbefb258c276943aabfbe8918062de, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
