@@ -17,30 +17,27 @@ public class NPCController : MonoBehaviour
 
     bool isPlayerEncounter = false;
 
-    private string currentScene = "a";
-    void Start()
-    {
-        string currentScene = SceneManager.GetActiveScene().name; //지금 씬의 명칭을 변수 currentScene에 저장
-    }
-
+    string _sceneName = "a";
     protected void Update()
     {
+        _sceneName = Helper.GetCurrentSceneName(); //Helper에서 현재 씬 이름을 받아옴
+        
         if (isPlayerEncounter && Input.GetKeyDown(KeyCode.F))
         {
             DialogImage.SetActive(true);
-            switch(currentScene) //지금 씬의 위치에 따라 다른 대사 출력
+            switch (_sceneName) //지금 씬의 위치에 따라 다른 대사 출력
             {
                 case "StageSelect":
-                TutorDialog(); //튜터 대사 실행
-                break;
+                    TutorDialog(); //튜터 대사 실행
+                    break;
 
                 case "Tutorial":
-                TutorialDialog(); //튜토리얼 대사 실행
-                break;
+                    TutorialDialog(); //튜토리얼 대사 실행
+                    break;
 
                 default:
-                break;
-                
+                    break;
+
             }
         }
     }
