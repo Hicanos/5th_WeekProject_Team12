@@ -174,7 +174,7 @@ MonoBehaviour:
   leftKey: 97
   rightKey: 100
   jumpKey: 119
-  SkillKey: 115
+  skillKey: 115
   moveSpeed: 6
   groundCheck: {fileID: 5845416776993409912}
   groundRayRange: 0.6
@@ -184,8 +184,8 @@ MonoBehaviour:
   jumpPower: 6
   maxJumpCount: 2
   headPivot: {fileID: 2875277944490406777}
-  SkillCoolTime: 1
-  WallCheck: {fileID: 4358738887154983158}
+  skillCoolTime: 1
+  wallCheck: {fileID: 4358738887154983158}
   wallRayRange: 0.7
   wallLayer:
     serializedVersion: 2
