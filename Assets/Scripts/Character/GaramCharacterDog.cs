@@ -84,6 +84,7 @@ public class GaramCharacterDog : Characterbase
             currentLook = new Vector2(-1, 0);
         }
         rb.velocity = Vector2.zero; //  속도 초기화
+        rb.position -= currentLook * 0.1f;// 딱 붙어서 사용할 시 Stay상태라 파괴되지 않으므로 Stay 하나더 만드는 것 보다 연출로 처리하기로 함
         //코루틴 시작 뒤에 매개변수 2개 인스펙터창 조정 가능
         StartCoroutine(DashDuration(currentLook, dashDuration, dashSpeed));
 
@@ -93,7 +94,7 @@ public class GaramCharacterDog : Characterbase
     private IEnumerator DashDuration(Vector2 direction, float duration, float dashSpeed)
     {
         isDash = true;
-
+        
         yield return new WaitForSeconds(0.1f);
         // 순간적으로 빠른 속도 설정
         rb.velocity = direction * dashSpeed;  
