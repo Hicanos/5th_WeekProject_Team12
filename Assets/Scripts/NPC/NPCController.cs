@@ -18,10 +18,15 @@ public class NPCController : MonoBehaviour
     bool isPlayerEncounter = false;
 
     string _sceneName = "a";
-    protected void Update()
+
+    private void Awake()
     {
         _sceneName = Helper.GetCurrentSceneName(); //Helper에서 현재 씬 이름을 받아옴
-        
+    }
+
+    protected void Update()
+    {
+
         if (isPlayerEncounter && Input.GetKeyDown(KeyCode.F))
         {
             DialogImage.SetActive(true);

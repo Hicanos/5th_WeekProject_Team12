@@ -8,7 +8,7 @@ public class MapManager : MonoBehaviour
     public static MapManager Instance { get; private set; }
     public string CurrentStage { get; private set; } //현재 스테이지를 저장할 변수
     //protected Rigidbody2D _doorRigidbody;
-    bool isPlayerInRange = false;
+    //bool isPlayerInRange = false;
     //public GameObject interactionPopup2;
     private int currentStageIndex = 0;
 
