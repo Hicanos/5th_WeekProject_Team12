@@ -13,14 +13,14 @@ public class Gift : MonoBehaviour
         {
             //LegacyID를 DataManager의 AquiredLegacy에 추가, 유물이 리스트에 잘 들어갔는지 확인.
             DataManager.AquiredLegacy.Add(LegacyID);
-            Debug.Log($"유물획득: {ObjManager.LegacyList[LegacyID].ToString()}");
+            Debug.Log($"유물획득: {DataManager.LegacyList[LegacyID].ToString()}");
         }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         //충돌체가 개나 고양이인지 확인(둘은 플레이어)
-        if (collision.CompareTag("Dog") || collision.CompareTag("Cat"))
+        if (collision.CompareTag("Player"))
         {
             GetGift();
             Destroy(gameObject); //유물을 등록하고 오브젝트는 제거
