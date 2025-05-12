@@ -6,7 +6,7 @@ public class Respawner : MonoBehaviour
 {
     [SerializeField] private GameObject[] characterPrefab;
     [SerializeField] private Transform spawnPoint;
-    void Start()
+    void Awake()
     {
         foreach (GameObject prefab in characterPrefab)
         {
@@ -14,5 +14,9 @@ public class Respawner : MonoBehaviour
 
         }
     }
-   
+    void Start()
+    {
+        Destroy(this.gameObject);
+    }
+    
 }
