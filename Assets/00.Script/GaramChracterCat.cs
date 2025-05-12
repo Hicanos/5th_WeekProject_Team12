@@ -7,7 +7,7 @@ public class GaramCharacterCat : Characterbase
 {
     [Header("고양이 용 벽탐지")]
 
-    [SerializeField] private Transform WallCheck;//벽 판정 위치
+    [SerializeField] private Transform wallCheck;//벽 판정 위치
     [SerializeField] private float wallRayRange = 0.1f; //벽  체크 범위(raycast길이)
     [SerializeField] private LayerMask wallLayer;//벽 레이어
 
@@ -51,12 +51,12 @@ public class GaramCharacterCat : Characterbase
     {
         if (!spriteRenderer.flipX)
         {
-            RaycastHit2D hit = Physics2D.Raycast(WallCheck.position, Vector2.right, wallRayRange, wallLayer);
+            RaycastHit2D hit = Physics2D.Raycast(wallCheck.position, Vector2.right, wallRayRange, wallLayer);
             return hit.collider != null;
         }
         else
         {
-            RaycastHit2D hit = Physics2D.Raycast(WallCheck.position, Vector2.left, wallRayRange, wallLayer);
+            RaycastHit2D hit = Physics2D.Raycast(wallCheck.position, Vector2.left, wallRayRange, wallLayer);
             return hit.collider != null;
         }
     }
@@ -73,15 +73,15 @@ public class GaramCharacterCat : Characterbase
     //토글형 스킬 입력 감지. 감지 조건에 IsWallClimb 추가하기 위해 재정의
     protected override void ToggleSkillCall()//토글형 스킬 입력 감지
     {
-        if (Input.GetKeyDown(SkillKey) && !isToggled && IsWallClimb())
+        if (Input.GetKeyDown(skillKey) && !isToggled && IsWallClimb())
         {
-            StartCoroutine(SkillCoolDown(SkillCoolTime));//쿨타임 시작 
+            StartCoroutine(SkillCoolDown(skillCoolTime));//쿨타임 시작 
             isToggled = true;
             ToggleSkillOn();
             Debug.Log($"{Name}스킬 키 입력");
             Debug.Log($"{Name}토글스킬발동");
         }
-        else if (Input.GetKeyDown(SkillKey) && isToggled)
+        else if (Input.GetKeyDown(skillKey) && isToggled)
         {
 
             isToggled = false;
@@ -225,16 +225,16 @@ public class GaramCharacterCat : Characterbase
         if (groundCheck == null) return;
         Gizmos.color = Color.green;
         Gizmos.DrawLine(groundCheck.position, groundCheck.position + Vector3.down * groundRayRange);
-        if (WallCheck == null || spriteRenderer == null) return;
+        if (wallCheck == null || spriteRenderer == null) return;
         if (!spriteRenderer.flipX)
         {
             Gizmos.color = Color.red;
-            Gizmos.DrawLine(WallCheck.position, WallCheck.position + Vector3.right * wallRayRange);
+            Gizmos.DrawLine(wallCheck.position, wallCheck.position + Vector3.right * wallRayRange);
         }
         else
         {
             Gizmos.color = Color.red;
-            Gizmos.DrawLine(WallCheck.position, WallCheck.position + Vector3.left * wallRayRange);
+            Gizmos.DrawLine(wallCheck.position, wallCheck.position + Vector3.left * wallRayRange);
         }
     }
     //벽에서 이동방향으로 뒤집어 보려다 실패한 흔적 
