@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class ObjManager : MonoBehaviour
 {
-
     public static Dictionary<int, string> LegacyList = new Dictionary<int, string>()
         {
             {0, "야구공"},
