@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class AudioManager : MonoBehaviour
 {
@@ -42,6 +43,45 @@ public class AudioManager : MonoBehaviour
         audioSource.volume = 1f;
         audioSource.Play();
     }
+
+    private void OnEnable()
+{
+    SceneManager.sceneLoaded += OnSceneLoaded;
+}
+
+private void OnDisable()
+{
+    SceneManager.sceneLoaded -= OnSceneLoaded;
+}
+
+private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+{
+    string sceneName = Helper.GetCurrentSceneName();
+    int bgmIndex = GetBGMIndexForScene(sceneName);
+    StartCoroutine(FadeInSound(bgmIndex, 1f));
+}
+
+private int GetBGMIndexForScene(string sceneName) //Scene 이름에 따라 다른 BGM이 재생되게끔.
+{
+    switch (sceneName)
+    {
+        case "Title": return 0;
+        case "SelectStage": return 1;
+        case "Tutorial": return 2;
+        case "Stage_1_1": return 3;
+        case "Stage_1_2":
+        case "Stage_1_3": 
+        case "Stage_2_1": return 4;
+        case "Stage_2_2":
+        case "Stage_2_3": 
+        case "Stage_3_1": return 5;
+        case "Stage_3_2":
+        case "Stage_3_3": 
+        case "EndingScene": return 6;
+        default: return 0;
+    }
+}
+
 
     public IEnumerator FadeOutSound(float duration)
     {

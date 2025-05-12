@@ -12,9 +12,18 @@ public class MapManager : MonoBehaviour
     //public GameObject interactionPopup2;
     private int currentStageIndex = 0;
 
+    [SerializeField]
+    private List<string> stageList = new List<string>() //Scene을 리스트로 관리 + 인스펙터에서 확인하기 편하게.
+{
+    "Title", "SelectStage","Tutorial",
+    "Stage_1_1", "Stage_1_2", "Stage_1_3",
+    "Stage_2_1", "Stage_2_2", "Stage_2_3",
+    "Stage_3_1", "Stage_3_2", "Stage_3_3"
+    ,"EndingScene",
+};
     protected virtual void Awake()
     {
-       // _doorRigidbody = GetComponent<Rigidbody2D>();
+        // _doorRigidbody = GetComponent<Rigidbody2D>();
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
@@ -26,29 +35,38 @@ public class MapManager : MonoBehaviour
         }
 
     }
-    protected void Update()
+    // protected void Update()
+    // {
+    //     if (isPlayerInRange && Input.GetKeyDown(KeyCode.E))
+    //     {
+    //         SceneManager.LoadScene("SelectStage");
+    //     }
+    // }
+
+    public void LoadStage(string stageName) //현재 스테이지를 불러오는 함수
     {
-        if (isPlayerInRange && Input.GetKeyDown(KeyCode.E))
+        CurrentStage = stageName;
+
+        int index = stageList.IndexOf(stageName); //IndexOf를 통해 리스트 안에서 해당 값이 몇번째인지 찾아냄.
+        if (index != -1)
         {
-            SceneManager.LoadScene("SelectStage");
+            currentStageIndex = index;
+        }
+
+        SceneManager.LoadScene(stageName);
+    }
+
+    public void LoadStageByName(string stageName)
+    {
+        if (stageList.Contains(stageName))
+        {
+            LoadStage(stageName);
+        }
+        else
+        {
+            Debug.Log($"{stageName}이 리스트에 없다!");
         }
     }
-
-    public void LoadStage(string _stageName) //스테이지를 불러오는 함수
-    {
-        CurrentStage = _stageName;
-        SceneManager.LoadScene(_stageName);
-    }
-
-    [SerializeField] private List<string> stageList = new List<string>() //Scene을 리스트로 관리 + 인스펙터에서 확인하기 편하게.
-{
-    "Title", "SelectStage","Tutorial",
-    "Stage_1_1", "Stage_1_2", "Stage_1_3",
-    "Stage_2_1", "Stage_2_2", "Stage_2_3",
-    "Stage_3_1", "Stage_3_2", "Stage_3_3"
-    ,"EndingScene",
-};
-
 
     public void LoadNextStage() //다음 스테이지를 불러오는 함수
     {
@@ -64,23 +82,4 @@ public class MapManager : MonoBehaviour
         }
     }
 
-
-    // private void OnTriggerEnter2D(Collider2D other)
-    // {
-    //     if (other.CompareTag("Player"))
-    //     {
-    //         isPlayerInRange = true;
-    //         interactionPopup2.SetActive(true);
-    //     }
-    // }
-
-    // private void OnTriggerExit2D(Collider2D other)
-    // {
-    //     if (other.CompareTag("Player"))
-    //     {
-    //         // 플레이어가 벗어나면 팝업 숨김
-    //         isPlayerInRange = false;
-    //         interactionPopup2.SetActive(false);
-    //     }
-    // }
 }
