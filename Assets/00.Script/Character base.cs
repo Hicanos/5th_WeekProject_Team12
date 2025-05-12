@@ -19,7 +19,8 @@ public enum PLAYERSTATE //상태머신 enum (아직 미구현)
     DASH,
     WALL
 }
-
+//TilemapCollider와 CompositeCollider 함께 사용시 발생하는 버그때문에 플래그가 난잡하게 나와버렸습니다. (velocity.x 만 조작해도 y축 값이 같이 바뀝니다. )
+//상태 머신 공부해야겠습니다. 
 
 public abstract class Characterbase : MonoBehaviour
 {
