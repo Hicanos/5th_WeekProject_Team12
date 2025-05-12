@@ -82,4 +82,10 @@ public class MapManager : MonoBehaviour
         }
     }
 
+    public void OnClickExitStageSelect()
+    {
+        //Debug.Log("Back ��ư Ŭ����!");
+        SceneManager.LoadScene("StageSelect");
+    }
+
 }

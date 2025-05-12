@@ -6,8 +6,6 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
-
-
     void Awake()
     {
         Application.targetFrameRate = 60;
@@ -25,6 +23,5 @@ public class GameManager : MonoBehaviour
         //MapManager.Instance.LoadMap("스테이지 선택창");
         //DataManager.Instance.LoadData();//점수와 같은 정보 호출
     }
-
 }
 
