@@ -7,23 +7,18 @@ public class MapManager : MonoBehaviour
 {
     public static MapManager Instance { get; private set; }
     public string CurrentStage { get; private set; } //현재 스테이지를 저장할 변수
-    //protected Rigidbody2D _doorRigidbody;
-    bool isPlayerInRange = false;
-    //public GameObject interactionPopup2;
     private int currentStageIndex = 0;
 
-    [SerializeField]
-    private List<string> stageList = new List<string>() //Scene을 리스트로 관리 + 인스펙터에서 확인하기 편하게.
+    [SerializeField] private List<string> stageList = new List<string>() //Scene을 리스트로 관리 + 인스펙터에서 확인하기 편하게.
 {
     "Title", "SelectStage","Tutorial",
-    "Stage_1_1", "Stage_1_2", "Stage_1_3",
-    "Stage_2_1", "Stage_2_2", "Stage_2_3",
-    "Stage_3_1", "Stage_3_2", "Stage_3_3"
+    "Stage 1-1", "Stage 1-2", "Stage 1-3",
+    "Stage 2-1", "Stage 2-2", "Stage 2-3",
+    "Stage 3-1", "Stage 3-2", "Stage 3-3"
     ,"EndingScene",
 };
     protected virtual void Awake()
     {
-        // _doorRigidbody = GetComponent<Rigidbody2D>();
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
@@ -34,14 +29,10 @@ public class MapManager : MonoBehaviour
             DontDestroyOnLoad(gameObject); // 씬 전환에도 유지됨
         }
 
+    CurrentStage = SceneManager.GetActiveScene().name;
+
     }
-    // protected void Update()
-    // {
-    //     if (isPlayerInRange && Input.GetKeyDown(KeyCode.E))
-    //     {
-    //         SceneManager.LoadScene("SelectStage");
-    //     }
-    // }
+
 
     public void LoadStage(string stageName) //현재 스테이지를 불러오는 함수
     {
@@ -80,6 +71,11 @@ public class MapManager : MonoBehaviour
             // 마지막 스테이지 이후 처리
             SceneManager.LoadScene("EndingScene");
         }
+    }
+
+    public void OnClickExitStageSelect()
+    {
+        SceneManager.LoadScene("StageSelect");
     }
 
 }
