@@ -7,6 +7,11 @@ using UnityEngine.SceneManagement;
 
 public class GaramCharacterDog : Characterbase
 {
+    [Header("강아지 돌진")]
+    [SerializeField] private LayerMask DestroyLayer;//파괴할 오브젝트 레이어
+    [SerializeField] private float DashSpeed = 30f;//돌진 속도(힘)
+    [SerializeField] private float DasgDuration = 0.2f;//돌진지속 시간
+
 
     protected override void Awake()
     {
@@ -18,28 +23,26 @@ public class GaramCharacterDog : Characterbase
     /// 입력매서드는 여기에
     /// </summary>
     private void Update()
-    {
+    {  //대시 중 움직임을 막을 것이기 때문에  입력 방지( 호출을 위해 true만든 bool값을 false로 바꾸지 못하게 됨 )
         if (isDash)
         {
             return;
         }
         else
         {
-            InstantSkillCall(); //스킬 키 입력
-            JumpCall();   // 점프 입력 
-            MoveCall();   // 이동 입력 
+            InstantSkillCall();
+            JumpCall();
+            MoveCall();
         }
-
-
     }
     /// <summary>
     /// 행동매서드는 여기에
     /// </summary>
     private void FixedUpdate()
     {
-
-        HandleJumpAnim();//점프 애니메이션
-        CheckLanding();//착지 판정
+        HandleJumpAnim();
+        CheckLanding();
+        //대시중에 rb.velocity값에 간섭을 주기때문에 Update단계에서 막기 
         if (isDash)
         {
             return;
@@ -50,23 +53,27 @@ public class GaramCharacterDog : Characterbase
             MoveActivate(moveInput); // 이동 호출 
         }
 
-
         SpriteFlip();    // 캐릭터 좌우 반전
         HandleMoveAnim();     // 이동 애니메이션 
         InstantSkillActivate(); //스킬발동
         HandleSkillAnim();//스킬 애니매이션
     }
-
+    /*------------------------------------------------------------------------------*/
+    // 강아지 스킬발동중을 감지할 불값
+    private bool isDash = false;
+    //착지상태일때만 스킬 사용 가능 하게 하기 위해 재정의0
     protected override void InstantSkillCall()
     {
-        if (IsGrounded() && currentJumpCount == 0) //착지상태일때만 스킬 사용 가능 하게 하기
+
+        if (IsGrounded() && currentJumpCount == 0)
             base.InstantSkillCall();
 
     }
+    //스킬 재정의
     protected override void InstantSkill()
     {
-
-        Vector2 currentLook; //방향을 잡기위한 백터값
+        //방향을 잡기위한 백터값 moveX이용하면 이동중이 아닐땐 0이라서 생각중.나중에 하드코딩 피하게 해보기 
+        Vector2 currentLook; 
         if (this.spriteRenderer.flipX == false)
         {
             currentLook = new Vector2(1, 0);
@@ -76,46 +83,29 @@ public class GaramCharacterDog : Characterbase
             currentLook = new Vector2(-1, 0);
         }
         rb.velocity = Vector2.zero; //  속도 초기화
-        rb.AddForce(currentLook * 10f, ForceMode2D.Impulse);
-        StartCoroutine(DashDuration(currentLook,0.2f,30f));
+        //코루틴 시작 뒤에 매개변수 2개 인스펙터창 조정 가능
+        StartCoroutine(DashDuration(currentLook, DasgDuration, DashSpeed));
 
     }
+
+    //대시 연출을 위한 코루틴 
     private IEnumerator DashDuration(Vector2 direction, float duration, float dashSpeed)
     {
         isDash = true;
-        
+
         yield return new WaitForSeconds(0.1f);
-        rb.velocity = direction * dashSpeed;  // 순간적으로 빠른 속도 설정
-       
+        // 순간적으로 빠른 속도 설정
+        rb.velocity = direction * dashSpeed;  
 
-        yield return new WaitForSeconds(duration); // 딱 duration만큼만 이동
+        // 딱 duration만큼만 이동
+        yield return new WaitForSeconds(duration); 
 
-        rb.velocity = Vector2.zero;  // 즉시 멈추기
+        // 즉시 멈추기
+        rb.velocity = Vector2.zero;
         isDash = false;
     }
-    //스킬 구성에 있어 좌우 방향 Update에서 갱신중이니 예외 필요
-    //예외처리 단순화를 위해서 "상태머신" 고려하기 
-    private bool isDash = false; // 강아지 스킬발동중을 감지할 불값
-    protected override void MoveCall() //이동키 입력 감지 
-    {
-        /*moveX = Input.GetAxisRaw("Horizontal");*///각기 다른 두 캐릭터를 조작해야 해서 입력 방식을 바꿈 
 
-       
-            moveX = 0;
-
-            if (Input.GetKey(leftKey)) moveX -= 1;
-            if (Input.GetKey(rightKey)) moveX += 1;
-            moveInput = new Vector2(moveX, moveY).normalized;
-        
-        //입력값을 통해 방향 구하기
-    }
-
-    protected override void HandleSkillAnim()
-    {
-        bool isSkill = isDash;
-        Anim.SetSkill(isSkill);
-
-    }
+    //레이어 감지하여 충돌 오브젝트 파괴하는 함수
     private void OnTriggerEnter2D(Collider2D other)
     {
         // 돌진 중이 아닐 때는 무시
@@ -126,11 +116,18 @@ public class GaramCharacterDog : Characterbase
         {
             Destroy(other.gameObject);
             HandleCrashAnim();
-            isDash = false;                     
+           //한개의 오브젝트 충돌하여 파괴하였을 시 즉시 멈추게 하기위한 구문 
+            isDash = false;
             rb.velocity = Vector2.zero;
-            
+
             Debug.Log(" 돌진으로 파괴됨: " + other.name);
         }
+    }
+    //지역변수 변경을 위해 재정의
+    protected override void HandleSkillAnim()
+    {
+        bool isSkill = isDash;
+        Anim.SetSkill(isSkill);
     }
 
 }

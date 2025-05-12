@@ -759,6 +759,8 @@ MonoBehaviour:
   DestroyLayer:
     serializedVersion: 2
     m_Bits: 0
+  DashSpeed: 0
+  DasgDuration: 0
   headPivot: {fileID: 1021175439}
   SkillCoolTime: 1
 --- !u!4 &104655559
@@ -2566,6 +2568,8 @@ MonoBehaviour:
   DestroyLayer:
     serializedVersion: 2
     m_Bits: 512
+  DashSpeed: 30
+  DasgDuration: 0.2
   headPivot: {fileID: 134507967}
   SkillCoolTime: 1
 --- !u!1 &550297274

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro.EditorUtilities;
 using Unity.Mathematics;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Playables;
 
@@ -10,7 +11,7 @@ using UnityEngine.Playables;
 /// 모든 캐릭터(플레이어/몬스터 등)의 공통 기능을 담당하는 추상 컨트롤러
 /// 이동, 체력 처리, 스프라이트 반전 등 기본 행동 제공
 /// </summary>
-public enum PLAYERSTATE
+public enum PLAYERSTATE //상태머신 enum (아직 미구현)
 {
     IDLE,
     MOVE,
@@ -22,16 +23,31 @@ public enum PLAYERSTATE
 
 public abstract class Characterbase : MonoBehaviour
 {
-    protected PLAYERSTATE currentState;
-   
-    // 입력값 저장
-    protected float moveX;
-    protected float moveY;
-    protected Vector2 moveInput;
-
     protected Rigidbody2D rb;                    // 이동을 위한 리지드바디
     protected SpriteRenderer spriteRenderer;     // 좌우 반전을 위한 스프라이트 렌더러
     protected MyAnimationController Anim;
+   
+
+    /// <summary> 초기화: 리지드바디, 스프라이트 찾고 스탯 초기화 </summary>
+    protected virtual void Awake()
+    {
+        rb = GetComponent<Rigidbody2D>();
+        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        Anim = GetComponentInChildren<MyAnimationController>();
+    }
+   
+    
+    protected PLAYERSTATE currentState;
+    //상태변경 함수 미구현
+    protected void ChangeState(PLAYERSTATE newState)
+    {
+        if (currentState == newState) return;
+
+        Debug.Log($"상태 전이: {currentState} -> {newState}");
+        currentState = newState;
+    }
+
+    //조작 스타일 enum
     protected enum CHAR
     {
         DOG,
@@ -60,7 +76,13 @@ public abstract class Characterbase : MonoBehaviour
 
     }
 
-
+    /*---------------------------------------캐릭터 공통 변수---------------------------------------*/
+    
+    // 입력값 저장
+    protected float moveX;
+    protected float moveY;
+    protected Vector2 moveInput;
+  
     [Header("이름")]
     [SerializeField] protected string Name = string.Empty;
 
@@ -79,54 +101,31 @@ public abstract class Characterbase : MonoBehaviour
     [SerializeField] protected int maxJumpCount = 2;//다중점프 최대 횟수
     protected int currentJumpCount = 0;//현재 점프수 저장 할 변수
 
-    [Header("고양이 용 벽탐지")]
-    
-    [SerializeField] protected Transform WallCheck;//벽 판정 위치
-    [SerializeField] protected float wallRayRange = 0.1f; //벽  체크 범위(raycast길이)
-    [SerializeField] protected LayerMask wallLayer;//벽 레이어
-
-    [Header("파괴가능오브젝트")]
-    [SerializeField] protected LayerMask DestroyLayer;//파괴할 오브젝트 레이어
     [Header("헬멧 피벗")]
     [SerializeField] protected Transform headPivot;
     protected GameObject helmet;
 
     [Header("스킬 쿨타임")]
     [SerializeField] protected float SkillCoolTime = 1f;
-    /// <summary> 초기화: 리지드바디, 스프라이트 찾고 스탯 초기화 </summary>
-    protected virtual void Awake()
-    {
-        rb = GetComponent<Rigidbody2D>();
-        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-        Anim = GetComponentInChildren<MyAnimationController>();
-    }
+    
+    /*---------------------------------------단발성 스킬 모음---------------------------------------*/
+    //스킬 요청할 불
+    protected bool SkillReq = false;
 
-    protected void ChangeState(PLAYERSTATE newState)
-    {
-        if (currentState == newState) return;
-
-        Debug.Log($"상태 전이: {currentState} -> {newState}");
-        currentState = newState;
-    }
-
-    //스킬용 변수
-    protected bool SkillReq = false; //스킬 요청할 불
-    protected bool skillReady = true;//스킬 쿨타임용 불
-    protected virtual void InstantSkillCall() // 스킬 입력 받을 매서드
+    // 스킬 입력 받을 매서드
+    protected virtual void InstantSkillCall()
     {
         if (Input.GetKeyDown(SkillKey) && skillReady)
         {
-
-            StartCoroutine(SkillCoolDown(SkillCoolTime));//쿨타임 시작 
+            //쿨타임 시작 
+            StartCoroutine(SkillCoolDown(SkillCoolTime));
             SkillReq = true;
             Debug.Log($"{Name}스킬 키 입력");
         }
-
-
     }
 
-
-    protected virtual void InstantSkillActivate()      //단발성 스킬호출
+    //단발성 스킬호출
+    protected virtual void InstantSkillActivate()
     {
         if (SkillReq)
         {
@@ -135,18 +134,21 @@ public abstract class Characterbase : MonoBehaviour
 
             Debug.Log($"{Name}스킬발동");
         }
-
     }
-    protected virtual void InstantSkill() // 단발성 스킬
-    {
+    // 재정의용 단발성 스킬 함수
+    protected virtual void InstantSkill() { }
 
+    /*---------------------------------------토글형 스킬 모음---------------------------------------*/
+    //토글스킬용 불값
+    protected bool isToggled = false;
 
-    }
-    protected virtual void ToggleSkillCall()//토글형 스킬 입력 감지
+    //토글형 스킬 입력 감지
+    protected virtual void ToggleSkillCall()
     {
-        if (Input.GetKeyDown(SkillKey) && !isToggled && IsWallClimb())
+        if (Input.GetKeyDown(SkillKey) && !isToggled)
         {
-            StartCoroutine(SkillCoolDown(SkillCoolTime));//쿨타임 시작 
+            //쿨타임 시작 
+            StartCoroutine(SkillCoolDown(SkillCoolTime));
             isToggled = true;
             ToggleSkillOn();
             Debug.Log($"{Name}스킬 키 입력");
@@ -154,7 +156,6 @@ public abstract class Characterbase : MonoBehaviour
         }
         else if (Input.GetKeyDown(SkillKey) && isToggled)
         {
-
             isToggled = false;
             ToggleSkillOff();
             Debug.Log($"{Name}스킬 키 입력");
@@ -162,17 +163,18 @@ public abstract class Characterbase : MonoBehaviour
         }
     }
 
-    protected bool isToggled = false;
-   
+    //재정의용 토글 스킬 On함수
+    protected virtual void ToggleSkillOn() { }
 
-    protected virtual void ToggleSkillOn()
-    { }
+    //재정의용 토글 스킬 Off함수
+    protected virtual void ToggleSkillOff() { }
 
-    protected virtual void ToggleSkillOff()
-    { }
+    /*---------------------------------------쿨타임 코루틴---------------------------------------*/
+    //스킬 쿨타임용 불
+    protected bool skillReady = true;
 
-
-    protected virtual IEnumerator SkillCoolDown(float cooldown)//스킬 쿨타임용 코루틴
+    //스킬 쿨타임용 코루틴
+    protected virtual IEnumerator SkillCoolDown(float cooldown)
     {
         Debug.Log("쿨타임 발동");
         cooldown = SkillCoolTime;
@@ -181,52 +183,32 @@ public abstract class Characterbase : MonoBehaviour
         skillReady = true;
         Debug.Log("쿨타임 끝");
     }
+    /*---------------------------------------애니메이션용 함수---------------------------------------*/
+    protected virtual void HandleJumpAnim()
+    {
+        bool isJump = currentJumpCount > 0 || (currentJumpCount == 0 && !IsGrounded());
+        Anim.SetJump(isJump);
+    }
     protected virtual void HandleSkillAnim()
     {
         bool isSkill = SkillReq;
         Anim.SetSkill(isSkill);
-
     }
 
-
-
-
-    /// <summary>
-    /// 이동 키 입력을 받아 방향 벡터 계산
-    /// </summary>
-    protected virtual void MoveCall() //이동키 입력 감지 
+    protected virtual void HandleCrashAnim()
     {
-        /*moveX = Input.GetAxisRaw("Horizontal");*///각기 다른 두 캐릭터를 조작해야 해서 입력 방식을 바꿈 
-        moveX = 0;
-
-        if (Input.GetKey(leftKey)) moveX -= 1;
-        if (Input.GetKey(rightKey)) moveX += 1;
-        moveInput = new Vector2(moveX, moveY).normalized;//입력값을 통해 방향 구하기
+        Anim.SetCrash();
     }
-    /// <summary> 이동 처리: 속도 적용 </summary>
-    protected virtual void MoveActivate(Vector2 input) //이동 호출용 매서드 
-    {
-
-        Vector2 velocity = rb.velocity;
-        velocity.x = input.x * moveSpeed;// 이동속도를 방향에 곱해주기
-
-        rb.velocity = velocity;
-
-
-        // 좌우 반전 처리
-        /*     if (input.x != 0)
-                 spriteRenderer.flipX = input.x < 0; */
-
-    }
-    /// <summary>
-    /// 이동 중 여부에 따라 애니메이션 파라미터 설정
-    /// </summary>
     protected virtual void HandleMoveAnim()
     {
         bool isMoving = moveX != 0;
         Anim.SetMove(isMoving);
     }
-    protected virtual void SpriteFlip() // 좌우반전 위한 매서드
+    /// <summary>
+    /// 캐릭터 좌우 반전 (flipX) 처리
+    /// 무기에는 적용하지 않음
+    /// </summary>
+    protected virtual void SpriteFlip()
     {
         if (moveX != 0)
             Anim.SetFlip(moveX < 0);
@@ -235,57 +217,72 @@ public abstract class Characterbase : MonoBehaviour
             {
                 headPivot.localScale = new Vector3(moveX < 0 ? -1f : 1f, 1f, 1f);
             }
-       
+    }
+    /*---------------------------------------움직임관련 함수---------------------------------------*/
+    //점프 콜을 위한 불
+    protected bool jumpReq = false;
+    //땅에 붙어있는지 감지할 불반환 함수
+    protected virtual bool IsGrounded()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(groundCheck.position, Vector2.down, groundRayRange, groundLayer);
+        return hit.collider != null;
+    }
+    /// <summary>
+    /// 이동 키 입력을 받아 방향 벡터 계산
+    /// </summary>
+    protected virtual void MoveCall()
+    {
+        moveX = 0;
+        if (Input.GetKey(leftKey)) moveX -= 1;
+        if (Input.GetKey(rightKey)) moveX += 1;
+        //입력값을 통해 방향 구하기
+        moveInput = new Vector2(moveX, moveY).normalized;
     }
 
+    /// <summary> 이동 처리: 속도 적용 </summary>
+    protected virtual void MoveActivate(Vector2 input)
+    {
+        Vector2 velocity = rb.velocity;
+        // 이동속도를 방향에 곱해주기
+        velocity.x = input.x * moveSpeed;
+        rb.velocity = velocity;
+    }
 
-
-    /// <summary>
-    /// 캐릭터 좌우 반전 (flipX) 처리
-    /// 무기에는 적용하지 않음
-    /// </summary>
-
-
-    protected bool jumpReq = false;//점프 콜을 위한 불
     /// <summary>
     /// 점프 키 입력 감지 및 쿨타임 확인 후 점프 실행
     /// </summary>
-    protected void JumpCall()//점프키 입력 감지
-    {
-        if ((Input.GetKeyDown(jumpKey) && currentJumpCount < maxJumpCount) && !isClimb)//키 입력, 점프 횟수가 최대 점프보다 작을 때,벽타기 중이 아닐 때 
+    protected virtual void JumpCall()//점프키 입력 감지
+    {   //키 입력, 점프 횟수가 최대 점프보다 작을 때,벽타기 중이 아닐 때 
+        if ((Input.GetKeyDown(jumpKey) && currentJumpCount < maxJumpCount))
         {
-            if (currentJumpCount == 0 && !IsGrounded())// 단순 낙하중에 점프 방지
+            // 단순 낙하중에 점프 방지
+            if (currentJumpCount == 0 && !IsGrounded())
             { return; }
+
             jumpReq = true;
         }
     }
-    protected virtual void JumpAtivate()//점프 호출
+
+    //점프 호출
+    protected virtual void JumpAtivate()
     {
         if (jumpReq)
-        {
-            rb.velocity = new Vector2(rb.velocity.x, 0f); // Y 속도 초기화
-            rb.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);//up방향으로 점프파워만큼 임펄스 에드포스
-
-            if (currentJumpCount < maxJumpCount)//점프 횟수 누적 및 디버깅용 로그 
+        {   // Y 속도 초기화
+            rb.velocity = new Vector2(rb.velocity.x, 0f);
+            //up방향으로 점프파워만큼 임펄스 에드포스
+            rb.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
+            if (currentJumpCount < maxJumpCount)
             {
                 currentJumpCount++;
+                //점프 횟수 누적 및 디버깅용 로그 
                 Debug.Log($"{Name}점프 {currentJumpCount}/{maxJumpCount}");
             }
             jumpReq = false;
         }
-
-
     }
 
-    protected virtual void HandleJumpAnim()
-    {
-      
-            bool isJump = currentJumpCount > 0 || (currentJumpCount == 0 && !IsGrounded());
-            Anim.SetJump(isJump);
-        
-    }
-
-    protected void CheckLanding()//땅에 착지했는지 감지하는 매서드
+    //땅에 착지했는지 감지하는 매서드
+    protected void CheckLanding()
     {
         if (Mathf.Abs(rb.velocity.y) < 0.01f && currentJumpCount > 0 && IsGrounded())
         {
@@ -295,73 +292,15 @@ public abstract class Characterbase : MonoBehaviour
             Debug.Log($"{Name}착지!");
         }
     }
+    /*---------------------------------------ect.---------------------------------------*/
 
-    //점프 착지 판정용 불값 필요 시 사용
-    protected bool IsGrounded()//땅에 붙어있는지 감지할 불값
-    {if (!isClimb)
-        {
-            RaycastHit2D hit = Physics2D.Raycast(groundCheck.position, Vector2.down, groundRayRange, groundLayer);
-            return hit.collider != null;
-        }
-    else {return false;}
-    }
-    //벽 감지용 불값
-    protected bool IsWallClimb()//벽타기 가능한 상태인지 감지할 불 값
-    {
-        if (!spriteRenderer.flipX)
-        {
-            RaycastHit2D hit = Physics2D.Raycast(WallCheck.position, Vector2.right, wallRayRange, wallLayer);
-            return hit.collider != null;
-        }
-        else
-        {
-            RaycastHit2D hit = Physics2D.Raycast(WallCheck.position, Vector2.left, wallRayRange, wallLayer);
-            return hit.collider != null;
-        }
-
-
-    }
-    protected void IsNotClimb() //벽을 초과하여 움직일때 토클 스킬 끄기
-    { 
-        if(isToggled && !IsWallClimb())
-        {
-         
-            ToggleSkillOff();
-               
-        }
-    }
-    protected bool isClimb = false; //벽타기 중인지 확인할 불
-    protected void OnDrawGizmosSelected() //raycast 기즈모 시각화하기 위한 매서드
+    //raycast 기즈모 시각화하기 위한 매서드
+    protected virtual void OnDrawGizmosSelected()
     {
         if (groundCheck == null) return;
         Gizmos.color = Color.green;
         Gizmos.DrawLine(groundCheck.position, groundCheck.position + Vector3.down * groundRayRange);
-       
-        if (WallCheck == null || spriteRenderer == null) return;
-
-        if (!spriteRenderer.flipX)
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawLine(WallCheck.position, WallCheck.position + Vector3.right * wallRayRange);
-            
-        }
-        else
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawLine(WallCheck.position, WallCheck.position + Vector3.left * wallRayRange);
-           
-        }
-       
 
     }
-    protected virtual void HandleCrashAnim()
-    {
-
-        
-        Anim.SetCrash();
-
-    }
-
-
 }
 
