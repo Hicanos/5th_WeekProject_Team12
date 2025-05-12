@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.SceneManagement;
-
+//상태머신, 구조체사용 , 델리게이트 사용 
 public class GaramCharacterDog : Characterbase
 {
     [Header("강아지 돌진")]
