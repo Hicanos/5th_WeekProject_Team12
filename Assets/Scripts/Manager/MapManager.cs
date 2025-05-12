@@ -34,10 +34,29 @@ public class MapManager : MonoBehaviour
         }
     }
 
-    public void LoadStage(string _stageName) //스테이지를 불러오는 함수
+    public void LoadStage(string stageName) //현재 스테이지를 불러오는 함수
     {
-        CurrentStage = _stageName;
-        SceneManager.LoadScene(_stageName);
+        CurrentStage = stageName;
+
+        int index = stageList.IndexOf(stageName); //IndexOf를 통해 리스트 안에서 해당 값이 몇번째인지 찾아냄.
+        if (index != -1)
+        {
+            currentStageIndex = index;
+        }
+
+        SceneManager.LoadScene(stageName);
+    }
+
+    public void LoadStageByName(string stageName)
+    {
+        if (stageList.Contains(stageName))
+        {
+            LoadStage(stageName);
+        }
+        else
+        {
+            Debug.Log($"{stageName}이 리스트에 없다!");
+        }
     }
 
     [SerializeField] private List<string> stageList = new List<string>() //Scene을 리스트로 관리 + 인스펙터에서 확인하기 편하게.
@@ -64,23 +83,4 @@ public class MapManager : MonoBehaviour
         }
     }
 
-
-    // private void OnTriggerEnter2D(Collider2D other)
-    // {
-    //     if (other.CompareTag("Player"))
-    //     {
-    //         isPlayerInRange = true;
-    //         interactionPopup2.SetActive(true);
-    //     }
-    // }
-
-    // private void OnTriggerExit2D(Collider2D other)
-    // {
-    //     if (other.CompareTag("Player"))
-    //     {
-    //         // 플레이어가 벗어나면 팝업 숨김
-    //         isPlayerInRange = false;
-    //         interactionPopup2.SetActive(false);
-    //     }
-    // }
 }
