@@ -77,7 +77,7 @@ public class GaramCharacterDog : Characterbase
         }
         rb.velocity = Vector2.zero; //  속도 초기화
         rb.AddForce(currentLook * 10f, ForceMode2D.Impulse);
-        StartCoroutine(DashDuration(currentLook,0.2f,50f));
+        StartCoroutine(DashDuration(currentLook,0.2f,30f));
 
     }
     private IEnumerator DashDuration(Vector2 direction, float duration, float dashSpeed)
@@ -125,6 +125,10 @@ public class GaramCharacterDog : Characterbase
         if (((1 << other.gameObject.layer) & DestroyLayer) != 0)
         {
             Destroy(other.gameObject);
+            HandleCrashAnim();
+            isDash = false;                     
+            rb.velocity = Vector2.zero;
+            
             Debug.Log(" 돌진으로 파괴됨: " + other.name);
         }
     }

@@ -49,6 +49,9 @@ public class MyAnimationController : MonoBehaviour
         _animator.SetBool("IsSkill",isSkill);
     }
 
-
+    public void SetCrash()
+    {
+        _animator.SetTrigger("IsCrash");
+    }
     
 }
