@@ -250,9 +250,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c49d5b2a989ccac4e8f4add331f066f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  compareTag: Cat
-  Dog: {fileID: 0}
-  Cat: {fileID: 0}
+  compareTag: Player
+  Player: {fileID: 0}
 --- !u!1 &5263945949621706613
 GameObject:
   m_ObjectHideFlags: 0
@@ -421,9 +420,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c49d5b2a989ccac4e8f4add331f066f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  compareTag: Dog
-  Dog: {fileID: 0}
-  Cat: {fileID: 0}
+  compareTag: Player
+  Player: {fileID: 0}
 --- !u!19719996 &2194353470471070698
 TilemapCollider2D:
   m_ObjectHideFlags: 0
