@@ -10,16 +10,16 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject); // 씬 넘어가도 유지
-        }
-        else
+        if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
         }
-        //SoundManager.Instance.PlayBGM();
+        else
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        
         //UIManager.Instance.InitUI();
         //MapManager.Instance.LoadMap("스테이지 선택창");
         //DataManager.Instance.LoadData();//점수와 같은 정보 호출
