@@ -4,14 +4,15 @@ using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.SceneManagement;
-
+//상태머신, 구조체사용 , 델리게이트 사용 
 public class GaramCharacterDog : Characterbase
 {
     [Header("강아지 돌진")]
-    [SerializeField] private LayerMask DestroyLayer;//파괴할 오브젝트 레이어
-    [SerializeField] private float DashSpeed = 30f;//돌진 속도(힘)
-    [SerializeField] private float DasgDuration = 0.2f;//돌진지속 시간
-
+    
+        [SerializeField] private LayerMask destroyLayer;//파괴할 오브젝트 레이어
+        [SerializeField] private float dashSpeed = 30f;//돌진 속도(힘)
+        [SerializeField] private float dashDuration = 0.2f;//돌진지속 시간
+    
 
     protected override void Awake()
     {
@@ -84,7 +85,7 @@ public class GaramCharacterDog : Characterbase
         }
         rb.velocity = Vector2.zero; //  속도 초기화
         //코루틴 시작 뒤에 매개변수 2개 인스펙터창 조정 가능
-        StartCoroutine(DashDuration(currentLook, DasgDuration, DashSpeed));
+        StartCoroutine(DashDuration(currentLook, dashDuration, dashSpeed));
 
     }
 
@@ -112,7 +113,7 @@ public class GaramCharacterDog : Characterbase
         if (!isDash) return;
 
         // 레이어 체크: 감지할 레이어에 해당하는지 확인
-        if (((1 << other.gameObject.layer) & DestroyLayer) != 0)
+        if (((1 << other.gameObject.layer) & destroyLayer) != 0)
         {
             Destroy(other.gameObject);
             HandleCrashAnim();

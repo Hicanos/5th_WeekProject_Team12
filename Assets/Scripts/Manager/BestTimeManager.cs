@@ -11,6 +11,7 @@ public class BestTimeManager : MonoBehaviour
     public static BestTimeManager Instance {get; private set;}
     private Dictionary<string, float> _bestTimeList = new()
     {
+        {"Title", float.MaxValue},
         {"Tutorial", float.MaxValue},
         {"Stage 1-1", float.MaxValue},
         {"Stage 1-2", float.MaxValue},

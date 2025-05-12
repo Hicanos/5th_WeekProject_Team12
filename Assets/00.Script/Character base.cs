@@ -64,14 +64,14 @@ public abstract class Characterbase : MonoBehaviour
                 leftKey = KeyCode.LeftArrow;
                 rightKey = KeyCode.RightArrow;
                 jumpKey = KeyCode.UpArrow;
-                SkillKey = KeyCode.DownArrow;
+                skillKey = KeyCode.DownArrow;
                 break;
 
             case CHAR.CAT:
                 leftKey = KeyCode.A;
                 rightKey = KeyCode.D;
                 jumpKey = KeyCode.W;
-                SkillKey = KeyCode.S;
+                skillKey = KeyCode.S;
                 break;
         }
 
@@ -91,7 +91,7 @@ public abstract class Characterbase : MonoBehaviour
     [SerializeField] protected KeyCode leftKey;
     [SerializeField] protected KeyCode rightKey;
     [SerializeField] protected KeyCode jumpKey;
-    [SerializeField] protected KeyCode SkillKey;
+    [SerializeField] protected KeyCode skillKey;
     [SerializeField] protected int moveSpeed = 5;
 
     [Header("횡스크롤 물리 기반 점프 시스템")]
@@ -107,20 +107,20 @@ public abstract class Characterbase : MonoBehaviour
     protected GameObject helmet;
 
     [Header("스킬 쿨타임")]
-    [SerializeField] protected float SkillCoolTime = 1f;
+    [SerializeField] protected float skillCoolTime = 1f;
     
     /*---------------------------------------단발성 스킬 모음---------------------------------------*/
     //스킬 요청할 불
-    protected bool SkillReq = false;
+    protected bool skillReq = false;
 
     // 스킬 입력 받을 매서드
     protected virtual void InstantSkillCall()
     {
-        if (Input.GetKeyDown(SkillKey) && skillReady)
+        if (Input.GetKeyDown(skillKey) && skillReady)
         {
             //쿨타임 시작 
-            StartCoroutine(SkillCoolDown(SkillCoolTime));
-            SkillReq = true;
+            StartCoroutine(SkillCoolDown(skillCoolTime));
+            skillReq = true;
             Debug.Log($"{Name}스킬 키 입력");
         }
     }
@@ -128,9 +128,9 @@ public abstract class Characterbase : MonoBehaviour
     //단발성 스킬호출
     protected virtual void InstantSkillActivate()
     {
-        if (SkillReq)
+        if (skillReq)
         {
-            SkillReq = false;
+            skillReq = false;
             InstantSkill();
 
             Debug.Log($"{Name}스킬발동");
@@ -146,16 +146,16 @@ public abstract class Characterbase : MonoBehaviour
     //토글형 스킬 입력 감지
     protected virtual void ToggleSkillCall()
     {
-        if (Input.GetKeyDown(SkillKey) && !isToggled)
+        if (Input.GetKeyDown(skillKey) && !isToggled)
         {
             //쿨타임 시작 
-            StartCoroutine(SkillCoolDown(SkillCoolTime));
+            StartCoroutine(SkillCoolDown(skillCoolTime));
             isToggled = true;
             ToggleSkillOn();
             Debug.Log($"{Name}스킬 키 입력");
             Debug.Log($"{Name}토글스킬발동");
         }
-        else if (Input.GetKeyDown(SkillKey) && isToggled)
+        else if (Input.GetKeyDown(skillKey) && isToggled)
         {
             isToggled = false;
             ToggleSkillOff();
@@ -178,7 +178,7 @@ public abstract class Characterbase : MonoBehaviour
     protected virtual IEnumerator SkillCoolDown(float cooldown)
     {
         Debug.Log("쿨타임 발동");
-        cooldown = SkillCoolTime;
+        cooldown = skillCoolTime;
         skillReady = false;
         yield return new WaitForSeconds(cooldown);
         skillReady = true;
@@ -192,7 +192,7 @@ public abstract class Characterbase : MonoBehaviour
     }
     protected virtual void HandleSkillAnim()
     {
-        bool isSkill = SkillReq;
+        bool isSkill = skillReq;
         Anim.SetSkill(isSkill);
     }
 

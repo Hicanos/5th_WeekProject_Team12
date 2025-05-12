@@ -54,7 +54,7 @@ MonoBehaviour:
   leftKey: 276
   rightKey: 275
   jumpKey: 273
-  SkillKey: 274
+  skillKey: 0
   moveSpeed: 5
   groundCheck: {fileID: 7379920000155263356}
   groundRayRange: 0.6
@@ -64,12 +64,12 @@ MonoBehaviour:
   jumpPower: 5
   maxJumpCount: 1
   headPivot: {fileID: 8883578392505497082}
-  SkillCoolTime: 1
-  DestroyLayer:
+  skillCoolTime: 1
+  destroyLayer:
     serializedVersion: 2
     m_Bits: 512
-  DashSpeed: 30
-  DasgDuration: 0.2
+  dashSpeed: 30
+  dashDuration: 0.2
 --- !u!50 &2966786719432084730
 Rigidbody2D:
   serializedVersion: 4
