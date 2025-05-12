@@ -7,7 +7,7 @@ public class Trap : MonoBehaviour
 {
     [Header("비교할 태그")] public string compareTag;
     public GameObject Player;
-    private Vector3 initialPosition; //초기 개의 위치
+    private Vector3 initialPosition; //초기 게임 오브젝트의 위치 (개/고양이/상자 등)
 
     private void Start()
     {

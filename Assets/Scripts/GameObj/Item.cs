@@ -10,9 +10,27 @@ public class Item : MonoBehaviour
     //Gift: 유물. 획득하면 true. 각 스테이지 별로 3개를 모으면 도전과제 달성
     // : 데이터 매니저, 오브젝트 매니저와 연계
     // Gift 0번은 튜토리얼 아이템
+    [Header("비교할 태그")] public string compareTag;
+    public GameObject Player;
+    int BonusCount = 0;
 
-    void GetItem()
+    public string GetTargetTagName()
     {
+        return compareTag;
+    }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        GetTargetTagName();
+        if (collision.CompareTag(compareTag))
+        {
+            GetItem();
+
+        }
+    }
+    void GetItem()
+    {   // 아이템 획득 시 = BonusCount(점수)증가 후 파괴
+        BonusCount++;
+        Destroy(this);
     }
 }
