@@ -119,7 +119,7 @@ public class GaramCharacterDog : Characterbase
     private void OnTriggerEnter2D(Collider2D other)
     {
         // 돌진 중이 아닐 때는 무시
-        if (isDash) return;
+        if (!isDash) return;
 
         // 레이어 체크: 감지할 레이어에 해당하는지 확인
         if (((1 << other.gameObject.layer) & DestroyLayer) != 0)

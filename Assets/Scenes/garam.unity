@@ -2850,8 +2850,8 @@ GameObject:
   - component: {fileID: 1525534803}
   - component: {fileID: 1525534802}
   - component: {fileID: 1525534801}
-  m_Layer: 8
-  m_Name: bubble
+  m_Layer: 0
+  m_Name: Corner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
