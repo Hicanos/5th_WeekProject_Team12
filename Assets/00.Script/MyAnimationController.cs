@@ -43,4 +43,12 @@ public class MyAnimationController : MonoBehaviour
     {
         _animator.SetBool("IsJump", isJump);
     }
+
+    public void SetSkill(bool isSkill)
+    {
+        _animator.SetBool("IsSkill",isSkill);
+    }
+
+
+    
 }
