@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Burst.CompilerServices;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 public class NPCController : MonoBehaviour
 {
@@ -16,12 +17,31 @@ public class NPCController : MonoBehaviour
 
     bool isPlayerEncounter = false;
 
+    private string currentScene = "a";
+    void Start()
+    {
+        string currentScene = SceneManager.GetActiveScene().name; //지금 씬의 명칭을 변수 currentScene에 저장
+    }
+
     protected void Update()
     {
         if (isPlayerEncounter && Input.GetKeyDown(KeyCode.F))
         {
             DialogImage.SetActive(true);
-            TutorDialog(); //튜터 대사 실행
+            switch(currentScene) //지금 씬의 위치에 따라 다른 대사 출력
+            {
+                case "StageSelect":
+                TutorDialog(); //튜터 대사 실행
+                break;
+
+                case "Tutorial":
+                TutorialDialog(); //튜토리얼 대사 실행
+                break;
+
+                default:
+                break;
+                
+            }
         }
     }
 
@@ -89,5 +109,10 @@ public class NPCController : MonoBehaviour
 
 
 
+    }
+
+    private void TutorialDialog()
+    {
+        //튜토리얼 대사 출력하기.
     }
 }
