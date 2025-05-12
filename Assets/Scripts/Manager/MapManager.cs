@@ -12,9 +12,18 @@ public class MapManager : MonoBehaviour
     //public GameObject interactionPopup2;
     private int currentStageIndex = 0;
 
+    [SerializeField]
+    private List<string> stageList = new List<string>() //Scene을 리스트로 관리 + 인스펙터에서 확인하기 편하게.
+{
+    "Title", "SelectStage","Tutorial",
+    "Stage_1_1", "Stage_1_2", "Stage_1_3",
+    "Stage_2_1", "Stage_2_2", "Stage_2_3",
+    "Stage_3_1", "Stage_3_2", "Stage_3_3"
+    ,"EndingScene",
+};
     protected virtual void Awake()
     {
-       // _doorRigidbody = GetComponent<Rigidbody2D>();
+        // _doorRigidbody = GetComponent<Rigidbody2D>();
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
@@ -26,13 +35,13 @@ public class MapManager : MonoBehaviour
         }
 
     }
-    protected void Update()
-    {
-        if (isPlayerInRange && Input.GetKeyDown(KeyCode.E))
-        {
-            SceneManager.LoadScene("SelectStage");
-        }
-    }
+    // protected void Update()
+    // {
+    //     if (isPlayerInRange && Input.GetKeyDown(KeyCode.E))
+    //     {
+    //         SceneManager.LoadScene("SelectStage");
+    //     }
+    // }
 
     public void LoadStage(string stageName) //현재 스테이지를 불러오는 함수
     {
@@ -58,16 +67,6 @@ public class MapManager : MonoBehaviour
             Debug.Log($"{stageName}이 리스트에 없다!");
         }
     }
-
-    [SerializeField] private List<string> stageList = new List<string>() //Scene을 리스트로 관리 + 인스펙터에서 확인하기 편하게.
-{
-    "Title", "SelectStage","Tutorial",
-    "Stage_1_1", "Stage_1_2", "Stage_1_3",
-    "Stage_2_1", "Stage_2_2", "Stage_2_3",
-    "Stage_3_1", "Stage_3_2", "Stage_3_3"
-    ,"EndingScene",
-};
-
 
     public void LoadNextStage() //다음 스테이지를 불러오는 함수
     {
