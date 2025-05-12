@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class Helper : MonoBehaviour
 {
     public static T GetComponentHelper<T>(GameObject _obj) where T : Component
@@ -10,6 +10,10 @@ public class Helper : MonoBehaviour
             Debug.LogError($"Component is null {typeof(T)} in {_obj.name}");
         }
         return _component;
+    }
+       public static string GetCurrentSceneName()
+    {
+        return SceneManager.GetActiveScene().name;
     }
 }
 
