@@ -359,7 +359,7 @@ GameObject:
   - component: {fileID: 1411339723}
   - component: {fileID: 1411339722}
   - component: {fileID: 1411339721}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Map Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2080,7 +2080,7 @@ GameObject:
   - component: {fileID: 1903774395}
   - component: {fileID: 1903774394}
   - component: {fileID: 1903774393}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Map Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3452,7 +3452,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 4
-      m_TileSpriteIndex: 4
+      m_TileSpriteIndex: 5
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -3462,7 +3462,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 1
-      m_TileSpriteIndex: 1
+      m_TileSpriteIndex: 4
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -3701,16 +3701,16 @@ Tilemap:
   m_TileSpriteArray:
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 1
-    m_Data: {fileID: -1211114681, guid: 36f76164e78004048b14bc8af6b4745e, type: 3}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   - m_RefCount: 22
     m_Data: {fileID: 527119933, guid: 63da1b7cff89fcd48a22f42be589f6dc, type: 3}
   - m_RefCount: 0
     m_Data: {fileID: 0}
   - m_RefCount: 1
+    m_Data: {fileID: -1211114681, guid: 36f76164e78004048b14bc8af6b4745e, type: 3}
+  - m_RefCount: 1
     m_Data: {fileID: 681893341, guid: 36f76164e78004048b14bc8af6b4745e, type: 3}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
   - m_RefCount: 37
     m_Data: {fileID: -405562917, guid: 63da1b7cff89fcd48a22f42be589f6dc, type: 3}
   - m_RefCount: 31

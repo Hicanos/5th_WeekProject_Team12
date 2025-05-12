@@ -359,7 +359,7 @@ GameObject:
   - component: {fileID: 1411339723}
   - component: {fileID: 1411339722}
   - component: {fileID: 1411339721}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Map Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2076,7 +2076,7 @@ GameObject:
   - component: {fileID: 1903774395}
   - component: {fileID: 1903774394}
   - component: {fileID: 1903774393}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Map Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
