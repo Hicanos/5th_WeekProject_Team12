@@ -354,8 +354,14 @@ public abstract class Characterbase : MonoBehaviour
        
 
     }
+    protected virtual void HandleCrashAnim()
+    {
 
-    
+        
+        Anim.SetCrash();
+
+    }
+
 
 }
 
