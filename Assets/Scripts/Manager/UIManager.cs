@@ -6,10 +6,11 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-    // º°À» ³ªÅ¸³¾ GameObjectµé
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å¸ï¿½ï¿½ GameObjectï¿½ï¿½
     [SerializeField] private GameObject goldStar1;
     [SerializeField] private GameObject goldStar2;
     [SerializeField] private GameObject goldStar3;
+
     public static UIManager Instance { get; private set; }
     [SerializeField] private Text timeText;
 
@@ -45,7 +46,7 @@ public class UIManager : MonoBehaviour
 
     public void DisplayStars(int starCount)
     {
-        // ¸ÕÀú ¸ðµç º°À» ²ö´Ù.
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½.
         goldStar1.SetActive(false);
         goldStar2.SetActive(false);
         goldStar3.SetActive(false);
@@ -68,6 +69,19 @@ public class UIManager : MonoBehaviour
         }
 
     }
+public void OnClickNextStage()
+{
+    MapManager.Instance.LoadNextStage();
+}
+
+public void OnClickRetryStage()
+{
+    MapManager.Instance.LoadStage(MapManager.Instance.CurrentStage);
+}
 
 
+public void OnClickSelectStage()
+{
+    MapManager.Instance.OnClickExitStageSelect();
+}
 }
