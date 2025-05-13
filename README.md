@@ -3,7 +3,7 @@
 
 # 🖥️ 프로젝트 소개
 
-## 멍판냥판
+## 개판냥판
 
 ![title_DogCat](https://github.com/user-attachments/assets/c8ea83c5-a7dc-40a2-ac67-b3692210d50a)
 
