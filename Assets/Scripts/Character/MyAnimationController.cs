@@ -53,5 +53,10 @@ public class MyAnimationController : MonoBehaviour
     {
         _animator.SetTrigger("IsCrash");
     }
+
+    public void SetSwitch(bool isSwitch)
+    {
+        _animator.SetBool("IsSwitch", isSwitch);
+    }
     
 }
