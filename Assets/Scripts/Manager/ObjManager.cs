@@ -62,7 +62,12 @@ public class ObjManager : MonoBehaviour
     public static void CheckGetObject()
     {
          gotAllObjects = true;
-         Debug.Log("아이템 다 먹었어요");     
+         Debug.Log("아이템 다 먹었어요");
+    }
+    public static void LeftItem()
+    {
+        gotAllObjects = false;
+        Debug.Log("아이템 있어요");
     }
 
     private void OnTriggerEnter2D(Collider2D other)
