@@ -6,24 +6,13 @@ public class Gift : MonoBehaviour
 {
     [SerializeField] public int LegacyID;
 
-    void GetGift()
-    {
-        //È¹µæÇÑ À¯¹°ÀÇ ID(¹øÈ£)°¡ DataManagerÀÇ AquiredLegacy¿¡ ¾øÀ» °æ¿ì
-        if (!DataManager.AquiredLegacy.Contains(LegacyID))
-        {
-            //LegacyID¸¦ DataManagerÀÇ AquiredLegacy¿¡ Ãß°¡, À¯¹°ÀÌ ¸®½ºÆ®¿¡ Àß µé¾î°¬´ÂÁö È®ÀÎ.
-            DataManager.AquiredLegacy.Add(LegacyID);
-            Debug.Log($"À¯¹°È¹µæ: {DataManager.LegacyList[LegacyID].ToString()}");
-        }
-    }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        //Ãæµ¹Ã¼°¡ °³³ª °í¾çÀÌÀÎÁö È®ÀÎ(µÑÀº ÇÃ·¹ÀÌ¾î)
+        //ï¿½æµ¹Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½)
         if (collision.CompareTag("Player"))
         {
-            GetGift();
-            Destroy(gameObject); //À¯¹°À» µî·ÏÇÏ°í ¿ÀºêÁ§Æ®´Â Á¦°Å
+            ObjManager.Instance.CollectLegacy(LegacyID);
+            Destroy(gameObject); //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         }
     }
 }
