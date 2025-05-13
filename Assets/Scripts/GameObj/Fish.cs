@@ -7,13 +7,13 @@ public class Fish : MonoBehaviour
 {
     private void OnTriggerEnter2D(Collider2D collision)
     {        
-        //·¹ÀÌ¾î ¹× Tag È®ÀÎ - Áßº¹ Ä«¿îÆ® ¹æÁö
+        //ë ˆì´ì–´ ë° Tag í™•ì¸ - ì¤‘ë³µ ì¹´ìš´íŠ¸ ë°©ì§€
         if(collision.gameObject.layer == LayerMask.NameToLayer("Cat")
             && collision.CompareTag("Player"))
         {
             GetItem();
         }
-        //°í¾çÀÌ°¡ ¾Æ´Ï¸é ¾Æ¹«·± È¿°ú ¾øÀ½
+        //ê³ ì–‘ì´ê°€ ì•„ë‹ˆë©´ ì•„ë¬´ëŸ° íš¨ê³¼ ì—†ìŒ
     }
 
     public void GetItem()

@@ -10,18 +10,18 @@ public class ItemCountUI : MonoBehaviour
     public bool itemClear;
     private void OnEnable()
     {
-        Item.OnItemCountChanged += UpdateUI;  //ÀÌº¥Æ®¿¡ Á¢±ÙÇÏ¸é È°¼ºÈ­
+        Item.OnItemCountChanged += UpdateUI;  //ì´ë²¤íŠ¸ì— ì ‘ê·¼í•˜ë©´ í™œì„±í™”
         UpdateUI();
     }
 
     private void OnDisable()
     {
-        Item.OnItemCountChanged -= UpdateUI; //Ã³¸®°¡ ³¡³ª¸é ´Ù½Ã ºñÈ°¼ºÈ­
+        Item.OnItemCountChanged -= UpdateUI; //ì²˜ë¦¬ê°€ ëë‚˜ë©´ ë‹¤ì‹œ ë¹„í™œì„±í™”
     }
 
     void UpdateUI()
     {
-        //¾ÆÀÌÅÛÀÌ nullÀÌ ¾Æ´Ï¶ó¸é, FishCount¿Í BoneCount È®ÀÎ
+        //ì•„ì´í…œì´ nullì´ ì•„ë‹ˆë¼ë©´, FishCountì™€ BoneCount í™•ì¸
         if (fishCountText != null)
             fishCountText.text = $"{Item.FishCount}";
         if (boneCountText != null)
