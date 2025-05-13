@@ -21,7 +21,7 @@ public class Scaffolding : MonoBehaviour
 
 
 
-    public bool scaffoldingOn = true;
+    public bool scaffoldingOn = false;
     [SerializeField] public float moveSpeed = 2f;
     [SerializeField] public float maxY = 3f;
     [SerializeField] public float minY = 0f;

@@ -50,7 +50,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rbscaffolding: {fileID: 0}
   tf: {fileID: 1031209713739808112}
-  scaffoldingOn: 1
+  scaffoldingOn: 0
   moveSpeed: 3
   maxY: 4
   minY: 0
