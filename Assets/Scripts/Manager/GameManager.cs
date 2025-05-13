@@ -19,7 +19,9 @@ public class GameManager : MonoBehaviour
             DontDestroyOnLoad(gameObject);
         }
     }
-    public void ProcessingStageClear(bool gotLegacy, bool gotAllObjects, float clearTime, float timeLimit) 
+    
+
+    public void ProcessingStageClear(bool gotLegacy, bool gotAllObjects, float clearTime, float timeLimit) //클리어시 별을 체크하는 메서드
     {
         int starCount = 0;
         if (gotLegacy) starCount++;
@@ -29,6 +31,25 @@ public class GameManager : MonoBehaviour
         string stage = MapManager.Instance.CurrentStage;
         DataManager.Instance.UpdateStarCount(stage, starCount);
         UIManager.Instance.DisplayStars(starCount);
+    }
+
+    public bool IsStageUnlocked(string stageName)
+    {
+        int legacyCount = DataManager.LegacyCount();
+        if(stageName == "SelectStage") return true;
+        if(stageName == "Tutorial") return true;
+        if(stageName == "Stage 1-1" && legacyCount >=1) return true;
+        if(stageName == "Stage 1-2" && legacyCount >=2) return true;
+        if(stageName == "Stage 1-3" && legacyCount >=3) return true;
+        if(stageName == "Stage 2-1" && legacyCount >=4) return true;
+        if(stageName == "Stage 2-2" && legacyCount >=5) return true;
+        if(stageName == "Stage 2-3" && legacyCount >=6) return true;
+        if(stageName == "Stage 3-1" && legacyCount >=7) return true;
+        if(stageName == "Stage 3-2" && legacyCount >=8) return true;
+        if(stageName == "Stage 3-3" && legacyCount >=9) return true;
+        if(stageName == "EndingScene" && legacyCount >=10) return true;
+
+        return false;
     }
 }
 
