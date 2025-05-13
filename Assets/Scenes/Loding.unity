@@ -415,8 +415,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa5187dc4b8ab4ae980a09147cd23c0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rawImage: {fileID: 1401845505}
   videoPlayer: {fileID: 1401845504}
   nextSceneName: SelectStage
+  videoClip: {fileID: 32900000, guid: b9a86347a1c7342268954ad7a9603e52, type: 3}
 --- !u!1 &1790900386
 GameObject:
   m_ObjectHideFlags: 0
