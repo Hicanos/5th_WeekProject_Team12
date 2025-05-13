@@ -415,7 +415,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa5187dc4b8ab4ae980a09147cd23c0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  videoPlayer: {fileID: 0}
+  videoPlayer: {fileID: 1401845504}
   nextSceneName: Title
 --- !u!1 &1790900386
 GameObject:
