@@ -6,10 +6,9 @@ public class Bone : MonoBehaviour
 {
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        int charLayer = collision.gameObject.layer;
-
         //레이어 및 Tag 확인 - 중복 카운트 방지
-        if (charLayer == LayerMask.NameToLayer("Dog") && collision.CompareTag("Player"))
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Dog")
+            && collision.CompareTag("Player"))
         {
             GetItem();
         }
@@ -18,7 +17,7 @@ public class Bone : MonoBehaviour
 
     public void GetItem()
     {
-        Item.BoneCount--;
+        Item.ChangeBoneCount(-1);
         Destroy(gameObject);
     }
 }

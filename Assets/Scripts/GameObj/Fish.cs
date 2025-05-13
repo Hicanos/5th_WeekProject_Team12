@@ -6,12 +6,10 @@ using UnityEngine;
 public class Fish : MonoBehaviour
 {
     private void OnTriggerEnter2D(Collider2D collision)
-    {
-        //충돌체의 레이어 확인
-        int charLayer = collision.gameObject.layer;
-
+    {        
         //레이어 및 Tag 확인 - 중복 카운트 방지
-        if(charLayer == LayerMask.NameToLayer("Cat")&& collision.CompareTag("Player"))
+        if(collision.gameObject.layer == LayerMask.NameToLayer("Cat")
+            && collision.CompareTag("Player"))
         {
             GetItem();
         }
@@ -20,7 +18,7 @@ public class Fish : MonoBehaviour
 
     public void GetItem()
     {
-        Item.FishCount--;
+        Item.ChangeFishCount(-1);
         Destroy(gameObject);
     }
 }
