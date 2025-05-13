@@ -6,10 +6,11 @@ using UnityEngine.Tilemaps;
 public class ScretTile : MonoBehaviour
 {
     public Tilemap tRenderer;
+    [SerializeField] private LayerMask cat;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (((1 << collision.gameObject.layer) & cat) != 0)
         {
             Color color = tRenderer.color;
             color.a = 0.4f;
@@ -20,7 +21,7 @@ public class ScretTile : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (((1 << collision.gameObject.layer) & cat) != 0)
         {
             Color color = tRenderer.color;
             color.a = 1f;
