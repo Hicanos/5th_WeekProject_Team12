@@ -58,7 +58,7 @@ GameObject:
   - component: {fileID: 1373524456002222138}
   - component: {fileID: 1109525780423057499}
   - component: {fileID: 340196302714667175}
-  - component: {fileID: 8451514881813210554}
+  - component: {fileID: 448205393203638987}
   m_Layer: 0
   m_Name: Catnip
   m_TagString: Untagged
@@ -238,7 +238,7 @@ TilemapCollider2D:
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0
   m_UseDelaunayMesh: 0
---- !u!114 &8451514881813210554
+--- !u!114 &448205393203638987
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -247,11 +247,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 4437776854479948767}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c49d5b2a989ccac4e8f4add331f066f6, type: 3}
+  m_Script: {fileID: 11500000, guid: 12766fd8a4998e043b77b2e1ef76d6d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  compareTag: Player
-  Player: {fileID: 0}
+  Player: {fileID: 2415254073650170630, guid: e65017ca773752744ba7c28a16d84341, type: 3}
 --- !u!1 &5263945949621706613
 GameObject:
   m_ObjectHideFlags: 0
@@ -263,8 +262,8 @@ GameObject:
   - component: {fileID: 1345189555906742899}
   - component: {fileID: 7465954166768703}
   - component: {fileID: 2373967216836714596}
-  - component: {fileID: 5694518411525111664}
   - component: {fileID: 2194353470471070698}
+  - component: {fileID: 7295899858016386577}
   m_Layer: 0
   m_Name: BallPool
   m_TagString: Untagged
@@ -408,20 +407,6 @@ TilemapRenderer:
   m_Mode: 0
   m_DetectChunkCullingBounds: 0
   m_MaskInteraction: 0
---- !u!114 &5694518411525111664
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5263945949621706613}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c49d5b2a989ccac4e8f4add331f066f6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  compareTag: Player
-  Player: {fileID: 0}
 --- !u!19719996 &2194353470471070698
 TilemapCollider2D:
   m_ObjectHideFlags: 0
@@ -458,3 +443,16 @@ TilemapCollider2D:
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0
   m_UseDelaunayMesh: 0
+--- !u!114 &7295899858016386577
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5263945949621706613}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a275fd7eff4f5194582b776a24b8bef7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Player: {fileID: 2415254073650170630, guid: e65017ca773752744ba7c28a16d84341, type: 3}
