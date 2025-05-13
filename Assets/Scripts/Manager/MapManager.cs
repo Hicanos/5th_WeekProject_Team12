@@ -36,6 +36,12 @@ public class MapManager : MonoBehaviour
 
     public void LoadStage(string stageName) //현재 스테이지를 불러오는 함수
     {
+        if(!GameManager.Instance.IsStageUnlocked(stageName))
+        {
+            //UI로 아직 갈 수 없는 장소입니다. 라고 알려줬으면 좋겠습니다.
+            Debug.Log($"{stageName}은 아직 해금되지 않았습니다.");
+            return;
+        }
         CurrentStage = stageName;
 
         int index = stageList.IndexOf(stageName); //IndexOf를 통해 리스트 안에서 해당 값이 몇번째인지 찾아냄.
@@ -56,6 +62,13 @@ public class MapManager : MonoBehaviour
         else
         {
             Debug.Log($"{stageName}이 리스트에 없다!");
+        }
+
+        if(!GameManager.Instance.IsStageUnlocked(stageName))
+        {
+            //UI로 아직 갈 수 없는 장소입니다. 라고 알려줬으면 좋겠습니다.
+            Debug.Log($"{stageName}은 아직 해금되지 않았습니다.");
+            return;
         }
     }
 
