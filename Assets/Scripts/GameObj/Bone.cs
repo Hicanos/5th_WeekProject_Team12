@@ -7,8 +7,8 @@ public class Bone : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         int charLayer = collision.gameObject.layer;
-        string Namechar = LayerMask.LayerToName(charLayer);
-        Debug.Log($"부딪힌 놈:{Namechar} ");
+
+        //레이어 및 Tag 확인 - 중복 카운트 방지
         if (charLayer == LayerMask.NameToLayer("Dog") && collision.CompareTag("Player"))
         {
             GetItem();
