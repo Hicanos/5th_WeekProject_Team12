@@ -6,6 +6,10 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
+    // 별을 나타낼 GameObject들
+    [SerializeField] private GameObject goldStar1;
+    [SerializeField] private GameObject goldStar2;
+    [SerializeField] private GameObject goldStar3;
     public static UIManager Instance { get; private set; }
     [SerializeField] private Text timeText;
 
@@ -41,13 +45,23 @@ public class UIManager : MonoBehaviour
 
     public void DisplayStars(int starCount)
     {
+        // 먼저 모든 별을 끈다.
+        goldStar1.SetActive(false);
+        goldStar2.SetActive(false);
+        goldStar3.SetActive(false);
         switch (starCount)
         {
-            case 1: 
+            case 1:
+                goldStar1.SetActive(true);
                 break;
             case 2:
+                goldStar1.SetActive(true);
+                goldStar2.SetActive(true);
                 break;
             case 3:
+                goldStar1.SetActive(true);
+                goldStar2.SetActive(true);
+                goldStar3.SetActive(true);
                 break;
             default:
                 break;
