@@ -144,7 +144,7 @@ TextureImporter:
         width: 550
         height: 550
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -157,7 +157,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: star_dark
+      name: star_empty
       rect:
         serializedVersion: 2
         x: 148
@@ -165,7 +165,7 @@ TextureImporter:
         width: 550
         height: 550
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -188,7 +188,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      star_dark: -519852086
+      star_empty: -519852086
       star_gold: 2100352312
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
