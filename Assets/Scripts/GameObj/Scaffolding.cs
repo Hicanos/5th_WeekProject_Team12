@@ -30,6 +30,7 @@ public class Scaffolding : MonoBehaviour
     public void ScaffoldingMove()
     {
         Vector2 updown = rbscaffolding.velocity;
+      
         if (scaffoldingOn)
         {
 
@@ -49,7 +50,7 @@ public class Scaffolding : MonoBehaviour
                 { scaffoldingMovingUp = true; }
             }
         }
-
+        else { updown.y = 0; }
 
 
 
