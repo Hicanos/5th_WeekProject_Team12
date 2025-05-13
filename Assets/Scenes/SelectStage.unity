@@ -437,6 +437,7 @@ RectTransform:
   - {fileID: 1252288457}
   - {fileID: 705666041}
   - {fileID: 1890636292}
+  - {fileID: 1403229004}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1000,7 +1001,6 @@ GameObject:
   - component: {fileID: 1252288460}
   - component: {fileID: 1252288459}
   - component: {fileID: 1252288458}
-  - component: {fileID: 1252288461}
   m_Layer: 5
   m_Name: Tutorial
   m_TagString: Untagged
@@ -1072,7 +1072,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1252288461}
+      - m_Target: {fileID: 1403229005}
         m_TargetAssemblyTypeName: MapManager, Assembly-CSharp
         m_MethodName: LoadStage
         m_Mode: 5
@@ -1122,32 +1122,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1252288456}
   m_CullTransparentMesh: 1
---- !u!114 &1252288461
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1252288456}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9428a4a1b3e2f964281a08242e0981b3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  stageList:
-  - Title
-  - SelectStage
-  - Tutorial
-  - Stage 1-1
-  - Stage 1-2
-  - Stage 1-3
-  - Stage 2-1
-  - Stage 2-2
-  - Stage 2-3
-  - Stage 3-1
-  - Stage 3-2
-  - Stage 3-3
-  - EndingScene
 --- !u!1 &1297391252
 GameObject:
   m_ObjectHideFlags: 0
@@ -1254,6 +1228,64 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &1403229002
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1403229004}
+  - component: {fileID: 1403229005}
+  m_Layer: 0
+  m_Name: GameObject (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1403229004
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1403229002}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -952.6526, y: -546.0053, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 654719661}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1403229005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1403229002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9428a4a1b3e2f964281a08242e0981b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stageList:
+  - Title
+  - SelectStage
+  - Tutorial
+  - Stage 1-1
+  - Stage 1-2
+  - Stage 1-3
+  - Stage 2-1
+  - Stage 2-2
+  - Stage 2-3
+  - Stage 3-1
+  - Stage 3-2
+  - Stage 3-3
+  - EndingScene
 --- !u!1 &1415416629
 GameObject:
   m_ObjectHideFlags: 0
