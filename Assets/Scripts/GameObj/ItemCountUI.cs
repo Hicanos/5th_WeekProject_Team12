@@ -7,7 +7,7 @@ public class ItemCountUI : MonoBehaviour
 {
     public Text fishCountText;
     public Text boneCountText;
-
+    public bool itemClear;
     private void OnEnable()
     {
         Item.OnItemCountChanged += UpdateUI;  //이벤트에 접근하면 활성화
@@ -29,11 +29,13 @@ public class ItemCountUI : MonoBehaviour
 
         if (Item.FishCount == 0 && Item.BoneCount == 0)
         {
-            ObjManager.CheckGetObject();
+            itemClear = true ;
+            ObjManager.CheckGetObject(itemClear);
         }
         else
         {
-            ObjManager.LeftItem();
+            itemClear = false;
+            ObjManager.CheckGetObject(itemClear);
         }
 
 
