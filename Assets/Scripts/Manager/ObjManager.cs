@@ -20,7 +20,7 @@ public class ObjManager : MonoBehaviour
 
     private bool isPlayerEncounter = false;
     private bool gotLegacy = false;
-    private bool gotAllObjects = false;
+    private static bool gotAllObjects = false;
     private float clearTime = float.MaxValue;
     private void Awake()
     {
@@ -59,9 +59,10 @@ public class ObjManager : MonoBehaviour
         openDoorObject.SetActive(true);
     }
 
-    public void CheckGetObject()
+    public static void CheckGetObject()
     {
-        gotAllObjects = true;
+         gotAllObjects = true;
+         Debug.Log("아이템 다 먹었어요");     
     }
 
     private void OnTriggerEnter2D(Collider2D other)
