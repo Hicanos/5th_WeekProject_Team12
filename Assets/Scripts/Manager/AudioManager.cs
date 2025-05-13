@@ -113,4 +113,15 @@ public class AudioManager : MonoBehaviour
 
         audioSource.volume = 1f;
     }
+    public void SetVolume(float volume)
+    {
+        // audioSource가 null이 아니면 (즉, 정상적으로 할당되어 있으면)
+        if (audioSource != null)
+            // volume 값을 0~1 사이로 제한해서 설정
+            audioSource.volume = Mathf.Clamp01(volume);
+    }
+
+    //읽기 전용 프로퍼티
+    public float CurrentVolume => audioSource.volume;
+
 }
