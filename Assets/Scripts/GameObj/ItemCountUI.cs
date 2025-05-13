@@ -15,6 +15,11 @@ public class ItemCountUI : MonoBehaviour
             fishCountText.text = $"{Item.FishCount}";
         if (boneCountText != null)
             boneCountText.text = $"{Item.BoneCount}";
-        
+
+        if (Item.FishCount == 0 && Item.BoneCount == 0)
+        {
+            ObjManager.CheckGetObject();
+        }
+
     }
 }
