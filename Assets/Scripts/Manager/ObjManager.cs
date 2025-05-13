@@ -13,42 +13,58 @@ public class ObjManager : MonoBehaviour
     [SerializeField] private GameObject openDoorObject;
     [SerializeField] private GameObject closeDoorObject;
     [SerializeField] private GameObject interactionPopup; //E를 눌러 상호작용 하라고 알려주기
+    [SerializeField] private GameObject refuseMessage;
     [SerializeField] private float timeLimit = 120f;
-    
+
+    public static ObjManager Instance { get; private set; }
 
     private bool isPlayerEncounter = false;
     private bool gotLegacy = false;
     private bool gotAllObjects = false;
     private float clearTime = float.MaxValue;
-
+    private void Awake()
+    {
+        if (Instance == null) Instance = this;
+        else Destroy(gameObject);
+    }
     private void Start()
     {
         closeDoorObject.SetActive(true);
         openDoorObject.SetActive(false);
     }
 
-     protected void Update()
+    protected void Update()
     {
-        if(isPlayerEncounter && Input.GetKeyDown(KeyCode.E))
+        if (isPlayerEncounter && Input.GetKeyDown(KeyCode.E))
         {
+            if (!gotLegacy)
+            {
+                refuseMessage.SetActive(true);
+                return;
+            }
             clearTime = UIManager.Instance.StopTimer();
             GameManager.Instance.ProcessingStageClear(gotLegacy, gotAllObjects, clearTime, timeLimit);
         }
     }
 
-    public void GetLegacy()
+    public void CollectLegacy(int LegacyID)
     {
+        if (!DataManager.AquiredLegacy.Contains(LegacyID))
+        {
+            DataManager.AquiredLegacy.Add(LegacyID);
+            Debug.Log($"유물 {DataManager.LegacyList[LegacyID]} 획득");
+        }
         gotLegacy = true;
         closeDoorObject.SetActive(false);
         openDoorObject.SetActive(true);
     }
 
-    public void GetObject()
+    public void CheckGetObject()
     {
         gotAllObjects = true;
     }
 
-     private void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
         {
