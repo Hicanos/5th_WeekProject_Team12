@@ -305,6 +305,7 @@ GameObject:
   - component: {fileID: 1401845506}
   - component: {fileID: 1401845505}
   - component: {fileID: 1401845504}
+  - component: {fileID: 1401845507}
   m_Layer: 5
   m_Name: LodingVideo
   m_TagString: Untagged
@@ -363,7 +364,7 @@ VideoPlayer:
   m_ControlledAudioTrackCount: 1
   m_PlayOnAwake: 1
   m_SkipOnDrop: 1
-  m_Looping: 1
+  m_Looping: 0
   m_WaitForFirstFrame: 1
   m_FrameReadyEventEnabled: 0
   m_VideoShaders: []
@@ -402,6 +403,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1401845502}
   m_CullTransparentMesh: 1
+--- !u!114 &1401845507
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1401845502}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa5187dc4b8ab4ae980a09147cd23c0c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rawImage: {fileID: 1401845505}
+  videoPlayer: {fileID: 1401845504}
+  nextSceneName: SelectStage
+  videoClip: {fileID: 32900000, guid: b9a86347a1c7342268954ad7a9603e52, type: 3}
 --- !u!1 &1790900386
 GameObject:
   m_ObjectHideFlags: 0
