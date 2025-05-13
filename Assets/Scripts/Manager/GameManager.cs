@@ -19,10 +19,16 @@ public class GameManager : MonoBehaviour
             DontDestroyOnLoad(gameObject);
         }
     }
-    void StageClear()
+    public void ProcessingStageClear(bool gotLegacy, bool gotAllObjects, float clearTime, float timeLimit) 
     {
-        UIManager.Instance.StopTimer();
+        int starCount = 0;
+        if (gotLegacy) starCount++;
+        if (gotAllObjects) starCount++;
+        if (clearTime <= timeLimit) starCount++;
 
+        string stage = MapManager.Instance.CurrentStage;
+        DataManager.Instance.UpdateStarCount(stage, starCount);
+        UIManager.Instance.DisplayStars(starCount);
     }
 }
 

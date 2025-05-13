@@ -5,6 +5,8 @@
 
 ## 멍판냥판
 
+![title_DogCat](https://github.com/user-attachments/assets/c8ea83c5-a7dc-40a2-ac67-b3692210d50a)
+
 > 호기심도 많고, 욕망도 많은 장난꾸러기 도굴꾼들,    
 > 🐕 **개 '루퍼스'**    
 > 🐈 **고양이 '벨라'**    
