@@ -59,16 +59,20 @@ public class ObjManager : MonoBehaviour
         openDoorObject.SetActive(true);
     }
 
-    public static void CheckGetObject()
+    public static bool CheckGetObject(bool check)
     {
-         gotAllObjects = true;
-         Debug.Log("아이템 다 먹었어요");
+        if(check == true)
+        {
+            Debug.Log("아이템 다 먹었어요");
+            return gotAllObjects = true;
+        }
+        else
+        {
+            Debug.Log("아이템 있어요");
+            return gotAllObjects = false;
+        }
     }
-    public static void LeftItem()
-    {
-        gotAllObjects = false;
-        Debug.Log("아이템 있어요");
-    }
+
 
     private void OnTriggerEnter2D(Collider2D other)
     {
