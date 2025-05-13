@@ -4,81 +4,87 @@ using UnityEngine;
 
 public class ObjManager : MonoBehaviour
 {
-    //여기서 다뤄야 할 것들...
-    //일단 유물 획득하면 문 열리게끔
-    //문에 따라 다른 곳으로 갈 수 있게끔?
-    //gotLegacy, gotAllObjects, cleartime을 넘겨줘야 함....
-    //문에 들어가면 게임클리어 되면서 GameManager.Instance.ProcessingStageClear(bool gotLegacy, bool gotAllObjects, float clearTime, float timeLimit) 실행되게끔
-
-    [SerializeField] private GameObject openDoorObject;
-    [SerializeField] private GameObject closeDoorObject;
-    [SerializeField] private GameObject interactionPopup; //E를 눌러 상호작용 하라고 알려주기
-    [SerializeField] private GameObject refuseMessage;
-    [SerializeField] private float timeLimit = 120f;
-
     public static ObjManager Instance { get; private set; }
 
-    private bool isPlayerEncounter = false;
+    [Header("Door Objects")]
+    [SerializeField] private GameObject openDoorObject;
+    [SerializeField] private GameObject closeDoorObject;
+
+    [Header("UI Elements")]
+    [SerializeField] private GameObject interactionPopup;
+    [SerializeField] private GameObject refuseMessage;
+
+    [Header("Clear Condition")]
+    [SerializeField] private float timeLimit = 120f;
+
+    private bool isPlayerNear = false;
     private bool gotLegacy = false;
     private static bool gotAllObjects = false;
     private float clearTime = float.MaxValue;
+
     private void Awake()
     {
-        if (Instance == null) Instance = this;
-        else Destroy(gameObject);
+        if (Instance != null && Instance != this) Destroy(gameObject);
+        else
+        {
+            Instance = this;
+           
+        }
     }
+
     private void Start()
     {
         closeDoorObject.SetActive(true);
         openDoorObject.SetActive(false);
+        refuseMessage.SetActive(false);
     }
 
-    protected void Update()
+    private void Update()
     {
-        if (isPlayerEncounter && Input.GetKeyDown(KeyCode.E))
+        if (isPlayerNear && Input.GetKeyDown(KeyCode.E))
         {
             if (!gotLegacy)
             {
                 refuseMessage.SetActive(true);
+                Invoke(nameof(HideRefuseMessage), 2f);
                 return;
             }
+
             clearTime = UIManager.Instance.StopTimer();
             GameManager.Instance.ProcessingStageClear(gotLegacy, gotAllObjects, clearTime, timeLimit);
         }
     }
 
-    public void CollectLegacy(int LegacyID)
+    private void HideRefuseMessage()
     {
-        if (!DataManager.AquiredLegacy.Contains(LegacyID))
+        refuseMessage.SetActive(false);
+    }
+
+    public void CollectLegacy(int legacyID)
+    {
+        if (!DataManager.AquiredLegacy.Contains(legacyID))
         {
-            DataManager.AquiredLegacy.Add(LegacyID);
-            Debug.Log($"유물 {DataManager.LegacyList[LegacyID]} 획득");
+            DataManager.AquiredLegacy.Add(legacyID);
+            Debug.Log($"유물 획득: {DataManager.LegacyList[legacyID]}");
         }
+
         gotLegacy = true;
         closeDoorObject.SetActive(false);
         openDoorObject.SetActive(true);
     }
 
-    public static bool CheckGetObject(bool check)
+    public static bool CheckGetObject(bool allCollected)
     {
-        if(check == true)
-        {
-            Debug.Log("아이템 다 먹었어요");
-            return gotAllObjects = true;
-        }
-        else
-        {
-            Debug.Log("아이템 있어요");
-            return gotAllObjects = false;
-        }
+        gotAllObjects = allCollected;
+        Debug.Log(gotAllObjects ? "아이템 다 모았음!" : "아이템 아직 있음");
+        return gotAllObjects;
     }
-
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
         {
-            isPlayerEncounter = true;
+            isPlayerNear = true;
             interactionPopup.SetActive(true);
         }
     }
@@ -87,8 +93,8 @@ public class ObjManager : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            interactionPopup.SetActive(false); // 플레이어가 벗어나면 팝업 숨김
-            isPlayerEncounter = false;
+            isPlayerNear = false;
+            interactionPopup.SetActive(false);
         }
     }
 }
