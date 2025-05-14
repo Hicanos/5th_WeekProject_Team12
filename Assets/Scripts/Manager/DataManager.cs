@@ -16,6 +16,7 @@ public class DataManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
+            LoadLegacyData(); //획득한 유물 데이터 불러오기
         }
     }
     //-----------------------------------------------------------------------------------------------------
@@ -45,7 +46,33 @@ public class DataManager : MonoBehaviour
     }
     //-----------------------------------------------------------------------------------------------------
     //유물 저장 로직
+    private const string LegacyKeyPrefix = "Legacy_";
     public static HashSet<int> AquiredLegacy = new HashSet<int>(); // 획득한 유물의 Key값만 저장, HashSet사용으로 중복제거
+
+    public static void AddLegacy(int legacyID)
+    {
+       
+            if(!AquiredLegacy.Contains(legacyID)) //만약 HashSet에 그 legacyID가 포함되어 있지 않는다면
+            {
+                AquiredLegacy.Add(legacyID);          //LegacyID를 추가하고
+                PlayerPrefs.SetInt(LegacyKeyPrefix + legacyID, 1); //bool값을 저장할 수 없기때문에 1로 true를 표시
+                PlayerPrefs.Save();
+            }
+        
+    }
+
+    public static void LoadLegacyData()
+    {
+        AquiredLegacy.Clear(); //게임을 다시 실행할 때 획득유물 리스트를 초기화
+        foreach (int id in LegacyList.Keys) //LegacyList에 있는 Keys들을 순회
+        {
+            if(PlayerPrefs.GetInt(LegacyKeyPrefix + id, 0) == 1) //PlayerPrefs에 저장된 id번의 밸류값이 1이라면
+            {
+                AquiredLegacy.Add(id);                           //획득유물 HashSet에 그 legacyid를 추가
+            }
+        }
+    }
+
 
     public static int LegacyCount() //유물을 몇개 획득했는지 정리
     {

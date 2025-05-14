@@ -46,8 +46,8 @@ public class UIManager : MonoBehaviour
         else
         {
             Instance = this;
+            DontDestroyOnLoad(gameObject);
         }
-
         // 버튼 초기 연결
         if (nextStageBtn != null) { // 버튼이 존재할 경우에만 이벤트 연결
             nextStageBtn.onClick.AddListener(OnClickNextStage);} 
