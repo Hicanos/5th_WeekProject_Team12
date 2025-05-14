@@ -44,16 +44,6 @@ public class MapManager : MonoBehaviour
        
     }
 
-    public static class SceneLoadManager
-{
-    public static string NextSceneName; // 로딩 후 이동할 씬 이름
-
-    public static void LoadScene(string targetScene)
-    {
-        NextSceneName = targetScene;
-        UnityEngine.SceneManagement.SceneManager.LoadScene("Loding"); // 로딩 씬 먼저 이동
-    }
-}
     public void LoadStage(string stageName) //현재 스테이지를 불러오는 함수
     {
         if(!GameManager.Instance.IsStageUnlocked(stageName))
@@ -70,7 +60,7 @@ public class MapManager : MonoBehaviour
             currentStageIndex = index;
         }
 
-        SceneLoadManager.LoadScene(stageName); // <-- 로딩 씬을 통해 이동
+
     }
 
     public void LoadStageByName(string stageName)
