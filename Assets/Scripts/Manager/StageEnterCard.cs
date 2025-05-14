@@ -29,6 +29,7 @@ public class StageEnterCard : MonoBehaviour
 
     public void SetCard(StageInfo info)
     {
+         Debug.Log($"SetCard 호출됨: {info.StageName}");
         _stageName = info.StageName;
         
         if (info.CanEnter == false)
@@ -58,6 +59,6 @@ public class StageEnterCard : MonoBehaviour
     {
         Debug.Log($"스테이지 불러오기 : {_stageName}");
         
-        // MapManager.Instance.LoadStageByName(_stageName);
+         MapManager.Instance.LoadStageByName(_stageName);
     }
 }
