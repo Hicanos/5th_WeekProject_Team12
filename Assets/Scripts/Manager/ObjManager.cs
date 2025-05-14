@@ -33,7 +33,7 @@ public class ObjManager : MonoBehaviour
     {
         if (!DataManager.AquiredLegacy.Contains(legacyID))
         {
-            DataManager.AquiredLegacy.Add(legacyID);
+            DataManager.AddLegacy(legacyID); // DataManager에서 저장로직을 구현했기 때문에 그 함수만 실행
             Debug.Log($"유물 획득: {DataManager.LegacyList[legacyID]}");
         }
 
