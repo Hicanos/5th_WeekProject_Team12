@@ -61,7 +61,7 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
-  jumpPower: 5
+  jumpPower: 6
   maxJumpCount: 1
   headPivot: {fileID: 8883578392505497082}
   skillCoolTime: 1
