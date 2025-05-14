@@ -13,6 +13,7 @@ public class MapManager : MonoBehaviour
     public Button stage1_2Button;
     public string CurrentStage { get; private set; } //현재 스테이지를 저장할 변수
     private int currentStageIndex = 0;
+    public static string NextSceneName;
 
     [SerializeField] private List<string> stageList = new List<string>() //Scene을 리스트로 관리 + 인스펙터에서 확인하기 편하게.
 {
@@ -42,6 +43,17 @@ public class MapManager : MonoBehaviour
     {
        
     }
+
+    public static class SceneLoadManager
+{
+    public static string NextSceneName; // 로딩 후 이동할 씬 이름
+
+    public static void LoadScene(string targetScene)
+    {
+        NextSceneName = targetScene;
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Loding"); // 로딩 씬 먼저 이동
+    }
+}
     public void LoadStage(string stageName) //현재 스테이지를 불러오는 함수
     {
         if(!GameManager.Instance.IsStageUnlocked(stageName))
@@ -58,7 +70,7 @@ public class MapManager : MonoBehaviour
             currentStageIndex = index;
         }
 
-        SceneManager.LoadScene(stageName);
+        SceneLoadManager.LoadScene(stageName); // <-- 로딩 씬을 통해 이동
     }
 
     public void LoadStageByName(string stageName)
@@ -103,4 +115,6 @@ public class MapManager : MonoBehaviour
     {
         SceneManager.LoadScene("Tutorial");
     }
+
+    
 }
