@@ -88,7 +88,7 @@ public class MapManager : MonoBehaviour
 
     public void OnClickExitStageSelect()
     {
-        SceneManager.LoadScene("StageSelect");
+        SceneManager.LoadScene("SelectStage");
     }
 
 }

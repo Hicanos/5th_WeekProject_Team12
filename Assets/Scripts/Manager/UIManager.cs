@@ -39,15 +39,16 @@ public class UIManager : MonoBehaviour
         }
 
         // 버튼 초기 연결
-        nextStageBtn.onClick.AddListener(OnClickNextStage);
+        if (nextStageBtn != null) { // 버튼이 존재할 경우에만 이벤트 연결
+            nextStageBtn.onClick.AddListener(OnClickNextStage);} 
         retryBtn.onClick.AddListener(OnClickRetryStage);
         selectStageBtn.onClick.AddListener(OnClickSelectStage);
     }
 
     private void Update()
     {
-        if (!isPlaying) return;
-
+        //if (!isPlaying) return;
+        if (!isPlaying || timeText == null) return;//timeText가 null이면 Update()에서 아예 실행 안 하도록 방어
         currentTime += Time.deltaTime;
         timeText.text = currentTime.ToString("N2");
     }
@@ -61,6 +62,10 @@ public class UIManager : MonoBehaviour
     public float StopTimer()
     {
         isPlaying = false;
+
+        if (timeText != null)
+            timeText.text = currentTime.ToString("N2");
+
         return currentTime;
     }
 
