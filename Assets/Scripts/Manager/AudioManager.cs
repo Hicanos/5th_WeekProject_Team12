@@ -64,15 +64,15 @@ public class AudioManager : MonoBehaviour
             case "Title": return 0;
             case "SelectStage": return 1;
             case "Tutorial": return 2;
-            case "Stage 1-1": return 3;
-            case "Stage 1-2":
-            case "Stage 1-3":
-            case "Stage 2-1": return 4;
+            case "Stage 1-1": 
+            case "Stage 1-2": 
+            case "Stage 1-3": return 3;
+            case "Stage 2-1": 
             case "Stage 2-2":
-            case "Stage 2-3":
-            case "Stage 3-1": return 5;
+            case "Stage 2-3": return 4;
+            case "Stage 3-1": 
             case "Stage 3-2":
-            case "Stage 3-3":
+            case "Stage 3-3": return 5;
             case "EndingScene": return 6;
             default: return 0;
         }
