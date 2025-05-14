@@ -91,4 +91,8 @@ public class MapManager : MonoBehaviour
         SceneManager.LoadScene("SelectStage");
     }
 
+    public void TutorialStage()
+    {
+        SceneManager.LoadScene("Tutorial");
+    }
 }
