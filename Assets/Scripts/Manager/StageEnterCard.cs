@@ -46,7 +46,7 @@ public class StageEnterCard : MonoBehaviour
 
     private void SetStarImage(int starCount)
     {
-        for (var i = 0; i < starImages.Count; i++)
+        for (int i = 0; i < starImages.Count; i++)
         {
             Image starImage = starImages[i];
 
