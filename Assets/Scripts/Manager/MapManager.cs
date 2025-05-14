@@ -31,7 +31,7 @@ public class MapManager : MonoBehaviour
         else
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
+            DontDestroyOnLoad(this.gameObject);
         }
 
         CurrentStage = SceneManager.GetActiveScene().name;

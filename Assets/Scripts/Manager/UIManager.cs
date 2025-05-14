@@ -13,6 +13,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject RC_CatImage;
     [SerializeField] private GameObject RC_DogImage;
     [SerializeField] private GameObject CR;
+    [SerializeField] private GameObject MainCanvas;
+    
 
     [Header("Star UI")] //인스펙터 창에서 보기 편하게 나눠주는 역할
 
@@ -52,12 +54,13 @@ public class UIManager : MonoBehaviour
         if (nextStageBtn != null)  // 버튼이 존재할 경우에만 이벤트 연결
         {
             foreach (Button btn in nextStageBtn)
-            { btn.onClick.AddListener(OnClickNextStage); }
-            foreach (Button btn in nextStageBtn)
+            { btn.onClick.AddListener(OnClickNextStage); }}
+          
+        foreach (Button btn in retryBtn)
             { btn.onClick.AddListener(OnClickRetryStage); }
-            foreach (Button btn in nextStageBtn)
+            foreach (Button btn in selectStageBtn)
             { btn.onClick.AddListener(OnClickSelectStage); }
-        }
+        tutorialStageBtn.onClick.AddListener(OnClickTutorialStageSelect);
     }
 
     private void Update()
@@ -113,19 +116,27 @@ public class UIManager : MonoBehaviour
     public void OnClickNextStage()
     {
         MapManager.Instance.LoadNextStage();
+        CR.SetActive(false);
+        MainCanvas.SetActive(true);
     }
 
     public void OnClickRetryStage()
     {
         MapManager.Instance.LoadStage(MapManager.Instance.CurrentStage);
+        CR.SetActive(false);
+        MainCanvas.SetActive(true);
     }
 
     public void OnClickSelectStage()
     {
         MapManager.Instance.OnClickExitStageSelect();
+        CR.SetActive(false);
+        MainCanvas.SetActive(false);
     }
     public void OnClickTutorialStageSelect() 
     {
         MapManager.Instance.LoadSceneTutorial();
+       CR.SetActive(false);
+        MainCanvas.SetActive(true);    
     }
 }
