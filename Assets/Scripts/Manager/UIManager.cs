@@ -30,10 +30,10 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject refuseMessage;
 
     [Header("Buttons")]
-    [SerializeField] private Button nextStageBtn;
-    [SerializeField] private Button retryBtn;
-    [SerializeField] private Button selectStageBtn;
-
+    [SerializeField] private Button []nextStageBtn;
+    [SerializeField] private Button []retryBtn;
+    [SerializeField] private Button[] selectStageBtn;
+    [SerializeField] private Button tutorialStageBtn;
     private float currentTime = 0f;
     private bool isPlaying = true;
 
@@ -46,13 +46,18 @@ public class UIManager : MonoBehaviour
         else
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
+            DontDestroyOnLoad(this.gameObject);
         }
         // 버튼 초기 연결
-        if (nextStageBtn != null) { // 버튼이 존재할 경우에만 이벤트 연결
-            nextStageBtn.onClick.AddListener(OnClickNextStage);} 
-        retryBtn.onClick.AddListener(OnClickRetryStage);
-        selectStageBtn.onClick.AddListener(OnClickSelectStage);
+        if (nextStageBtn != null)  // 버튼이 존재할 경우에만 이벤트 연결
+        {
+            foreach (Button btn in nextStageBtn)
+            { btn.onClick.AddListener(OnClickNextStage); }
+            foreach (Button btn in nextStageBtn)
+            { btn.onClick.AddListener(OnClickRetryStage); }
+            foreach (Button btn in nextStageBtn)
+            { btn.onClick.AddListener(OnClickSelectStage); }
+        }
     }
 
     private void Update()
@@ -118,5 +123,9 @@ public class UIManager : MonoBehaviour
     public void OnClickSelectStage()
     {
         MapManager.Instance.OnClickExitStageSelect();
+    }
+    public void OnClickTutorialStageSelect() 
+    {
+        MapManager.Instance.LoadSceneTutorial();
     }
 }

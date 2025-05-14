@@ -6,8 +6,5 @@ using UnityEngine.SceneManagement;
 public class LoadScene : MonoBehaviour
 {
 
-    public void LoadSceneTutorial()
-    {
-        SceneManager.LoadScene("Tutorial");
-    }
+   
 }
