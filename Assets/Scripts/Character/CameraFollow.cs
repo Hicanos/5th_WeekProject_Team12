@@ -9,14 +9,9 @@ public class CameraFollow : MonoBehaviour
     [SerializeField] private GameObject [] player;
     [SerializeField]float minY = 0f;
     [SerializeField] float maxY = 11f;
-    
-    
-
-
-    /*[Header("카메라 따라가기 속도")]
-    [SerializeField] private float followSpeed = 5f;*/
+   
     Camera camera;
-    // Start is called before the first frame update
+   
     void Awake()
     {
         camera = Camera.main;
