@@ -55,13 +55,13 @@ MonoBehaviour:
   rightKey: 275
   jumpKey: 273
   skillKey: 0
-  moveSpeed: 5
+  moveSpeed: 6
   groundCheck: {fileID: 7379920000155263356}
   groundRayRange: 0.6
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
-  jumpPower: 5
+  jumpPower: 8
   maxJumpCount: 1
   headPivot: {fileID: 8883578392505497082}
   skillCoolTime: 1
