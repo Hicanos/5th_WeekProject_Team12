@@ -2506,6 +2506,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9428a4a1b3e2f964281a08242e0981b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tutorialButton: {fileID: 0}
+  stage1_1Button: {fileID: 0}
+  stage1_2Button: {fileID: 0}
   stageList:
   - Title
   - SelectStage
