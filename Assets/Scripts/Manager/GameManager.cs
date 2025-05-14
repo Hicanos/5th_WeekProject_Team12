@@ -6,6 +6,11 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
+    //다른 스크립트에서 사용하게 될 변수
+    public int LastStageStarCount { get; private set; } = 0;
+
+    
+
     void Awake()
     {
         Application.targetFrameRate = 60;
@@ -27,6 +32,9 @@ public class GameManager : MonoBehaviour
         if (gotLegacy) starCount++;
         if (gotAllObjects) starCount++;
         if (clearTime <= timeLimit) starCount++;
+        
+        //별 갯수를 저장할 변수
+        LastStageStarCount = starCount;
 
         string stage = MapManager.Instance.CurrentStage;
         DataManager.Instance.UpdateStarCount(stage, starCount);
