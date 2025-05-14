@@ -2,10 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MapManager : MonoBehaviour
 {
     public static MapManager Instance { get; private set; }
+    [Header("Stage 버튼들")]
+    public Button tutorialButton;
+    public Button stage1_1Button;
+    public Button stage1_2Button;
     public string CurrentStage { get; private set; } //현재 스테이지를 저장할 변수
     private int currentStageIndex = 0;
 
@@ -26,14 +31,17 @@ public class MapManager : MonoBehaviour
         else
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject); // 씬 전환에도 유지됨
+            DontDestroyOnLoad(gameObject);
         }
 
-    CurrentStage = SceneManager.GetActiveScene().name;
+        CurrentStage = SceneManager.GetActiveScene().name;
 
     }
 
-
+    void Start()
+    {
+       
+    }
     public void LoadStage(string stageName) //현재 스테이지를 불러오는 함수
     {
         if(!GameManager.Instance.IsStageUnlocked(stageName))
@@ -89,6 +97,7 @@ public class MapManager : MonoBehaviour
     public void OnClickExitStageSelect()
     {
         SceneManager.LoadScene("SelectStage");
+
     }
 
 }

@@ -50,9 +50,11 @@ public class UIManager : MonoBehaviour
         }
         // 버튼 초기 연결
         if (nextStageBtn != null) { // 버튼이 존재할 경우에만 이벤트 연결
-            nextStageBtn.onClick.AddListener(OnClickNextStage);} 
-        retryBtn.onClick.AddListener(OnClickRetryStage);
-        selectStageBtn.onClick.AddListener(OnClickSelectStage);
+            nextStageBtn.onClick.AddListener(OnClickNextStage);}
+        if (retryBtn != null)
+            retryBtn.onClick.AddListener(OnClickRetryStage);
+        if (selectStageBtn != null)
+            selectStageBtn.onClick.AddListener(OnClickSelectStage);
     }
 
     private void Update()
