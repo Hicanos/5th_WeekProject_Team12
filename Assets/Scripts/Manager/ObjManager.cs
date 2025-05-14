@@ -13,15 +13,22 @@ public class ObjManager : MonoBehaviour
     [SerializeField] private float timeLimit = 120f;
     public float TimeLimit => timeLimit;
 
-    private bool gotLegacy = false;
+    private static bool gotLegacy = false;
+
+    public bool HasGotLegacy() => gotLegacy;
     private static bool gotAllObjects = false;
 
     private void Awake()
     {
         if (Instance != null && Instance != this)
+        {
             Destroy(gameObject);
+        }
         else
+        {
             Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
     }
 
     private void Start()
@@ -48,5 +55,4 @@ public class ObjManager : MonoBehaviour
         return gotAllObjects;
     }
 
-    public bool HasGotLegacy() => gotLegacy;
 }
