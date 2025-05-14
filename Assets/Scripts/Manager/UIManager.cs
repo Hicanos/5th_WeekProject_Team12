@@ -7,8 +7,18 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     public static UIManager Instance { get; private set; }
+    [Header("Base UI")] //인스펙터 창에서 보기 편하게 나눠주는 역할
+    [SerializeField] private GameObject RC_BgImage;
+    [SerializeField] private GameObject RC_CompleteImage;
+    [SerializeField] private GameObject RC_CatImage;
+    [SerializeField] private GameObject RC_DogImage;
+
 
     [Header("Star UI")] //인스펙터 창에서 보기 편하게 나눠주는 역할
+
+    [SerializeField] private GameObject emptyStar1;
+    [SerializeField] private GameObject emptyStar2;
+    [SerializeField] private GameObject emptyStar3;
     [SerializeField] private GameObject goldStar1;
     [SerializeField] private GameObject goldStar2;
     [SerializeField] private GameObject goldStar3;
@@ -71,9 +81,16 @@ public class UIManager : MonoBehaviour
 
     public void DisplayStars(int starCount)
     {
+        RC_BgImage.SetActive(true);
+        RC_CompleteImage.SetActive(true);
+        RC_CatImage.SetActive(true);
+        RC_DogImage.SetActive(true);
         goldStar1.SetActive(starCount >= 1);
         goldStar2.SetActive(starCount >= 2);
         goldStar3.SetActive(starCount == 3);
+        emptyStar1.SetActive(true);
+        emptyStar2.SetActive(true);
+        emptyStar3.SetActive(true);
     }
 
     public void ShowRefuseMessage()
