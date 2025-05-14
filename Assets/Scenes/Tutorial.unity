@@ -5839,7 +5839,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   door: {fileID: 674870945}
-  timeLimit: 15
+  timeLimit: 120
 --- !u!224 &5913133393179181371
 RectTransform:
   m_ObjectHideFlags: 0
