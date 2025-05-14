@@ -58,7 +58,7 @@ public class UIManager : MonoBehaviour
         { btn.onClick.AddListener(OnClickRetryStage); }
         foreach (Button btn in selectStageBtn)
         { btn.onClick.AddListener(OnClickSelectStage); }
-        tutorialStageBtn.onClick.AddListener(OnClickTutorialStageSelect);
+
     }
 
     private void Update()

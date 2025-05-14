@@ -1,17 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro.EditorUtilities;
-using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Playables;
 
 /// <summary>
-/// ¸ðµç Ä³¸¯ÅÍ(ÇÃ·¹ÀÌ¾î/¸ó½ºÅÍ µî)ÀÇ °øÅë ±â´ÉÀ» ´ã´çÇÏ´Â Ãß»ó ÄÁÆ®·Ñ·¯
-/// ÀÌµ¿, Ã¼·Â Ã³¸®, ½ºÇÁ¶óÀÌÆ® ¹ÝÀü µî ±âº» Çàµ¿ Á¦°ø
+/// ï¿½ï¿½ï¿½ Ä³ï¿½ï¿½ï¿½ï¿½(ï¿½Ã·ï¿½ï¿½Ì¾ï¿½/ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½)ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ß»ï¿½ ï¿½ï¿½Æ®ï¿½Ñ·ï¿½
+/// ï¿½Ìµï¿½, Ã¼ï¿½ï¿½ Ã³ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½âº» ï¿½àµ¿ ï¿½ï¿½ï¿½ï¿½
 /// </summary>
-public enum PLAYERSTATE //»óÅÂ¸Ó½Å enum (¾ÆÁ÷ ¹Ì±¸Çö)
+public enum PLAYERSTATE //ï¿½ï¿½ï¿½Â¸Ó½ï¿½ enum (ï¿½ï¿½ï¿½ï¿½ ï¿½Ì±ï¿½ï¿½ï¿½)
 {
     IDLE,
     MOVE,
@@ -19,17 +17,17 @@ public enum PLAYERSTATE //»óÅÂ¸Ó½Å enum (¾ÆÁ÷ ¹Ì±¸Çö)
     DASH,
     WALL
 }
-//TilemapCollider¿Í CompositeCollider ÇÔ²² »ç¿ë½Ã ¹ß»ýÇÏ´Â ¹ö±×¶§¹®¿¡ ÇÃ·¡±×°¡ ³­ÀâÇÏ°Ô ³ª¿Í¹ö·È½À´Ï´Ù. (velocity.x ¸¸ Á¶ÀÛÇØµµ yÃà °ªÀÌ °°ÀÌ ¹Ù²ò´Ï´Ù. )
-//»óÅÂ ¸Ó½Å °øºÎÇØ¾ß°Ú½À´Ï´Ù. 
+//TilemapColliderï¿½ï¿½ CompositeCollider ï¿½Ô²ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ß»ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½×¶ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½×°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½ï¿½ï¿½Í¹ï¿½ï¿½È½ï¿½ï¿½Ï´ï¿½. (velocity.x ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Øµï¿½ yï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ù²ï¿½Ï´ï¿½. )
+//ï¿½ï¿½ï¿½ï¿½ ï¿½Ó½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ø¾ß°Ú½ï¿½ï¿½Ï´ï¿½. 
 
 public abstract class Characterbase : MonoBehaviour
 {
-    protected Rigidbody2D rb;                    // ÀÌµ¿À» À§ÇÑ ¸®Áöµå¹Ùµð
-    protected SpriteRenderer spriteRenderer;     // ÁÂ¿ì ¹ÝÀüÀ» À§ÇÑ ½ºÇÁ¶óÀÌÆ® ·»´õ·¯
+    protected Rigidbody2D rb;                    // ï¿½Ìµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ùµï¿½
+    protected SpriteRenderer spriteRenderer;     // ï¿½Â¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     protected MyAnimationController Anim;
    
 
-    /// <summary> ÃÊ±âÈ­: ¸®Áöµå¹Ùµð, ½ºÇÁ¶óÀÌÆ® Ã£°í ½ºÅÈ ÃÊ±âÈ­ </summary>
+    /// <summary> ï¿½Ê±ï¿½È­: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ùµï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® Ã£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­ </summary>
     protected virtual void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -39,22 +37,22 @@ public abstract class Characterbase : MonoBehaviour
    
     
     protected PLAYERSTATE currentState;
-    //»óÅÂº¯°æ ÇÔ¼ö ¹Ì±¸Çö
+    //ï¿½ï¿½ï¿½Âºï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½ ï¿½Ì±ï¿½ï¿½ï¿½
     protected void ChangeState(PLAYERSTATE newState)
     {
         if (currentState == newState) return;
 
-        Debug.Log($"»óÅÂ ÀüÀÌ: {currentState} -> {newState}");
+        Debug.Log($"ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½: {currentState} -> {newState}");
         currentState = newState;
     }
 
-    //Á¶ÀÛ ½ºÅ¸ÀÏ enum
+    //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å¸ï¿½ï¿½ enum
     protected enum CHAR
     {
         DOG,
         CAT
     }
-    [Header("Á¶ÀÛ ½ºÅ¸ÀÏ")]
+    [Header("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å¸ï¿½ï¿½")]
     [SerializeField] protected CHAR enumChar;
     protected void ControlKey()
     {
@@ -77,55 +75,55 @@ public abstract class Characterbase : MonoBehaviour
 
     }
 
-    /*---------------------------------------Ä³¸¯ÅÍ °øÅë º¯¼ö---------------------------------------*/
+    /*---------------------------------------Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½---------------------------------------*/
     
-    // ÀÔ·Â°ª ÀúÀå
+    // ï¿½Ô·Â°ï¿½ ï¿½ï¿½ï¿½ï¿½
     protected float moveX;
     protected float moveY;
     protected Vector2 moveInput;
   
-    [Header("ÀÌ¸§")]
+    [Header("ï¿½Ì¸ï¿½")]
     [SerializeField] protected string Name = string.Empty;
 
-    [Header("Á¶ÀÛÅ° ¼³Á¤")]
+    [Header("ï¿½ï¿½ï¿½ï¿½Å° ï¿½ï¿½ï¿½ï¿½")]
     [SerializeField] protected KeyCode leftKey;
     [SerializeField] protected KeyCode rightKey;
     [SerializeField] protected KeyCode jumpKey;
     [SerializeField] protected KeyCode skillKey;
     [SerializeField] protected int moveSpeed = 5;
 
-    [Header("È¾½ºÅ©·Ñ ¹°¸® ±â¹Ý Á¡ÇÁ ½Ã½ºÅÛ")]
-    [SerializeField] protected Transform groundCheck;      // ¹Ù´Ú ÆÇÁ¤ À§Ä¡
-    [SerializeField] protected float groundRayRange = 0.1f; // ¹Ù´Ú Ã¼Å© ¹üÀ§(raycast±æÀÌ)
-    [SerializeField] protected LayerMask groundLayer;      // ¹Ù´Ú ·¹ÀÌ¾î
-    [SerializeField] protected float jumpPower = 5f;       // Á¡ÇÁ Èû
-    [SerializeField] protected int maxJumpCount = 2;//´ÙÁßÁ¡ÇÁ ÃÖ´ë È½¼ö
-    protected int currentJumpCount = 0;//ÇöÀç Á¡ÇÁ¼ö ÀúÀå ÇÒ º¯¼ö
+    [Header("È¾ï¿½ï¿½Å©ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã½ï¿½ï¿½ï¿½")]
+    [SerializeField] protected Transform groundCheck;      // ï¿½Ù´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡
+    [SerializeField] protected float groundRayRange = 0.1f; // ï¿½Ù´ï¿½ Ã¼Å© ï¿½ï¿½ï¿½ï¿½(raycastï¿½ï¿½ï¿½ï¿½)
+    [SerializeField] protected LayerMask groundLayer;      // ï¿½Ù´ï¿½ ï¿½ï¿½ï¿½Ì¾ï¿½
+    [SerializeField] protected float jumpPower = 5f;       // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
+    [SerializeField] protected int maxJumpCount = 2;//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ È½ï¿½ï¿½
+    protected int currentJumpCount = 0;//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
-    [Header("Çï¸ä ÇÇ¹þ")]
+    [Header("ï¿½ï¿½ï¿½ ï¿½Ç¹ï¿½")]
     [SerializeField] protected Transform headPivot;
     protected GameObject helmet;
 
-    [Header("½ºÅ³ ÄðÅ¸ÀÓ")]
+    [Header("ï¿½ï¿½Å³ ï¿½ï¿½Å¸ï¿½ï¿½")]
     [SerializeField] protected float skillCoolTime = 1f;
     
-    /*---------------------------------------´Ü¹ß¼º ½ºÅ³ ¸ðÀ½---------------------------------------*/
-    //½ºÅ³ ¿äÃ»ÇÒ ºÒ
+    /*---------------------------------------ï¿½Ü¹ß¼ï¿½ ï¿½ï¿½Å³ ï¿½ï¿½ï¿½ï¿½---------------------------------------*/
+    //ï¿½ï¿½Å³ ï¿½ï¿½Ã»ï¿½ï¿½ ï¿½ï¿½
     protected bool skillReq = false;
 
-    // ½ºÅ³ ÀÔ·Â ¹ÞÀ» ¸Å¼­µå
+    // ï¿½ï¿½Å³ ï¿½Ô·ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Å¼ï¿½ï¿½ï¿½
     protected virtual void InstantSkillCall()
     {
         if (Input.GetKeyDown(skillKey) && skillReady)
         {
-            //ÄðÅ¸ÀÓ ½ÃÀÛ 
+            //ï¿½ï¿½Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 
             StartCoroutine(SkillCoolDown(skillCoolTime));
             skillReq = true;
-            Debug.Log($"{Name}½ºÅ³ Å° ÀÔ·Â");
+            Debug.Log($"{Name}ï¿½ï¿½Å³ Å° ï¿½Ô·ï¿½");
         }
     }
 
-    //´Ü¹ß¼º ½ºÅ³È£Ãâ
+    //ï¿½Ü¹ß¼ï¿½ ï¿½ï¿½Å³È£ï¿½ï¿½
     protected virtual void InstantSkillActivate()
     {
         if (skillReq)
@@ -133,58 +131,58 @@ public abstract class Characterbase : MonoBehaviour
             skillReq = false;
             InstantSkill();
 
-            Debug.Log($"{Name}½ºÅ³¹ßµ¿");
+            Debug.Log($"{Name}ï¿½ï¿½Å³ï¿½ßµï¿½");
         }
     }
-    // ÀçÁ¤ÀÇ¿ë ´Ü¹ß¼º ½ºÅ³ ÇÔ¼ö
+    // ï¿½ï¿½ï¿½ï¿½ï¿½Ç¿ï¿½ ï¿½Ü¹ß¼ï¿½ ï¿½ï¿½Å³ ï¿½Ô¼ï¿½
     protected virtual void InstantSkill() { }
 
-    /*---------------------------------------Åä±ÛÇü ½ºÅ³ ¸ðÀ½---------------------------------------*/
-    //Åä±Û½ºÅ³¿ë ºÒ°ª
+    /*---------------------------------------ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å³ ï¿½ï¿½ï¿½ï¿½---------------------------------------*/
+    //ï¿½ï¿½Û½ï¿½Å³ï¿½ï¿½ ï¿½Ò°ï¿½
     protected bool isToggled = false;
 
-    //Åä±ÛÇü ½ºÅ³ ÀÔ·Â °¨Áö
+    //ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å³ ï¿½Ô·ï¿½ ï¿½ï¿½ï¿½ï¿½
     protected virtual void ToggleSkillCall()
     {
         if (Input.GetKeyDown(skillKey) && !isToggled)
         {
-            //ÄðÅ¸ÀÓ ½ÃÀÛ 
+            //ï¿½ï¿½Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 
             StartCoroutine(SkillCoolDown(skillCoolTime));
             isToggled = true;
             ToggleSkillOn();
-            Debug.Log($"{Name}½ºÅ³ Å° ÀÔ·Â");
-            Debug.Log($"{Name}Åä±Û½ºÅ³¹ßµ¿");
+            Debug.Log($"{Name}ï¿½ï¿½Å³ Å° ï¿½Ô·ï¿½");
+            Debug.Log($"{Name}ï¿½ï¿½Û½ï¿½Å³ï¿½ßµï¿½");
         }
         else if (Input.GetKeyDown(skillKey) && isToggled)
         {
             isToggled = false;
             ToggleSkillOff();
-            Debug.Log($"{Name}½ºÅ³ Å° ÀÔ·Â");
-            Debug.Log($"{Name}Åä±Û½ºÅ³ÇØÁ¦");
+            Debug.Log($"{Name}ï¿½ï¿½Å³ Å° ï¿½Ô·ï¿½");
+            Debug.Log($"{Name}ï¿½ï¿½Û½ï¿½Å³ï¿½ï¿½ï¿½ï¿½");
         }
     }
 
-    //ÀçÁ¤ÀÇ¿ë Åä±Û ½ºÅ³ OnÇÔ¼ö
+    //ï¿½ï¿½ï¿½ï¿½ï¿½Ç¿ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½Å³ Onï¿½Ô¼ï¿½
     protected virtual void ToggleSkillOn() { }
 
-    //ÀçÁ¤ÀÇ¿ë Åä±Û ½ºÅ³ OffÇÔ¼ö
+    //ï¿½ï¿½ï¿½ï¿½ï¿½Ç¿ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½Å³ Offï¿½Ô¼ï¿½
     protected virtual void ToggleSkillOff() { }
 
-    /*---------------------------------------ÄðÅ¸ÀÓ ÄÚ·çÆ¾---------------------------------------*/
-    //½ºÅ³ ÄðÅ¸ÀÓ¿ë ºÒ
+    /*---------------------------------------ï¿½ï¿½Å¸ï¿½ï¿½ ï¿½Ú·ï¿½Æ¾---------------------------------------*/
+    //ï¿½ï¿½Å³ ï¿½ï¿½Å¸ï¿½Ó¿ï¿½ ï¿½ï¿½
     protected bool skillReady = true;
 
-    //½ºÅ³ ÄðÅ¸ÀÓ¿ë ÄÚ·çÆ¾
+    //ï¿½ï¿½Å³ ï¿½ï¿½Å¸ï¿½Ó¿ï¿½ ï¿½Ú·ï¿½Æ¾
     protected virtual IEnumerator SkillCoolDown(float cooldown)
     {
-        Debug.Log("ÄðÅ¸ÀÓ ¹ßµ¿");
+        Debug.Log("ï¿½ï¿½Å¸ï¿½ï¿½ ï¿½ßµï¿½");
         cooldown = skillCoolTime;
         skillReady = false;
         yield return new WaitForSeconds(cooldown);
         skillReady = true;
-        Debug.Log("ÄðÅ¸ÀÓ ³¡");
+        Debug.Log("ï¿½ï¿½Å¸ï¿½ï¿½ ï¿½ï¿½");
     }
-    /*---------------------------------------¾Ö´Ï¸ÞÀÌ¼Ç¿ë ÇÔ¼ö---------------------------------------*/
+    /*---------------------------------------ï¿½Ö´Ï¸ï¿½ï¿½Ì¼Ç¿ï¿½ ï¿½Ô¼ï¿½---------------------------------------*/
     protected virtual void HandleJumpAnim()
     {
         bool isJump = currentJumpCount > 0 || (currentJumpCount == 0 && !IsGrounded());
@@ -206,8 +204,8 @@ public abstract class Characterbase : MonoBehaviour
         Anim.SetMove(isMoving);
     }
     /// <summary>
-    /// Ä³¸¯ÅÍ ÁÂ¿ì ¹ÝÀü (flipX) Ã³¸®
-    /// ¹«±â¿¡´Â Àû¿ëÇÏÁö ¾ÊÀ½
+    /// Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½Â¿ï¿½ ï¿½ï¿½ï¿½ï¿½ (flipX) Ã³ï¿½ï¿½
+    /// ï¿½ï¿½ï¿½â¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     /// </summary>
     protected virtual void SpriteFlip()
     {
@@ -219,44 +217,44 @@ public abstract class Characterbase : MonoBehaviour
                 headPivot.localScale = new Vector3(moveX < 0 ? -1f : 1f, 1f, 1f);
             }
     }
-    /*---------------------------------------¿òÁ÷ÀÓ°ü·Ã ÇÔ¼ö---------------------------------------*/
-    //Á¡ÇÁ ÄÝÀ» À§ÇÑ ºÒ
+    /*---------------------------------------ï¿½ï¿½ï¿½ï¿½ï¿½Ó°ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½---------------------------------------*/
+    //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
     protected bool jumpReq = false;
-    //¶¥¿¡ ºÙ¾îÀÖ´ÂÁö °¨ÁöÇÒ ºÒ¹ÝÈ¯ ÇÔ¼ö
+    //ï¿½ï¿½ï¿½ï¿½ ï¿½Ù¾ï¿½ï¿½Ö´ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ò¹ï¿½È¯ ï¿½Ô¼ï¿½
     protected virtual bool IsGrounded()
     {
         RaycastHit2D hit = Physics2D.Raycast(groundCheck.position, Vector2.down, groundRayRange, groundLayer);
         return hit.collider != null;
     }
     /// <summary>
-    /// ÀÌµ¿ Å° ÀÔ·ÂÀ» ¹Þ¾Æ ¹æÇâ º¤ÅÍ °è»ê
+    /// ï¿½Ìµï¿½ Å° ï¿½Ô·ï¿½ï¿½ï¿½ ï¿½Þ¾ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
     /// </summary>
     protected virtual void MoveCall()
     {
         moveX = 0;
         if (Input.GetKey(leftKey)) moveX -= 1;
         if (Input.GetKey(rightKey)) moveX += 1;
-        //ÀÔ·Â°ªÀ» ÅëÇØ ¹æÇâ ±¸ÇÏ±â
+        //ï¿½Ô·Â°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ï±ï¿½
         moveInput = new Vector2(moveX, moveY).normalized;
     }
 
-    /// <summary> ÀÌµ¿ Ã³¸®: ¼Óµµ Àû¿ë </summary>
+    /// <summary> ï¿½Ìµï¿½ Ã³ï¿½ï¿½: ï¿½Óµï¿½ ï¿½ï¿½ï¿½ï¿½ </summary>
     protected virtual void MoveActivate(Vector2 input)
     {
         Vector2 velocity = rb.velocity;
-        // ÀÌµ¿¼Óµµ¸¦ ¹æÇâ¿¡ °öÇØÁÖ±â
+        // ï¿½Ìµï¿½ï¿½Óµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½â¿¡ ï¿½ï¿½ï¿½ï¿½ï¿½Ö±ï¿½
         velocity.x = input.x * moveSpeed;
         rb.velocity = velocity;
     }
 
     /// <summary>
-    /// Á¡ÇÁ Å° ÀÔ·Â °¨Áö ¹× ÄðÅ¸ÀÓ È®ÀÎ ÈÄ Á¡ÇÁ ½ÇÇà
+    /// ï¿½ï¿½ï¿½ï¿½ Å° ï¿½Ô·ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½Å¸ï¿½ï¿½ È®ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     /// </summary>
-    protected virtual void JumpCall()//Á¡ÇÁÅ° ÀÔ·Â °¨Áö
-    {   //Å° ÀÔ·Â, Á¡ÇÁ È½¼ö°¡ ÃÖ´ë Á¡ÇÁº¸´Ù ÀÛÀ» ¶§,º®Å¸±â ÁßÀÌ ¾Æ´Ò ¶§ 
+    protected virtual void JumpCall()//ï¿½ï¿½ï¿½ï¿½Å° ï¿½Ô·ï¿½ ï¿½ï¿½ï¿½ï¿½
+    {   //Å° ï¿½Ô·ï¿½, ï¿½ï¿½ï¿½ï¿½ È½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½,ï¿½ï¿½Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Æ´ï¿½ ï¿½ï¿½ 
         if ((Input.GetKeyDown(jumpKey) && currentJumpCount < maxJumpCount))
         {
-            // ´Ü¼ø ³«ÇÏÁß¿¡ Á¡ÇÁ ¹æÁö
+            // ï¿½Ü¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ß¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             if (currentJumpCount == 0 && !IsGrounded())
             { return; }
 
@@ -264,25 +262,25 @@ public abstract class Characterbase : MonoBehaviour
         }
     }
 
-    //Á¡ÇÁ È£Ãâ
+    //ï¿½ï¿½ï¿½ï¿½ È£ï¿½ï¿½
     protected virtual void JumpAtivate()
     {
         if (jumpReq)
-        {   // Y ¼Óµµ ÃÊ±âÈ­
+        {   // Y ï¿½Óµï¿½ ï¿½Ê±ï¿½È­
             rb.velocity = new Vector2(rb.velocity.x, 0f);
-            //up¹æÇâÀ¸·Î Á¡ÇÁÆÄ¿ö¸¸Å­ ÀÓÆÞ½º ¿¡µåÆ÷½º
+            //upï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½Å­ ï¿½ï¿½ï¿½Þ½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             rb.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
             if (currentJumpCount < maxJumpCount)
             {
                 currentJumpCount++;
-                //Á¡ÇÁ È½¼ö ´©Àû ¹× µð¹ö±ë¿ë ·Î±× 
-                Debug.Log($"{Name}Á¡ÇÁ {currentJumpCount}/{maxJumpCount}");
+                //ï¿½ï¿½ï¿½ï¿½ È½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Î±ï¿½ 
+                Debug.Log($"{Name}ï¿½ï¿½ï¿½ï¿½ {currentJumpCount}/{maxJumpCount}");
             }
             jumpReq = false;
         }
     }
 
-    //¶¥¿¡ ÂøÁöÇß´ÂÁö °¨ÁöÇÏ´Â ¸Å¼­µå
+    //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ß´ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Å¼ï¿½ï¿½ï¿½
     protected void CheckLanding()
     {
         if (Mathf.Abs(rb.velocity.y) < 0.01f && currentJumpCount > 0 && IsGrounded())
@@ -290,12 +288,12 @@ public abstract class Characterbase : MonoBehaviour
             currentJumpCount = 0;
             Anim.SetJump(false);
 
-            Debug.Log($"{Name}ÂøÁö!");
+            Debug.Log($"{Name}ï¿½ï¿½ï¿½ï¿½!");
         }
     }
     /*---------------------------------------ect.---------------------------------------*/
 
-    //raycast ±âÁî¸ð ½Ã°¢È­ÇÏ±â À§ÇÑ ¸Å¼­µå
+    //raycast ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½È­ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Å¼ï¿½ï¿½ï¿½
     protected virtual void OnDrawGizmosSelected()
     {
         if (groundCheck == null) return;
