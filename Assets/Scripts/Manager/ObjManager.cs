@@ -47,6 +47,9 @@ public class ObjManager : MonoBehaviour
         Debug.Log(gotAllObjects ? "아이템 다 모았음!" : "아이템 아직 있음");
         return gotAllObjects;
     }
-
+    public static bool CGO()
+    {
+        return gotAllObjects;
+    }
     public bool HasGotLegacy() => gotLegacy;
 }

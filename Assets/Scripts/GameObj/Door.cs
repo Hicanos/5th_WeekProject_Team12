@@ -37,7 +37,7 @@ public class Door : MonoBehaviour
             float clearTime = UIManager.Instance.StopTimer();
             GameManager.Instance.ProcessingStageClear(
                 gotLegacy: true,
-                gotAllObjects: ObjManager.CheckGetObject(true),
+                gotAllObjects: ObjManager.CGO(),
                 clearTime: clearTime,
                 timeLimit: ObjManager.Instance.TimeLimit
             );
