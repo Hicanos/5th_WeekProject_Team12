@@ -486,8 +486,8 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 275765305}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.35917136}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -500,7 +500,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 4.233051, y: -1.6713909}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
 --- !u!1 &349742004
@@ -7109,6 +7109,7 @@ MonoBehaviour:
   RC_CatImage: {fileID: 7325445377341754479}
   RC_DogImage: {fileID: 6385101426846663612}
   CR: {fileID: 2762956424934450330}
+  MainCanvas: {fileID: 1309812164}
   emptyStar1: {fileID: 3611030490844438649}
   emptyStar2: {fileID: 1389193820243224085}
   emptyStar3: {fileID: 1762751472468738966}
@@ -7117,12 +7118,12 @@ MonoBehaviour:
   goldStar3: {fileID: 8265844741936468392}
   timeText: {fileID: 35433770}
   refuseMessage: {fileID: 6199638390317121331}
-  nextStageBtn:
-  - {fileID: 0}
+  nextStageBtn: []
   retryBtn:
-  - {fileID: 0}
+  - {fileID: 1843105452471508536}
   selectStageBtn:
-  - {fileID: 0}
+  - {fileID: 756689482}
+  - {fileID: 331198183278704950}
   tutorialStageBtn: {fileID: 0}
 --- !u!223 &6613898746518564728
 Canvas:
