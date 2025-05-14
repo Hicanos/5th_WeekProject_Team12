@@ -34,9 +34,9 @@ public class SelectStageController : MonoBehaviour
     {
         List<StageInfo> stageInfoList = new();
 
-        for (var i = 0; i < _stageNames.Count; i++)
+        for (int i = 0; i < _stageNames.Count; i++)
         {
-            var stageName = _stageNames[i];
+            string stageName = _stageNames[i];
             bool canEnter = GameManager.Instance.IsStageUnlocked(stageName);
             int starCount = DataManager.Instance.GetStars(stageName);
 
