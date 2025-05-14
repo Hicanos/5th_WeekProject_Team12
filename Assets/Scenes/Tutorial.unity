@@ -1606,6 +1606,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2349705019556988131, guid: 5a05968bce2993743b09888c25002c07, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 286
+      objectReference: {fileID: 0}
+    - target: {fileID: 2349705019556988131, guid: 5a05968bce2993743b09888c25002c07, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 410
+      objectReference: {fileID: 0}
     - target: {fileID: 5412945375345722072, guid: 5a05968bce2993743b09888c25002c07, type: 3}
       propertyPath: m_FlipX
       value: 1
@@ -1653,6 +1661,14 @@ PrefabInstance:
     - target: {fileID: 7625816137126014311, guid: 5a05968bce2993743b09888c25002c07, type: 3}
       propertyPath: m_Name
       value: NPC_Tutor
+      objectReference: {fileID: 0}
+    - target: {fileID: 7937958870084869727, guid: 5a05968bce2993743b09888c25002c07, type: 3}
+      propertyPath: m_Text
+      value: "\uC548\uB155?"
+      objectReference: {fileID: 0}
+    - target: {fileID: 8467123375835101858, guid: 5a05968bce2993743b09888c25002c07, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
