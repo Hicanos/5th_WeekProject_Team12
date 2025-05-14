@@ -13,10 +13,7 @@ public class Door : MonoBehaviour
     private bool isPlayerNear = false;
     private void Awake()
     {
-        openDoorObject = GameObject.FindGameObjectWithTag("OpenDoor");
-        closeDoorObject = GameObject.FindGameObjectWithTag("ClosedDoor");
-        interactionPopup = GameObject.FindGameObjectWithTag("inter");
-        refuseMessage = GameObject.FindGameObjectWithTag("refu ");
+       
     }
     private void Start()
     {
@@ -24,6 +21,8 @@ public class Door : MonoBehaviour
 
         if (refuseMessage != null)
             refuseMessage.SetActive(false);
+        
+        
     }
 
     private void Update()
@@ -48,6 +47,13 @@ public class Door : MonoBehaviour
                 timeLimit: ObjManager.Instance.TimeLimit
             );
         }
+
+        if (openDoorObject == null) openDoorObject = GameObject.FindGameObjectWithTag("OpenDoor"); else { return; }
+        if (closeDoorObject == null) closeDoorObject = GameObject.FindGameObjectWithTag("ClosedDoor"); else { return; }
+        if (interactionPopup == null) interactionPopup = GameObject.FindGameObjectWithTag("inter"); else { return; }
+        if (refuseMessage == null) { refuseMessage = GameObject.FindGameObjectWithTag("refu "); } else { return; }
+
+
     }
 
     private void HideRefuseMessage()
