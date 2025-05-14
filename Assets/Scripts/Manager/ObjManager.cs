@@ -6,58 +6,27 @@ public class ObjManager : MonoBehaviour
 {
     public static ObjManager Instance { get; private set; }
 
-    [Header("Door Objects")]
-    [SerializeField] private GameObject openDoorObject;
-    [SerializeField] private GameObject closeDoorObject;
-
-    [Header("UI Elements")]
-    [SerializeField] private GameObject interactionPopup;
-    [SerializeField] private GameObject refuseMessage;
+    [Header("Door Reference")]
+    [SerializeField] private Door door;
 
     [Header("Clear Condition")]
     [SerializeField] private float timeLimit = 120f;
+    public float TimeLimit => timeLimit;
 
-    private bool isPlayerNear = false;
     private bool gotLegacy = false;
     private static bool gotAllObjects = false;
-    private float clearTime = float.MaxValue;
 
     private void Awake()
     {
-        if (Instance != null && Instance != this) Destroy(gameObject);
+        if (Instance != null && Instance != this)
+            Destroy(gameObject);
         else
-        {
             Instance = this;
-           
-        }
     }
 
     private void Start()
     {
-        closeDoorObject.SetActive(true);
-        openDoorObject.SetActive(false);
-        refuseMessage.SetActive(false);
-    }
-
-    private void Update()
-    {
-        if (isPlayerNear && Input.GetKeyDown(KeyCode.E))
-        {
-            if (!gotLegacy)
-            {
-                refuseMessage.SetActive(true);
-                Invoke(nameof(HideRefuseMessage), 2f);
-                return;
-            }
-
-            clearTime = UIManager.Instance.StopTimer();
-            GameManager.Instance.ProcessingStageClear(gotLegacy, gotAllObjects, clearTime, timeLimit);
-        }
-    }
-
-    private void HideRefuseMessage()
-    {
-        refuseMessage.SetActive(false);
+        door.Close();
     }
 
     public void CollectLegacy(int legacyID)
@@ -69,8 +38,7 @@ public class ObjManager : MonoBehaviour
         }
 
         gotLegacy = true;
-        closeDoorObject.SetActive(false);
-        openDoorObject.SetActive(true);
+        door.Open();
     }
 
     public static bool CheckGetObject(bool allCollected)
@@ -80,21 +48,5 @@ public class ObjManager : MonoBehaviour
         return gotAllObjects;
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            isPlayerNear = true;
-            interactionPopup.SetActive(true);
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            isPlayerNear = false;
-            interactionPopup.SetActive(false);
-        }
-    }
+    public bool HasGotLegacy() => gotLegacy;
 }
