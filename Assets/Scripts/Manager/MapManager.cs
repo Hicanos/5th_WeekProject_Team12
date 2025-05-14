@@ -31,7 +31,7 @@ public class MapManager : MonoBehaviour
         else
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
+            DontDestroyOnLoad(this.gameObject);
         }
 
         CurrentStage = SceneManager.GetActiveScene().name;
@@ -74,7 +74,7 @@ public class MapManager : MonoBehaviour
 
         if(!GameManager.Instance.IsStageUnlocked(stageName))
         {
-            //UI로 아직 갈 수 없는 장소입니다. 라고 알려줬으면 좋겠습니다.
+            
             Debug.Log($"{stageName}은 아직 해금되지 않았습니다.");
             return;
         }

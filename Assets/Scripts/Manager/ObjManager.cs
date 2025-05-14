@@ -22,6 +22,7 @@ public class ObjManager : MonoBehaviour
             Destroy(gameObject);
         else
             Instance = this;
+        DontDestroyOnLoad(this.gameObject);
     }
 
     private void Start()
