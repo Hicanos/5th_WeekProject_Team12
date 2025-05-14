@@ -33,7 +33,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject refuseMessage;
 
     [Header("Buttons")]
-    [SerializeField] private Button[] nextStageBtn;
+   
     [SerializeField] private Button[] retryBtn;
     [SerializeField] private Button[] selectStageBtn;
     [SerializeField] private Button tutorialStageBtn;
@@ -52,11 +52,7 @@ public class UIManager : MonoBehaviour
             DontDestroyOnLoad(this.gameObject);
         }
         // 버튼 초기 연결
-        if (nextStageBtn != null)  // 버튼이 존재할 경우에만 이벤트 연결
-        {
-            foreach (Button btn in nextStageBtn)
-            { btn.onClick.AddListener(OnClickNextStage); }
-        }
+        
 
         foreach (Button btn in retryBtn)
         { btn.onClick.AddListener(OnClickRetryStage); }
@@ -144,13 +140,8 @@ public class UIManager : MonoBehaviour
         refuseMessage.SetActive(false);
     }
 
-    public void OnClickNextStage()
-    {
-        MapManager.Instance.LoadNextStage();
-        CR.SetActive(false);
-        MainCanvas.SetActive(true);
-    }
-
+  
+   
     public void OnClickRetryStage()
     {
         MapManager.Instance.LoadStage(MapManager.Instance.CurrentStage);

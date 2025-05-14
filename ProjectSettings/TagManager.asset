@@ -9,6 +9,11 @@ TagManager:
   - Dog
   - Cat
   - Door
+  - inter
+  - ClosedDoor
+  - refu
+  - OpenDoor
+  - UIM
   layers:
   - Default
   - TransparentFX
