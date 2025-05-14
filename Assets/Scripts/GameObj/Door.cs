@@ -11,7 +11,13 @@ public class Door : MonoBehaviour
     [SerializeField] private GameObject refuseMessage;
 
     private bool isPlayerNear = false;
-
+    private void Awake()
+    {
+        openDoorObject = GameObject.FindGameObjectWithTag("OpenDoor");
+        closeDoorObject = GameObject.FindGameObjectWithTag("ClosedDoor");
+        interactionPopup = GameObject.FindGameObjectWithTag("inter");
+        refuseMessage = GameObject.FindGameObjectWithTag("refu ");
+    }
     private void Start()
     {
         Close();
