@@ -6,12 +6,12 @@ using UnityEngine;
 public class CameraFollow : MonoBehaviour
 {
     [Header("카메라가 따라갈 두 캐릭터")]
-    [SerializeField] private Transform Cat;
-    [SerializeField] private Transform Dog;
-    Rigidbody2D rb;
-    Transform tCam;
-    Transform tCat;
-    Transform tDog;
+    [SerializeField] private GameObject [] player;
+    [SerializeField]float minY = 0f;
+    [SerializeField] float maxY = 10f;
+    
+    
+
 
     /*[Header("카메라 따라가기 속도")]
     [SerializeField] private float followSpeed = 5f;*/
@@ -20,11 +20,13 @@ public class CameraFollow : MonoBehaviour
     void Awake()
     {
         camera = Camera.main;
-        rb = GetComponent<Rigidbody2D>();
-        tCam = GetComponent<Transform>();
+       
         
     }
-
+    private void Start()
+    {
+         player = GameObject.FindGameObjectsWithTag("Player");
+    }
     private void FixedUpdate()
     {
         MoveCamera();
@@ -34,8 +36,9 @@ public class CameraFollow : MonoBehaviour
 
     private void MoveCamera()
     { 
-        Vector3 midpoint = (tCat.position + tDog.position)/ 2f;
-        rb.position = midpoint;
+        Vector3 midpoint = (player[0].transform.position + player[1].transform.position)/ 2f;
+        camera.transform.position = new Vector3(0f, midpoint.y, -10f);
+
         
 
 
