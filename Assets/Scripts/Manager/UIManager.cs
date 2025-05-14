@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
@@ -14,7 +15,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject RC_DogImage;
     [SerializeField] public GameObject CR;
     [SerializeField] public GameObject MainCanvas;
-    
+
 
     [Header("Star UI")] //인스펙터 창에서 보기 편하게 나눠주는 역할
 
@@ -32,8 +33,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject refuseMessage;
 
     [Header("Buttons")]
-    [SerializeField] private Button []nextStageBtn;
-    [SerializeField] private Button []retryBtn;
+    [SerializeField] private Button[] nextStageBtn;
+    [SerializeField] private Button[] retryBtn;
     [SerializeField] private Button[] selectStageBtn;
     [SerializeField] private Button tutorialStageBtn;
     private float currentTime = 0f;
@@ -54,13 +55,14 @@ public class UIManager : MonoBehaviour
         if (nextStageBtn != null)  // 버튼이 존재할 경우에만 이벤트 연결
         {
             foreach (Button btn in nextStageBtn)
-            { btn.onClick.AddListener(OnClickNextStage); }}
-          
+            { btn.onClick.AddListener(OnClickNextStage); }
+        }
+
         foreach (Button btn in retryBtn)
-            { btn.onClick.AddListener(OnClickRetryStage); }
-            foreach (Button btn in selectStageBtn)
-            { btn.onClick.AddListener(OnClickSelectStage); }
-            tutorialStageBtn.onClick.AddListener(OnClickTutorialStageSelect);
+        { btn.onClick.AddListener(OnClickRetryStage); }
+        foreach (Button btn in selectStageBtn)
+        { btn.onClick.AddListener(OnClickSelectStage); }
+        tutorialStageBtn.onClick.AddListener(OnClickTutorialStageSelect);
     }
 
     private void Update()
@@ -68,9 +70,38 @@ public class UIManager : MonoBehaviour
         //if (!isPlaying) return;
         if (!isPlaying || timeText == null) return;//timeText가 null이면 Update()에서 아예 실행 안 하도록 방어
         currentTime += Time.deltaTime;
-        timeText.text = currentTime.ToString("N2");
+        Scene currentScene = SceneManager.GetActiveScene();
+        if (currentScene.name != "SelectStage")
+        {
+            timeText.text = currentTime.ToString("N2");
+        }
+        else
+        {
+            currentTime = 0;
+            timeText.text = "0";
+        }
+        UnityEngine.Debug.Log(timeText.text);
     }
+    private void OnDisable()
+    {
 
+        this.enabled = true;
+        //SceneManager.sceneLoaded -= OnSceneLoaded;
+
+    }
+    ////컴포넌트가 켜질 때 호출됨
+    //private void OnEnable()
+    //{
+    //    //SceneManager.sceneLoaded += OnSceneLoaded;
+    //    //씬이 바뀔 때마다 OnSceneLoaded()가 호출되도록 이벤트 등록
+    //}
+
+    ////씬이 새로 로드되면 자동 실행됨
+    //private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    //{
+    //    //씬이 바뀔 때마다 UI를 초기화
+    //    StartTimer();
+    //}
     public void StartTimer()
     {
         currentTime = 0f;
@@ -133,10 +164,10 @@ public class UIManager : MonoBehaviour
         CR.SetActive(false);
         MainCanvas.SetActive(false);
     }
-    public void OnClickTutorialStageSelect() 
+    public void OnClickTutorialStageSelect()
     {
         MapManager.Instance.LoadSceneTutorial();
-       CR.SetActive(false);
-        MainCanvas.SetActive(true);    
+        CR.SetActive(false);
+        MainCanvas.SetActive(true);
     }
 }
