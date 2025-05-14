@@ -44,6 +44,10 @@ public class Box : MonoBehaviour
         {
             rb.constraints = RigidbodyConstraints2D.FreezeRotation | RigidbodyConstraints2D.FreezePositionY; //회전금지. Y금지(위로 올라가는 것 방지)
         }
+        else if (charLayer == LayerMask.NameToLayer("Cat"))
+        {
+            rb.constraints = RigidbodyConstraints2D.FreezeAll; //위로 올라가지 않도록
+        }
         else
         {
             rb.constraints = RigidbodyConstraints2D.FreezeRotation | RigidbodyConstraints2D.FreezePositionX; //회전 금지, x금지
