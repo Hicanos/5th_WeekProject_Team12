@@ -11,13 +11,18 @@ public class Door : MonoBehaviour
     [SerializeField] private GameObject refuseMessage;
 
     private bool isPlayerNear = false;
-
+    private void Awake()
+    {
+       
+    }
     private void Start()
     {
         Close();
 
         if (refuseMessage != null)
             refuseMessage.SetActive(false);
+        
+        
     }
 
     private void Update()
@@ -42,6 +47,13 @@ public class Door : MonoBehaviour
                 timeLimit: ObjManager.Instance.TimeLimit
             );
         }
+
+        if (openDoorObject == null) openDoorObject = GameObject.FindGameObjectWithTag("OpenDoor"); else { return; }
+        if (closeDoorObject == null) closeDoorObject = GameObject.FindGameObjectWithTag("ClosedDoor"); else { return; }
+        if (interactionPopup == null) interactionPopup = GameObject.FindGameObjectWithTag("inter"); else { return; }
+        if (refuseMessage == null) { refuseMessage = GameObject.FindGameObjectWithTag("refu "); } else { return; }
+
+
     }
 
     private void HideRefuseMessage()

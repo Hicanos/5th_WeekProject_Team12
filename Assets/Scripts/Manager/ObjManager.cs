@@ -18,16 +18,24 @@ public class ObjManager : MonoBehaviour
 
     private void Awake()
     {
+        DontDestroyOnLoad(this.gameObject);
+       
         if (Instance != null && Instance != this)
             Destroy(gameObject);
         else
-            Instance = this;
-        DontDestroyOnLoad(this.gameObject);
-    }
+        { Instance = this; }
+       
 
+    }
+    private void Update()
+    {
+        if (door == null) door = GameObject.FindWithTag("Door").GetComponent<Door>(); else { return; }
+    }
     private void Start()
     {
+       
         door.Close();
+        
     }
 
     public void CollectLegacy(int legacyID)
