@@ -23,6 +23,10 @@ public class GameManager : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject);
         }
+        //저장된 정보 초기화
+        //PlayerPrefs.DeleteAll();
+        //PlayerPrefs.Save();
+
     }
     
 
