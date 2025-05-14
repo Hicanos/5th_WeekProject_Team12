@@ -97,18 +97,7 @@ public class MapManager : MonoBehaviour
     public void OnClickExitStageSelect()
     {
         SceneManager.LoadScene("SelectStage");
-        // 씬이 SelectStage일 때만 버튼 연결
-        if (SceneManager.GetActiveScene().name == "SelectStage")
-        {
-            Debug.Log("SelectStage에 들어왔습니다.");
-            tutorialButton?.onClick.AddListener(() => LoadStage("Tutorial"));
-            stage1_1Button?.onClick.AddListener(() => LoadStage("Stage 1-1"));
-            stage1_2Button?.onClick.AddListener(() => LoadStage("Stage 1-2"));
-        }
-        else
-        {
-            Debug.Log("현재 씬 이름: " + SceneManager.GetActiveScene().name);
-        }
+
     }
 
 }
