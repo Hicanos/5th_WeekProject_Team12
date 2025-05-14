@@ -24,6 +24,8 @@ public class Item : MonoBehaviour
         //Fish, Bone 오브젝트 아래에 있는 자식들(Fish 클론들) 카운트)
         BoneCount = BoneObj.transform.childCount;
         FishCount = FishObj.transform.childCount;
+
+        OnItemCountChanged?.Invoke();
     }
 
     public static void ChangeFishCount(int delta)
