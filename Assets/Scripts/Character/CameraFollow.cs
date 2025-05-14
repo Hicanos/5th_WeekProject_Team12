@@ -8,7 +8,7 @@ public class CameraFollow : MonoBehaviour
     [Header("카메라가 따라갈 두 캐릭터")]
     [SerializeField] private GameObject [] player;
     [SerializeField]float minY = 0f;
-    [SerializeField] float maxY = 10f;
+    [SerializeField] float maxY = 11f;
     
     
 
@@ -42,7 +42,7 @@ public class CameraFollow : MonoBehaviour
         if (camera.transform.position.y<minY)
         { camera.transform.position =new Vector3(0,minY,-10); }
         if (camera.transform.position.y > maxY)
-        { camera.transform.position = new Vector3(0, minY, -10); }
+        { camera.transform.position = new Vector3(0, maxY, -10); }
 
 
 
