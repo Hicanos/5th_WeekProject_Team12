@@ -12,7 +12,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject RC_CompleteImage;
     [SerializeField] private GameObject RC_CatImage;
     [SerializeField] private GameObject RC_DogImage;
-
+    [SerializeField] private GameObject CR;
 
     [Header("Star UI")] //인스펙터 창에서 보기 편하게 나눠주는 역할
 
@@ -81,6 +81,7 @@ public class UIManager : MonoBehaviour
 
     public void DisplayStars(int starCount)
     {
+        CR.SetActive(true);
         RC_BgImage.SetActive(true);
         RC_CompleteImage.SetActive(true);
         RC_CatImage.SetActive(true);
