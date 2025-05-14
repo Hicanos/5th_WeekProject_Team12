@@ -57,6 +57,10 @@ public class StageEnterCard : MonoBehaviour
 
     private void OnButtonPressed()
     {
+            UIManager.Instance.CR.SetActive(false);
+            UIManager.Instance.MainCanvas.SetActive(true);
+      
+
         Debug.Log($"스테이지 불러오기 : {_stageName}");
         
          MapManager.Instance.LoadStageByName(_stageName);

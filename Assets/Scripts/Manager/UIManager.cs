@@ -12,8 +12,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject RC_CompleteImage;
     [SerializeField] private GameObject RC_CatImage;
     [SerializeField] private GameObject RC_DogImage;
-    [SerializeField] private GameObject CR;
-    [SerializeField] private GameObject MainCanvas;
+    [SerializeField] public GameObject CR;
+    [SerializeField] public GameObject MainCanvas;
     
 
     [Header("Star UI")] //인스펙터 창에서 보기 편하게 나눠주는 역할
