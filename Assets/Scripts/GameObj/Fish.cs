@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+<<<<<<< HEAD
 
+=======
+>>>>>>> trymerge
 using UnityEngine;
 
 public class Fish : MonoBehaviour
