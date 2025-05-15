@@ -59,7 +59,7 @@ public class StageEnterCard : MonoBehaviour
     {
             UIManager.Instance.CR.SetActive(false);
             UIManager.Instance.MainCanvas.SetActive(true);
-      
+      UIManager.Instance.StartTimer();
 
         Debug.Log($"스테이지 불러오기 : {_stageName}");
         
