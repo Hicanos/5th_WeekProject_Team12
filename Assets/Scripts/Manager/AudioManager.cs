@@ -61,19 +61,19 @@ public class AudioManager : MonoBehaviour
     {
         switch (sceneName)
         {
-            case "Title": return 0;
-            case "SelectStage": return 1;
-            case "Tutorial": return 2;
+            case "Title": 
+            case "SelectStage": return 0;
+            case "Tutorial": return 1;
             case "Stage 1-1": 
             case "Stage 1-2": 
-            case "Stage 1-3": return 3;
+            case "Stage 1-3": return 2;
             case "Stage 2-1": 
             case "Stage 2-2":
-            case "Stage 2-3": return 4;
+            case "Stage 2-3": return 3;
             case "Stage 3-1": 
             case "Stage 3-2":
-            case "Stage 3-3": return 5;
-            case "EndingScene": return 6;
+            case "Stage 3-3": return 4;
+            case "EndingScene": return 5;
             default: return 0;
         }
     }
