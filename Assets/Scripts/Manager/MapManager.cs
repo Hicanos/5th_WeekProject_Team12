@@ -103,4 +103,9 @@ public class MapManager : MonoBehaviour
     {
         SceneManager.LoadScene("Tutorial");
     }
+
+    public void LoadSceneTiltle()
+    {
+        SceneManager.LoadScene("Title");
+    }
 }

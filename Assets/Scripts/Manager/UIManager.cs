@@ -15,9 +15,9 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject RC_DogImage;
     [SerializeField] public GameObject CR;
     [SerializeField] public GameObject MainCanvas;
-
-
-    [Header("Star UI")] //인스펙터 창에서 보기 편하게 나눠주는 역할
+    [SerializeField] public GameObject tBtn;
+    [SerializeField] public GameObject bBtn;
+   [Header("Star UI")] //인스펙터 창에서 보기 편하게 나눠주는 역할
 
     [SerializeField] private GameObject emptyStar1;
     [SerializeField] private GameObject emptyStar2;
@@ -36,7 +36,7 @@ public class UIManager : MonoBehaviour
    
     [SerializeField] private Button[] retryBtn;
     [SerializeField] private Button[] selectStageBtn;
-    [SerializeField] private Button tutorialStageBtn;
+    [SerializeField] private Button titleStageBtn;
     private float currentTime = 0f;
     private bool isPlaying = true;
 
@@ -58,7 +58,7 @@ public class UIManager : MonoBehaviour
         { btn.onClick.AddListener(OnClickRetryStage); }
         foreach (Button btn in selectStageBtn)
         { btn.onClick.AddListener(OnClickSelectStage); }
-
+        titleStageBtn.onClick.AddListener(OnClickStageTitle);
     }
 
     private void Update()
@@ -154,11 +154,19 @@ public class UIManager : MonoBehaviour
         MapManager.Instance.OnClickExitStageSelect();
         CR.SetActive(false);
         MainCanvas.SetActive(false);
+        tBtn.SetActive(true);
+        bBtn.SetActive(false);
     }
     public void OnClickTutorialStageSelect()
     {
         MapManager.Instance.LoadSceneTutorial();
         CR.SetActive(false);
         MainCanvas.SetActive(true);
+       
+    }
+
+    public void OnClickStageTitle()
+    { 
+    MapManager.Instance.LoadSceneTiltle();
     }
 }
