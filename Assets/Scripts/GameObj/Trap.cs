@@ -1,16 +1,16 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
 public class Trap : MonoBehaviour
 {
-    [SerializeField] private GameObject Player; //Respawner¸¦ Áı¾î³Ö¾î¼­, ÇØ´ç À§Ä¡¿¡ Player°¡ ´Ù½Ã ¼ÒÈ¯µÇµµ·Ï ÇÒ °ÍÀÓ
-    protected Vector3 initialPosition; //ÃÊ±â °ÔÀÓ ¿ÀºêÁ§Æ®ÀÇ À§Ä¡ (°³/°í¾çÀÌ/»óÀÚ µî)
+    [SerializeField] private GameObject Player; //Respawnerë¥¼ ì§‘ì–´ë„£ì–´ì„œ, í•´ë‹¹ ìœ„ì¹˜ì— Playerê°€ ë‹¤ì‹œ ì†Œí™˜ë˜ë„ë¡ í•  ê²ƒì„
+    protected Vector3 initialPosition; //ì´ˆê¸° ê²Œì„ ì˜¤ë¸Œì íŠ¸ì˜ ìœ„ì¹˜ (ê°œ/ê³ ì–‘ì´/ìƒì ë“±)
 
     private void Start()
     {
-        //°¢ ÇÃ·¹ÀÌ¾îÀÇ Æ÷Áö¼Ç ÃÊ±â°ª ¼¼ÆÃ
+        //ê° í”Œë ˆì´ì–´ì˜ í¬ì§€ì…˜ ì´ˆê¸°ê°’ ì„¸íŒ…
         initialPosition = Player.transform.position;
     }
 }

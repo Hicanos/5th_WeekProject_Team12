@@ -1,30 +1,30 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.SceneManagement;
-//»óÅÂ¸Ó½Å, ±¸Á¶Ã¼»ç¿ë , µ¨¸®°ÔÀÌÆ® »ç¿ë 
+//ìƒíƒœë¨¸ì‹ , êµ¬ì¡°ì²´ì‚¬ìš© , ë¸ë¦¬ê²Œì´íŠ¸ ì‚¬ìš© 
 public class GaramCharacterDog : Characterbase
 {
-    [Header("°­¾ÆÁö µ¹Áø")]
+    [Header("ê°•ì•„ì§€ ëŒì§„")]
     
-        [SerializeField] private LayerMask destroyLayer;//ÆÄ±«ÇÒ ¿ÀºêÁ§Æ® ·¹ÀÌ¾î
-        [SerializeField] private float dashSpeed = 30f;//µ¹Áø ¼Óµµ(Èû)
-        [SerializeField] private float dashDuration = 0.2f;//µ¹ÁøÁö¼Ó ½Ã°£
+        [SerializeField] private LayerMask destroyLayer;//íŒŒê´´í•  ì˜¤ë¸Œì íŠ¸ ë ˆì´ì–´
+        [SerializeField] private float dashSpeed = 30f;//ëŒì§„ ì†ë„(í˜)
+        [SerializeField] private float dashDuration = 0.2f;//ëŒì§„ì§€ì† ì‹œê°„
     
 
     protected override void Awake()
     {
-        enumChar = CHAR.DOG;//Ä³¸¯ÅÍ ºĞ·ù
+        enumChar = CHAR.DOG;//ìºë¦­í„° ë¶„ë¥˜
         base.Awake();
-        ControlKey();//Á¶ÀÛÅ°ÇÒ´ç
+        ControlKey();//ì¡°ì‘í‚¤í• ë‹¹
     }
     /// <summary>
-    /// ÀÔ·Â¸Å¼­µå´Â ¿©±â¿¡
+    /// ì…ë ¥ë§¤ì„œë“œëŠ” ì—¬ê¸°ì—
     /// </summary>
     private void Update()
-    {  //´ë½Ã Áß ¿òÁ÷ÀÓÀ» ¸·À» °ÍÀÌ±â ¶§¹®¿¡  ÀÔ·Â ¹æÁö( È£ÃâÀ» À§ÇØ true¸¸µç bool°ªÀ» false·Î ¹Ù²ÙÁö ¸øÇÏ°Ô µÊ )
+    {  //ëŒ€ì‹œ ì¤‘ ì›€ì§ì„ì„ ë§‰ì„ ê²ƒì´ê¸° ë•Œë¬¸ì—  ì…ë ¥ ë°©ì§€( í˜¸ì¶œì„ ìœ„í•´ trueë§Œë“  boolê°’ì„ falseë¡œ ë°”ê¾¸ì§€ ëª»í•˜ê²Œ ë¨ )
         if (isDash)
         {
             return;
@@ -37,32 +37,32 @@ public class GaramCharacterDog : Characterbase
         }
     }
     /// <summary>
-    /// Çàµ¿¸Å¼­µå´Â ¿©±â¿¡
+    /// í–‰ë™ë§¤ì„œë“œëŠ” ì—¬ê¸°ì—
     /// </summary>
     private void FixedUpdate()
     {
         HandleJumpAnim();
         CheckLanding();
-        //´ë½ÃÁß¿¡ rb.velocity°ª¿¡ °£¼·À» ÁÖ±â¶§¹®¿¡ Update´Ü°è¿¡¼­ ¸·±â 
+        //ëŒ€ì‹œì¤‘ì— rb.velocityê°’ì— ê°„ì„­ì„ ì£¼ê¸°ë•Œë¬¸ì— Updateë‹¨ê³„ì—ì„œ ë§‰ê¸° 
         if (isDash)
         {
             return;
         }
         else
         {
-            JumpAtivate();//Á¡ÇÁ ½ÇÇà
-            MoveActivate(moveInput); // ÀÌµ¿ È£Ãâ 
+            JumpAtivate();//ì í”„ ì‹¤í–‰
+            MoveActivate(moveInput); // ì´ë™ í˜¸ì¶œ 
         }
 
-        SpriteFlip();    // Ä³¸¯ÅÍ ÁÂ¿ì ¹İÀü
-        HandleMoveAnim();     // ÀÌµ¿ ¾Ö´Ï¸ŞÀÌ¼Ç 
-        InstantSkillActivate(); //½ºÅ³¹ßµ¿
-        HandleSkillAnim();//½ºÅ³ ¾Ö´Ï¸ÅÀÌ¼Ç
+        SpriteFlip();    // ìºë¦­í„° ì¢Œìš° ë°˜ì „
+        HandleMoveAnim();     // ì´ë™ ì• ë‹ˆë©”ì´ì…˜ 
+        InstantSkillActivate(); //ìŠ¤í‚¬ë°œë™
+        HandleSkillAnim();//ìŠ¤í‚¬ ì• ë‹ˆë§¤ì´ì…˜
     }
     /*------------------------------------------------------------------------------*/
-    // °­¾ÆÁö ½ºÅ³¹ßµ¿ÁßÀ» °¨ÁöÇÒ ºÒ°ª
+    // ê°•ì•„ì§€ ìŠ¤í‚¬ë°œë™ì¤‘ì„ ê°ì§€í•  ë¶ˆê°’
     private bool isDash = false;
-    //ÂøÁö»óÅÂÀÏ¶§¸¸ ½ºÅ³ »ç¿ë °¡´É ÇÏ°Ô ÇÏ±â À§ÇØ ÀçÁ¤ÀÇ0
+    //ì°©ì§€ìƒíƒœì¼ë•Œë§Œ ìŠ¤í‚¬ ì‚¬ìš© ê°€ëŠ¥ í•˜ê²Œ í•˜ê¸° ìœ„í•´ ì¬ì •ì˜0
     protected override void InstantSkillCall()
     {
 
@@ -70,10 +70,10 @@ public class GaramCharacterDog : Characterbase
             base.InstantSkillCall();
 
     }
-    //½ºÅ³ ÀçÁ¤ÀÇ
+    //ìŠ¤í‚¬ ì¬ì •ì˜
     protected override void InstantSkill()
     {
-        //¹æÇâÀ» Àâ±âÀ§ÇÑ ¹éÅÍ°ª moveXÀÌ¿ëÇÏ¸é ÀÌµ¿ÁßÀÌ ¾Æ´Ò¶© 0ÀÌ¶ó¼­ »ı°¢Áß.³ªÁß¿¡ ÇÏµåÄÚµù ÇÇÇÏ°Ô ÇØº¸±â 
+        //ë°©í–¥ì„ ì¡ê¸°ìœ„í•œ ë°±í„°ê°’ moveXì´ìš©í•˜ë©´ ì´ë™ì¤‘ì´ ì•„ë‹ë• 0ì´ë¼ì„œ ìƒê°ì¤‘.ë‚˜ì¤‘ì— í•˜ë“œì½”ë”© í”¼í•˜ê²Œ í•´ë³´ê¸° 
         Vector2 currentLook; 
         if (this.spriteRenderer.flipX == false)
         {
@@ -83,49 +83,49 @@ public class GaramCharacterDog : Characterbase
         {
             currentLook = new Vector2(-1, 0);
         }
-        rb.velocity = Vector2.zero; //  ¼Óµµ ÃÊ±âÈ­
-        rb.position -= currentLook * 0.1f;// µü ºÙ¾î¼­ »ç¿ëÇÒ ½Ã Stay»óÅÂ¶ó ÆÄ±«µÇÁö ¾ÊÀ¸¹Ç·Î Stay ÇÏ³ª´õ ¸¸µå´Â °Í º¸´Ù ¿¬Ãâ·Î Ã³¸®ÇÏ±â·Î ÇÔ
-        //ÄÚ·çÆ¾ ½ÃÀÛ µÚ¿¡ ¸Å°³º¯¼ö 2°³ ÀÎ½ºÆåÅÍÃ¢ Á¶Á¤ °¡´É
+        rb.velocity = Vector2.zero; //  ì†ë„ ì´ˆê¸°í™”
+        rb.position -= currentLook * 0.1f;// ë”± ë¶™ì–´ì„œ ì‚¬ìš©í•  ì‹œ Stayìƒíƒœë¼ íŒŒê´´ë˜ì§€ ì•Šìœ¼ë¯€ë¡œ Stay í•˜ë‚˜ë” ë§Œë“œëŠ” ê²ƒ ë³´ë‹¤ ì—°ì¶œë¡œ ì²˜ë¦¬í•˜ê¸°ë¡œ í•¨
+        //ì½”ë£¨í‹´ ì‹œì‘ ë’¤ì— ë§¤ê°œë³€ìˆ˜ 2ê°œ ì¸ìŠ¤í™í„°ì°½ ì¡°ì • ê°€ëŠ¥
         StartCoroutine(DashDuration(currentLook, dashDuration, dashSpeed));
 
     }
 
-    //´ë½Ã ¿¬ÃâÀ» À§ÇÑ ÄÚ·çÆ¾ 
+    //ëŒ€ì‹œ ì—°ì¶œì„ ìœ„í•œ ì½”ë£¨í‹´ 
     private IEnumerator DashDuration(Vector2 direction, float duration, float dashSpeed)
     {
         isDash = true;
         
         yield return new WaitForSeconds(0.1f);
-        // ¼ø°£ÀûÀ¸·Î ºü¸¥ ¼Óµµ ¼³Á¤
+        // ìˆœê°„ì ìœ¼ë¡œ ë¹ ë¥¸ ì†ë„ ì„¤ì •
         rb.velocity = direction * dashSpeed;  
 
-        // µü duration¸¸Å­¸¸ ÀÌµ¿
+        // ë”± durationë§Œí¼ë§Œ ì´ë™
         yield return new WaitForSeconds(duration); 
 
-        // Áï½Ã ¸ØÃß±â
+        // ì¦‰ì‹œ ë©ˆì¶”ê¸°
         rb.velocity = Vector2.zero;
         isDash = false;
     }
 
-    //·¹ÀÌ¾î °¨ÁöÇÏ¿© Ãæµ¹ ¿ÀºêÁ§Æ® ÆÄ±«ÇÏ´Â ÇÔ¼ö
+    //ë ˆì´ì–´ ê°ì§€í•˜ì—¬ ì¶©ëŒ ì˜¤ë¸Œì íŠ¸ íŒŒê´´í•˜ëŠ” í•¨ìˆ˜
     private void OnTriggerEnter2D(Collider2D other)
     {
-        // µ¹Áø ÁßÀÌ ¾Æ´Ò ¶§´Â ¹«½Ã
+        // ëŒì§„ ì¤‘ì´ ì•„ë‹ ë•ŒëŠ” ë¬´ì‹œ
         if (!isDash) return;
 
-        // ·¹ÀÌ¾î Ã¼Å©: °¨ÁöÇÒ ·¹ÀÌ¾î¿¡ ÇØ´çÇÏ´ÂÁö È®ÀÎ
+        // ë ˆì´ì–´ ì²´í¬: ê°ì§€í•  ë ˆì´ì–´ì— í•´ë‹¹í•˜ëŠ”ì§€ í™•ì¸
         if (((1 << other.gameObject.layer) & destroyLayer) != 0)
         {
             Destroy(other.gameObject);
             HandleCrashAnim();
-           //ÇÑ°³ÀÇ ¿ÀºêÁ§Æ® Ãæµ¹ÇÏ¿© ÆÄ±«ÇÏ¿´À» ½Ã Áï½Ã ¸ØÃß°Ô ÇÏ±âÀ§ÇÑ ±¸¹® 
+           //í•œê°œì˜ ì˜¤ë¸Œì íŠ¸ ì¶©ëŒí•˜ì—¬ íŒŒê´´í•˜ì˜€ì„ ì‹œ ì¦‰ì‹œ ë©ˆì¶”ê²Œ í•˜ê¸°ìœ„í•œ êµ¬ë¬¸ 
             isDash = false;
             rb.velocity = Vector2.zero;
 
-            Debug.Log(" µ¹ÁøÀ¸·Î ÆÄ±«µÊ: " + other.name);
+            Debug.Log(" ëŒì§„ìœ¼ë¡œ íŒŒê´´ë¨: " + other.name);
         }
     }
-    //Áö¿ªº¯¼ö º¯°æÀ» À§ÇØ ÀçÁ¤ÀÇ
+    //ì§€ì—­ë³€ìˆ˜ ë³€ê²½ì„ ìœ„í•´ ì¬ì •ì˜
     protected override void HandleSkillAnim()
     {
         bool isSkill = isDash;

@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.UI;
 
 public class VolumeControl : MonoBehaviour
@@ -8,11 +8,11 @@ public class VolumeControl : MonoBehaviour
 
     void Start()
     {
-        // AudioManagerÀÇ ÀÎ½ºÅÏ½º¸¦ °¡Á®¿Í¼­ audioManager º¯¼ö¿¡ ÀúÀå
+        // AudioManagerì˜ ì¸ìŠ¤í„´ìŠ¤ë¥¼ ê°€ì ¸ì™€ì„œ audioManager ë³€ìˆ˜ì— ì €ì¥
         audioManager = AudioManager.Instance;
-        // ½½¶óÀÌ´õÀÇ ÃÊ±â °ªÀ» ÇöÀç ¿Àµğ¿À º¼·ıÀ¸·Î ¼³Á¤ (¿¹: 0.8ÀÌ¸é ½½¶óÀÌ´õµµ 0.8¿¡ À§Ä¡)
+        // ìŠ¬ë¼ì´ë”ì˜ ì´ˆê¸° ê°’ì„ í˜„ì¬ ì˜¤ë””ì˜¤ ë³¼ë¥¨ìœ¼ë¡œ ì„¤ì • (ì˜ˆ: 0.8ì´ë©´ ìŠ¬ë¼ì´ë”ë„ 0.8ì— ìœ„ì¹˜)
         volumeSlider.value = audioManager.CurrentVolume;
-        // ½½¶óÀÌ´õ °ªÀÌ º¯°æµÉ ¶§¸¶´Ù OnVolumeChanged ÇÔ¼ö°¡ È£ÃâµÇµµ·Ï ÀÌº¥Æ® ¿¬°á
+        // ìŠ¬ë¼ì´ë” ê°’ì´ ë³€ê²½ë  ë•Œë§ˆë‹¤ OnVolumeChanged í•¨ìˆ˜ê°€ í˜¸ì¶œë˜ë„ë¡ ì´ë²¤íŠ¸ ì—°ê²°
         volumeSlider.onValueChanged.AddListener(OnVolumeChanged);
     }
 

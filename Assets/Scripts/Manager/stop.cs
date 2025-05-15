@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -8,9 +8,9 @@ public class stop : MonoBehaviour
     public void StopPlayOrQuit()
     {
 #if UNITY_EDITOR
-        EditorApplication.isPlaying = false; // ¿¡µğÅÍ¿¡¼­ ÇÃ·¹ÀÌ ¸ğµå Á¾·á
+        EditorApplication.isPlaying = false; // ì—ë””í„°ì—ì„œ í”Œë ˆì´ ëª¨ë“œ ì¢…ë£Œ
 #else
-        Application.Quit(); // ºôµåµÈ °ÔÀÓ¿¡¼­´Â Ã¢ Á¾·á
+        Application.Quit(); // ë¹Œë“œëœ ê²Œì„ì—ì„œëŠ” ì°½ ì¢…ë£Œ
 #endif
     }
 }

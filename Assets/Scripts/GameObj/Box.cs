@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -10,13 +10,13 @@ public class Box : MonoBehaviour
 
     void Awake()
     {
-        // ½ÃÀÛ ½Ã ÀÚ½ÅÀÇ Rigidbody ºÒ·¯¿È
+        // ì‹œì‘ ì‹œ ìì‹ ì˜ Rigidbody ë¶ˆëŸ¬ì˜´
         rb = GetComponent<Rigidbody2D>();
 
         if (rb == null)
         {
-            // Rigidbody°¡ ¾ø´Ù¸é °æ°í ¸Ş½ÃÁö
-            Debug.LogError("Box ½ºÅ©¸³Æ®´Â Rigidbody ÄÄÆ÷³ÍÆ®°¡ ÇÊ¿äÇÕ´Ï´Ù. GameObject ÀÌ¸§: " + gameObject.name);
+            // Rigidbodyê°€ ì—†ë‹¤ë©´ ê²½ê³  ë©”ì‹œì§€
+            Debug.LogError("Box ìŠ¤í¬ë¦½íŠ¸ëŠ” Rigidbody ì»´í¬ë„ŒíŠ¸ê°€ í•„ìš”í•©ë‹ˆë‹¤. GameObject ì´ë¦„: " + gameObject.name);
         }
         
 
@@ -24,33 +24,33 @@ public class Box : MonoBehaviour
         boxCollider = GetComponent<BoxCollider2D>();
         if(boxCollider == null)
         {
-            Debug.LogError("Box ½ºÅ©¸³Æ®´Â BoxCollider2D ÄÄÆ÷³ÍÆ®°¡ ÇÊ¿äÇÕ´Ï´Ù. GameObject ÀÌ¸§: " + gameObject.name);
+            Debug.LogError("Box ìŠ¤í¬ë¦½íŠ¸ëŠ” BoxCollider2D ì»´í¬ë„ŒíŠ¸ê°€ í•„ìš”í•©ë‹ˆë‹¤. GameObject ì´ë¦„: " + gameObject.name);
         }
 
     }
 
-    // µî·ÏµÈ ¿ÀºêÁ§Æ®¿Í Ãæµ¹ÀÌ Áö¼ÓµÇ´Â µ¿¾È °è¼Ó È£Ãâ-¹Ğ±â
+    // ë“±ë¡ëœ ì˜¤ë¸Œì íŠ¸ì™€ ì¶©ëŒì´ ì§€ì†ë˜ëŠ” ë™ì•ˆ ê³„ì† í˜¸ì¶œ-ë°€ê¸°
 
     private void OnCollisionStay2D(Collision2D collision)
     {
-        //ÇØ´ç ¿ÀºêÁ§Æ®ÀÇ layer = Dog (7¹ø)¶ó¸é ½ÇÇàµÇ¸é µÊ
+        //í•´ë‹¹ ì˜¤ë¸Œì íŠ¸ì˜ layer = Dog (7ë²ˆ)ë¼ë©´ ì‹¤í–‰ë˜ë©´ ë¨
         int charLayer = collision.gameObject.layer;
         string layerName = LayerMask.LayerToName(charLayer);
      
-        Debug.Log("Á¢ÃËÇÑ ¿ÀºêÁ§Æ®ÀÇ Layer:" + layerName);
+        Debug.Log("ì ‘ì´‰í•œ ì˜¤ë¸Œì íŠ¸ì˜ Layer:" + layerName);
 
-        // allowedPusher ¸ñ·Ï¿¡¼­ Ãæµ¹ÇÑ ¿ÀºêÁ§Æ®ÀÇ ·¹ÀÌ¾îÀÇ Æ÷ÇÔ¿©ºÎ È®ÀÎ
+        // allowedPusher ëª©ë¡ì—ì„œ ì¶©ëŒí•œ ì˜¤ë¸Œì íŠ¸ì˜ ë ˆì´ì–´ì˜ í¬í•¨ì—¬ë¶€ í™•ì¸
         if (charLayer == LayerMask.NameToLayer("Dog"))
         {
-            rb.constraints = RigidbodyConstraints2D.FreezeRotation | RigidbodyConstraints2D.FreezePositionY; //È¸Àü±İÁö. Y±İÁö(À§·Î ¿Ã¶ó°¡´Â °Í ¹æÁö)
+            rb.constraints = RigidbodyConstraints2D.FreezeRotation | RigidbodyConstraints2D.FreezePositionY; //íšŒì „ê¸ˆì§€. Yê¸ˆì§€(ìœ„ë¡œ ì˜¬ë¼ê°€ëŠ” ê²ƒ ë°©ì§€)
         }
         else if (charLayer == LayerMask.NameToLayer("Cat"))
         {
-            rb.constraints = RigidbodyConstraints2D.FreezeAll; //À§·Î ¿Ã¶ó°¡Áö ¾Êµµ·Ï
+            rb.constraints = RigidbodyConstraints2D.FreezeAll; //ìœ„ë¡œ ì˜¬ë¼ê°€ì§€ ì•Šë„ë¡
         }
         else
         {
-            rb.constraints = RigidbodyConstraints2D.FreezeRotation | RigidbodyConstraints2D.FreezePositionX; //È¸Àü ±İÁö, x±İÁö
+            rb.constraints = RigidbodyConstraints2D.FreezeRotation | RigidbodyConstraints2D.FreezePositionX; //íšŒì „ ê¸ˆì§€, xê¸ˆì§€
         }
 
     }

@@ -1,27 +1,27 @@
-using System;
+ï»¿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Item : MonoBehaviour
 {
-    //¾ÆÀÌÅÛ: »À/»ı¼± : °¢°¢ Trigger°¡ °³ÀÎÁö °í¾çÀÌÀÎÁö È®ÀÎ = Layer·Î ±¸ºĞ 
-    //¾Ë¸ÂÀº Ãæµ¹ Ã¼¿¡¼­ Á¡¼ö°¡ ¿Ã¶ó°¨. ¾Æ´Ï¶ó¸é ÆÄ±«µÇÁö ¾ÊÀ½
-    //Gift: À¯¹°. È¹µæÇÏ¸é true. °¢ ½ºÅ×ÀÌÁö º°·Î 3°³¸¦ ¸ğÀ¸¸é µµÀü°úÁ¦ ´Ş¼º
+    //ì•„ì´í…œ: ë¼ˆ/ìƒì„  : ê°ê° Triggerê°€ ê°œì¸ì§€ ê³ ì–‘ì´ì¸ì§€ í™•ì¸ = Layerë¡œ êµ¬ë¶„ 
+    //ì•Œë§ì€ ì¶©ëŒ ì²´ì—ì„œ ì ìˆ˜ê°€ ì˜¬ë¼ê°. ì•„ë‹ˆë¼ë©´ íŒŒê´´ë˜ì§€ ì•ŠìŒ
+    //Gift: ìœ ë¬¼. íšë“í•˜ë©´ true. ê° ìŠ¤í…Œì´ì§€ ë³„ë¡œ 3ê°œë¥¼ ëª¨ìœ¼ë©´ ë„ì „ê³¼ì œ ë‹¬ì„±
     
-    //¿©±â¼­ ÃÑ ¾ÆÀÌÅÛ °¹¼ö°¡ 0 = º° 1°³
+    //ì—¬ê¸°ì„œ ì´ ì•„ì´í…œ ê°¯ìˆ˜ê°€ 0 = ë³„ 1ê°œ
     public GameObject FishObj;
     public GameObject BoneObj;
     public static int FishCount;
     public static int BoneCount;
 
 
-    //ÀÌº¥Æ® ½Ã½ºÅÛÀ¸·Î Fish¿Í BoneÀÇ Ä«¿îÆ® º¯È­°¡ ÀÖÀ» ¶§¸¶´Ù È£Ãâ
+    //ì´ë²¤íŠ¸ ì‹œìŠ¤í…œìœ¼ë¡œ Fishì™€ Boneì˜ ì¹´ìš´íŠ¸ ë³€í™”ê°€ ìˆì„ ë•Œë§ˆë‹¤ í˜¸ì¶œ
     public static event Action OnItemCountChanged;
 
     private void Awake()
     {
-        //Fish, Bone ¿ÀºêÁ§Æ® ¾Æ·¡¿¡ ÀÖ´Â ÀÚ½Äµé(Fish Å¬·Ğµé) Ä«¿îÆ®)
+        //Fish, Bone ì˜¤ë¸Œì íŠ¸ ì•„ë˜ì— ìˆëŠ” ìì‹ë“¤(Fish í´ë¡ ë“¤) ì¹´ìš´íŠ¸)
         BoneCount = BoneObj.transform.childCount;
         FishCount = FishObj.transform.childCount;
         OnItemCountChanged?.Invoke();
@@ -39,7 +39,7 @@ public class Item : MonoBehaviour
         OnItemCountChanged?.Invoke();
     }
 
-    // ¾ÆÀÌÅÛ È¹µæ ½Ã = ÇØ´ç ¾ÆÀÌÅÛ°ú ºÎÇÕÇÏ´Â °³¼ö Â÷°¨ ÈÄ ÆÄ±«
+    // ì•„ì´í…œ íšë“ ì‹œ = í•´ë‹¹ ì•„ì´í…œê³¼ ë¶€í•©í•˜ëŠ” ê°œìˆ˜ ì°¨ê° í›„ íŒŒê´´
     //    FishCount--;
     //    BoneCount--;
     //    Destroy(this);

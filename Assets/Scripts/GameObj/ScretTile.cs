@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -14,7 +14,7 @@ public class ScretTile : MonoBehaviour
             Color color = tRenderer.color;
             color.a = 0.4f;
             tRenderer.color = color;
-            Debug.Log("ÀÛµ¿");
+            Debug.Log("ì‘ë™");
         }
     }
 
@@ -25,7 +25,7 @@ public class ScretTile : MonoBehaviour
             Color color = tRenderer.color;
             color.a = 1f;
             tRenderer.color = color;
-            Debug.Log("ÀÛµ¿ÇØÁ¦");
+            Debug.Log("ì‘ë™í•´ì œ");
         }
     }
 }
