@@ -1238,6 +1238,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _mainBGMs:
+<<<<<<< Updated upstream
+=======
+  - {fileID: 8300000, guid: 5a8f1ff5239db4878ab08b263816a211, type: 3}
+  - {fileID: 8300000, guid: 045e1c632b85341cbb9ff07009d2e975, type: 3}
+>>>>>>> Stashed changes
   - {fileID: 8300000, guid: 9e5b0bf405fa943438ccf0765c756722, type: 3}
   - {fileID: 8300000, guid: e8203794c6cb24c19841abff1127b916, type: 3}
   - {fileID: 8300000, guid: 78c0e7bc37ab94a6f8a688d2f64fcd66, type: 3}
