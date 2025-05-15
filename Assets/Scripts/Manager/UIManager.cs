@@ -168,5 +168,6 @@ public class UIManager : MonoBehaviour
     public void OnClickStageTitle()
     { 
     MapManager.Instance.LoadSceneTiltle();
+        tBtn.SetActive(false);
     }
 }
