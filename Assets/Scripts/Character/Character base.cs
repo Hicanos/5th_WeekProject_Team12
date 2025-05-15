@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 /// <summary>
 /// 기본 캐릭터(플레이어/적 등)의 공통 동작을 정의하는 추상 클래스
