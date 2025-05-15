@@ -2466,6 +2466,7 @@ MonoBehaviour:
   selectStageBtn:
   - {fileID: 205569145}
   - {fileID: 1334647243}
+  - {fileID: 583644654}
   titleStageBtn: {fileID: 359717571}
 --- !u!4 &827205267
 Transform:
