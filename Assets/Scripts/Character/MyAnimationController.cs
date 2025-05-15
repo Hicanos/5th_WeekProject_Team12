@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using UnityEngine;
@@ -6,11 +6,11 @@ using UnityEngine;
 public class MyAnimationController : MonoBehaviour
 {
     /// <summary>
-    /// ¾Ö´Ï¸ŞÀÌ¼Ç ÄÁÆ®·ÑÀ» À§ÇÑ Animator ÄÄÆ÷³ÍÆ®
+    /// ì• ë‹ˆë©”ì´ì…˜ ì»¨íŠ¸ë¡¤ì„ ìœ„í•œ Animator ì»´í¬ë„ŒíŠ¸
     /// </summary>
     private Animator _animator;
     /// <summary>
-    /// ¹æÇâ ÀüÈ¯À» À§ÇÑ SpriteRenderer (ÇÊ¿äÇÒ °æ¿ì)
+    /// ë°©í–¥ ì „í™˜ì„ ìœ„í•œ SpriteRenderer (í•„ìš”í•  ê²½ìš°)
     /// </summary>
     private SpriteRenderer spriteRenderer;
    
@@ -23,18 +23,18 @@ public class MyAnimationController : MonoBehaviour
    
     
     /// <summary>
-    /// Ä³¸¯ÅÍ ÁÂ¿ì ¹æÇâ ¹İÀüÀ» Ã³¸®ÇÔ
+    /// ìºë¦­í„° ì¢Œìš° ë°©í–¥ ë°˜ì „ì„ ì²˜ë¦¬í•¨
     /// </summary>
-    /// <param name="flip">¿ŞÂÊÀÌ¸é true, ¿À¸¥ÂÊÀÌ¸é false</param>
+    /// <param name="flip">ì™¼ìª½ì´ë©´ true, ì˜¤ë¥¸ìª½ì´ë©´ false</param>
     public void SetFlip(bool flip)
     {
         if (spriteRenderer != null)
             spriteRenderer.flipX = flip;
     }
     /// <summary>
-    /// ÀÌµ¿ Áß ¿©ºÎ¿¡ µû¶ó 'IsMove' ÆÄ¶ó¹ÌÅÍ ¼³Á¤
+    /// ì´ë™ ì¤‘ ì—¬ë¶€ì— ë”°ë¼ 'IsMove' íŒŒë¼ë¯¸í„° ì„¤ì •
     /// </summary>
-    /// <param name="isMoving">¿òÁ÷ÀÌ°í ÀÖ´ÂÁö ¿©ºÎ</param>
+    /// <param name="isMoving">ì›€ì§ì´ê³  ìˆëŠ”ì§€ ì—¬ë¶€</param>
     public void SetMove(bool isMoving)
     {
         _animator.SetBool("IsMove", isMoving);

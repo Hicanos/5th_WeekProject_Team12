@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,13 +6,13 @@ public class ScaffoldingButton : MonoBehaviour
 {
    
     
-    /*[Header("»óÈ£ÀÛ¿ë ¿ÀºêÁ§Æ®")] public GameObject gameObj;*/
+    /*[Header("ìƒí˜¸ì‘ìš© ì˜¤ë¸Œì íŠ¸")] public GameObject gameObj;*/
     
-    //°ÔÀÓ ¿ÀºêÁ§Æ®¿¡ Collider Àû¿ë, Trigger = »óÀÚ¸¦ ÀÎ½ÄÇØ¼­ ¹öÆ°ÀÌ ´­¸®¸é Àû¿ëµÊ
-    //°í¾çÀÌÀÇ °æ¿ì: Type WallÀÏ ¶§ ¿ŞÂÊ ½¬ÇÁÆ®·Î »óÈ£ÀÛ¿ë °¡´É (°í¾çÀÌ°¡ stayÁß¿¡ ¿ŞÂÊ ½¬ÇÁÆ®¸¦ ´©¸£¸é, ¿ÀºêÁ§Æ® ÀÛµ¿)
-    //»óÀÚÀÇ Tag => Box·Î º¯°æ
-    //SetActive¸¦ false¸é true, true¸é false·Î ¸¸µé¾î¼­ Àû¿ë
-    //»óÀÚ°¡ ¹üÀ§¸¦ ¹ş¾î³ª¸é ´Ù½Ã ¿ªÀ¸·Î ¹Ù²Ş
+    //ê²Œì„ ì˜¤ë¸Œì íŠ¸ì— Collider ì ìš©, Trigger = ìƒìë¥¼ ì¸ì‹í•´ì„œ ë²„íŠ¼ì´ ëˆŒë¦¬ë©´ ì ìš©ë¨
+    //ê³ ì–‘ì´ì˜ ê²½ìš°: Type Wallì¼ ë•Œ ì™¼ìª½ ì‰¬í”„íŠ¸ë¡œ ìƒí˜¸ì‘ìš© ê°€ëŠ¥ (ê³ ì–‘ì´ê°€ stayì¤‘ì— ì™¼ìª½ ì‰¬í”„íŠ¸ë¥¼ ëˆ„ë¥´ë©´, ì˜¤ë¸Œì íŠ¸ ì‘ë™)
+    //ìƒìì˜ Tag => Boxë¡œ ë³€ê²½
+    //SetActiveë¥¼ falseë©´ true, trueë©´ falseë¡œ ë§Œë“¤ì–´ì„œ ì ìš©
+    //ìƒìê°€ ë²”ìœ„ë¥¼ ë²—ì–´ë‚˜ë©´ ë‹¤ì‹œ ì—­ìœ¼ë¡œ ë°”ê¿ˆ
 
     // Start is called before the first frame update
 
