@@ -1,16 +1,13 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.Burst.CompilerServices;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+
 public class NPCController : MonoBehaviour
 {
 
     [SerializeField] private SpriteRenderer npcRenderer; //npc 이미지 인스펙터에서 넣게끔
-    [SerializeField] private GameObject interactionPopup; //npc 앞에서 F누르라고 안내하는 팝업을 인스펙터에서 관리
-    [SerializeField] private Text _dialogText;
+    [SerializeField] private GameObject[] interactionPopups; //npc 앞에서 F누르라고 안내하는 팝업을 인스펙터에서 관리
+    //[SerializeField] private string _dialogText;
 
 
     public GameObject DialogImage;
@@ -37,7 +34,7 @@ public class NPCController : MonoBehaviour
                     break;
 
                 case "Tutorial":
-                    TutorialDialog(); //튜토리얼 대사 실행
+                    Debug.Log("튜토리얼입니다"); //튜토리얼 대사 실행
                     break;
 
                 default:
@@ -52,7 +49,7 @@ public class NPCController : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             isPlayerEncounter = true;
-            interactionPopup.SetActive(true);//f를 눌러 대화하기 팝업 보여주기
+            ShowInterActionPopup();//f를 눌러 대화하기 팝업 보여주기
         }
     }
 
@@ -60,7 +57,7 @@ public class NPCController : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            interactionPopup.SetActive(false); // 플레이어가 벗어나면 팝업 숨김
+            HideAllPopups(); // 플레이어가 벗어나면 팝업 숨김
             isPlayerEncounter = false;
             DialogImage.SetActive(false);
         }
@@ -105,7 +102,7 @@ public class NPCController : MonoBehaviour
                 break;
 
             default:
-                _dialogText.text = "아직 유물을 가진게 없구나. 유물을 얻고 다시 찾아오렴";
+                Debug.Log("아직 유물을 가진게 없구나. 유물을 얻고 다시 찾아오렴");
                 break;
         }
 
@@ -113,8 +110,21 @@ public class NPCController : MonoBehaviour
 
     }
 
-    private void TutorialDialog()
+    private void ShowInterActionPopup()
     {
-        //튜토리얼 대사 출력하기.
+        HideAllPopups();
+
+        int randomIndex = UnityEngine.Random.Range(0, interactionPopups.Length);
+
+        interactionPopups[randomIndex].SetActive(true);
     }
+    
+    private void HideAllPopups()
+{
+    foreach (UnityEngine.GameObject popup in interactionPopups)
+    {
+        if (popup != null)
+            popup.SetActive(false);
+    }
+}
 }

@@ -1756,29 +1756,29 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2349705019556988131, guid: 5a05968bce2993743b09888c25002c07, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 3
+    - target: {fileID: 552764877134459903, guid: 5a05968bce2993743b09888c25002c07, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 582.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 950159844301575311, guid: 5a05968bce2993743b09888c25002c07, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 582.5
       objectReference: {fileID: 0}
     - target: {fileID: 2349705019556988131, guid: 5a05968bce2993743b09888c25002c07, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 3
+      propertyPath: m_SizeDelta.x
+      value: 250.01
       objectReference: {fileID: 0}
     - target: {fileID: 2349705019556988131, guid: 5a05968bce2993743b09888c25002c07, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 290
+      value: 608
       objectReference: {fileID: 0}
-    - target: {fileID: 2349705019556988131, guid: 5a05968bce2993743b09888c25002c07, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 398
-      objectReference: {fileID: 0}
-    - target: {fileID: 5412945375345722072, guid: 5a05968bce2993743b09888c25002c07, type: 3}
-      propertyPath: m_FlipX
-      value: 1
+    - target: {fileID: 5202953899667219852, guid: 5a05968bce2993743b09888c25002c07, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 582.5
       objectReference: {fileID: 0}
     - target: {fileID: 6692785756688458192, guid: 5a05968bce2993743b09888c25002c07, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 7.39
+      value: 3.56
       objectReference: {fileID: 0}
     - target: {fileID: 6692785756688458192, guid: 5a05968bce2993743b09888c25002c07, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1820,21 +1820,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: NPC_Tutor
       objectReference: {fileID: 0}
-    - target: {fileID: 7937958870084869727, guid: 5a05968bce2993743b09888c25002c07, type: 3}
-      propertyPath: m_Text
-      value: "\uACE0\uC591\uC774\uB294 \uBCBD\uC5D0\uC11C \n\uC2A4\uD0AC\uC744 \uB20C\uB7EC\uBD10"
+    - target: {fileID: 8613665507094524112, guid: 5a05968bce2993743b09888c25002c07, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 582.5
       objectReference: {fileID: 0}
-    - target: {fileID: 7937958870084869727, guid: 5a05968bce2993743b09888c25002c07, type: 3}
-      propertyPath: m_FontData.m_MinSize
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7937958870084869727, guid: 5a05968bce2993743b09888c25002c07, type: 3}
-      propertyPath: m_FontData.m_FontSize
-      value: 25
-      objectReference: {fileID: 0}
-    - target: {fileID: 8467123375835101858, guid: 5a05968bce2993743b09888c25002c07, type: 3}
-      propertyPath: m_IsActive
-      value: 0
+    - target: {fileID: 8901442945525599655, guid: 5a05968bce2993743b09888c25002c07, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 582.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
