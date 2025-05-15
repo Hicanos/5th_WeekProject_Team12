@@ -1,52 +1,52 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GaramCharacterCat : Characterbase
 {
-    [Header("°í¾çÀÌ ¿ë º®Å½Áö")]
+    [Header("ê³ ì–‘ì´ ìš© ë²½íƒì§€")]
 
-    [SerializeField] private Transform wallCheck;//º® ÆÇÁ¤ À§Ä¡
-    [SerializeField] private float wallRayRange = 0.1f; //º®  Ã¼Å© ¹üÀ§(raycast±æÀÌ)
-    [SerializeField] private LayerMask wallLayer;//º® ·¹ÀÌ¾î
+    [SerializeField] private Transform wallCheck;//ë²½ íŒì • ìœ„ì¹˜
+    [SerializeField] private float wallRayRange = 0.1f; //ë²½  ì²´í¬ ë²”ìœ„(raycastê¸¸ì´)
+    [SerializeField] private LayerMask wallLayer;//ë²½ ë ˆì´ì–´
 
     protected override void Awake()
     {
-        enumChar = CHAR.CAT; // Ä³¸¯ÅÍ ºĞ·ùÇÏ±â
+        enumChar = CHAR.CAT; // ìºë¦­í„° ë¶„ë¥˜í•˜ê¸°
         base.Awake();
-        ControlKey();//ºĞ·ù¿¡ µû¶ó Á¶ÀÛÅ° ÇÒ´ç
+        ControlKey();//ë¶„ë¥˜ì— ë”°ë¼ ì¡°ì‘í‚¤ í• ë‹¹
     }
     /// <summary>
-    /// ÀÔ·Â¸Å¼­µå´Â ¿©±â¿¡
+    /// ì…ë ¥ë§¤ì„œë“œëŠ” ì—¬ê¸°ì—
     /// </summary>
     private void Update()
     {
-        IsNotClimb();//º®ÀÌÅ»½Ã º®Å¸±â ÇØÁ¦
-        MoveCall();         // ÀÌµ¿ ÀÔ·Â 
-        ToggleSkillCall(); //½ºÅ³ Å° ÀÔ·Â
-        JumpCall();   // Á¡ÇÁ ÀÔ·Â 
+        IsNotClimb();//ë²½ì´íƒˆì‹œ ë²½íƒ€ê¸° í•´ì œ
+        MoveCall();         // ì´ë™ ì…ë ¥ 
+        ToggleSkillCall(); //ìŠ¤í‚¬ í‚¤ ì…ë ¥
+        JumpCall();   // ì í”„ ì…ë ¥ 
     }
     /// <summary>
-    /// Çàµ¿¸Å¼­µå´Â ¿©±â¿¡
+    /// í–‰ë™ë§¤ì„œë“œëŠ” ì—¬ê¸°ì—
     /// </summary>
     private void FixedUpdate()
     {
-        JumpAtivate();//Á¡ÇÁ ½ÇÇà
-        HandleJumpAnim();//Á¡ÇÁ ¾Ö´Ï¸ŞÀÌ¼Ç
-        CheckLanding();//ÂøÁö ÆÇÁ¤
+        JumpAtivate();//ì í”„ ì‹¤í–‰
+        HandleJumpAnim();//ì í”„ ì• ë‹ˆë©”ì´ì…˜
+        CheckLanding();//ì°©ì§€ íŒì •
 
-        MoveActivate(moveInput); // ÀÌµ¿ È£Ãâ 
-        SpriteFlip();    // Ä³¸¯ÅÍ ÁÂ¿ì ¹İÀü
-        HandleMoveAnim();     // ÀÌµ¿ ¾Ö´Ï¸ŞÀÌ¼Ç 
+        MoveActivate(moveInput); // ì´ë™ í˜¸ì¶œ 
+        SpriteFlip();    // ìºë¦­í„° ì¢Œìš° ë°˜ì „
+        HandleMoveAnim();     // ì´ë™ ì• ë‹ˆë©”ì´ì…˜ 
 
     }
-    /*---------------------------------------½ºÅ³ °ü·Ã---------------------------------------*/
+    /*---------------------------------------ìŠ¤í‚¬ ê´€ë ¨---------------------------------------*/
 
-    //º®Å¸±â ÁßÀÎÁö È®ÀÎÇÒ ºÒ
+    //ë²½íƒ€ê¸° ì¤‘ì¸ì§€ í™•ì¸í•  ë¶ˆ
     private bool isClimb = false;
 
-    //º® °¨Áö¿ë ºÒ°ª
+    //ë²½ ê°ì§€ìš© ë¶ˆê°’
     private bool IsWallClimb()
     {
         if (!spriteRenderer.flipX)
@@ -61,7 +61,7 @@ public class GaramCharacterCat : Characterbase
         }
     }
 
-    //º®À» ÃÊ°úÇÏ¿© ¿òÁ÷ÀÏ¶§ ÅäÅ¬ ½ºÅ³À» ²ô±â À§ÇÑ ÇÔ¼ö
+    //ë²½ì„ ì´ˆê³¼í•˜ì—¬ ì›€ì§ì¼ë•Œ í† í´ ìŠ¤í‚¬ì„ ë„ê¸° ìœ„í•œ í•¨ìˆ˜
     private void IsNotClimb()
     {
         if (isToggled && !IsWallClimb())
@@ -70,43 +70,43 @@ public class GaramCharacterCat : Characterbase
         }
     }
 
-    //Åä±ÛÇü ½ºÅ³ ÀÔ·Â °¨Áö. °¨Áö Á¶°Ç¿¡ IsWallClimb Ãß°¡ÇÏ±â À§ÇØ ÀçÁ¤ÀÇ
-    protected override void ToggleSkillCall()//Åä±ÛÇü ½ºÅ³ ÀÔ·Â °¨Áö
+    //í† ê¸€í˜• ìŠ¤í‚¬ ì…ë ¥ ê°ì§€. ê°ì§€ ì¡°ê±´ì— IsWallClimb ì¶”ê°€í•˜ê¸° ìœ„í•´ ì¬ì •ì˜
+    protected override void ToggleSkillCall()//í† ê¸€í˜• ìŠ¤í‚¬ ì…ë ¥ ê°ì§€
     {
         if (Input.GetKeyDown(skillKey) && !isToggled && IsWallClimb())
         {
-            StartCoroutine(SkillCoolDown(skillCoolTime));//ÄğÅ¸ÀÓ ½ÃÀÛ 
+            StartCoroutine(SkillCoolDown(skillCoolTime));//ì¿¨íƒ€ì„ ì‹œì‘ 
             isToggled = true;
             ToggleSkillOn();
-            Debug.Log($"{Name}½ºÅ³ Å° ÀÔ·Â");
-            Debug.Log($"{Name}Åä±Û½ºÅ³¹ßµ¿");
+            Debug.Log($"{Name}ìŠ¤í‚¬ í‚¤ ì…ë ¥");
+            Debug.Log($"{Name}í† ê¸€ìŠ¤í‚¬ë°œë™");
         }
         else if (Input.GetKeyDown(skillKey) && isToggled)
         {
 
             isToggled = false;
             ToggleSkillOff();
-            Debug.Log($"{Name}½ºÅ³ Å° ÀÔ·Â");
-            Debug.Log($"{Name}Åä±Û½ºÅ³ÇØÁ¦");
+            Debug.Log($"{Name}ìŠ¤í‚¬ í‚¤ ì…ë ¥");
+            Debug.Log($"{Name}í† ê¸€ìŠ¤í‚¬í•´ì œ");
         }
     }
-    //Åä±Û ½ºÅ³ ÀçÁ¤ÀÇ
+    //í† ê¸€ ìŠ¤í‚¬ ì¬ì •ì˜
     protected override void ToggleSkillOn()
     {
         if (!spriteRenderer.flipX)
         {
             spriteRenderer.transform.localPosition = new Vector3(0.2f, 0f, 0f);
 
-            spriteRenderer.transform.rotation = Quaternion.Euler(0f, 0f, 90f); //º®¿¡ ºÙµíÀÌ º¸¿©ÁÖ±â À§ÇØ zÃà È¸Àü
-            rb.gravityScale = 0f; //Áß·Â 0À¸·Î ¸¸µé±â 
+            spriteRenderer.transform.rotation = Quaternion.Euler(0f, 0f, 90f); //ë²½ì— ë¶™ë“¯ì´ ë³´ì—¬ì£¼ê¸° ìœ„í•´ zì¶• íšŒì „
+            rb.gravityScale = 0f; //ì¤‘ë ¥ 0ìœ¼ë¡œ ë§Œë“¤ê¸° 
             isClimb = true;
             Anim.SetMove(false);
         }
         else
         {
 
-            spriteRenderer.transform.rotation = Quaternion.Euler(0f, 0f, -90f); //º®¿¡ ºÙµíÀÌ º¸¿©ÁÖ±â À§ÇØ zÃà È¸Àü
-            rb.gravityScale = 0f; //Áß·Â 0À¸·Î ¸¸µé±â 
+            spriteRenderer.transform.rotation = Quaternion.Euler(0f, 0f, -90f); //ë²½ì— ë¶™ë“¯ì´ ë³´ì—¬ì£¼ê¸° ìœ„í•´ zì¶• íšŒì „
+            rb.gravityScale = 0f; //ì¤‘ë ¥ 0ìœ¼ë¡œ ë§Œë“¤ê¸° 
             isClimb = true;
             Anim.SetMove(false);
         }
@@ -115,14 +115,14 @@ public class GaramCharacterCat : Characterbase
     protected override void ToggleSkillOff()
     {
         spriteRenderer.transform.localPosition = new Vector3(0f, 0f, 0f);
-        spriteRenderer.transform.rotation = Quaternion.identity; // °¢µµ ÃÊ±â°ª (0,0,0)
+        spriteRenderer.transform.rotation = Quaternion.identity; // ê°ë„ ì´ˆê¸°ê°’ (0,0,0)
         rb.gravityScale = 1f;
         isClimb = false;
         Anim.SetSkill(false);
 
     }
-    /*-------------------------------------¿òÁ÷ÀÓ °ü·Ã-----------------------------------------*/
-    //º®¿¡ ºÙ¾úÀ» ½Ã¿¡ Á¶ÀÛ ¹æÇâ º¯°æÀ» À§ÇÑ ÀçÁ¤ÀÇ
+    /*-------------------------------------ì›€ì§ì„ ê´€ë ¨-----------------------------------------*/
+    //ë²½ì— ë¶™ì—ˆì„ ì‹œì— ì¡°ì‘ ë°©í–¥ ë³€ê²½ì„ ìœ„í•œ ì¬ì •ì˜
     protected override void MoveCall()
     {
         if (!isClimb)
@@ -154,7 +154,7 @@ public class GaramCharacterCat : Characterbase
         }
     }
 
-    //º®¿¡ ºÙ¾úÀ» ½Ã¿¡ ¿òÁ÷ÀÌ´Â ¹æÇâ º¯°æÀ» À§ÇÑ ÀçÁ¤ÀÇ
+    //ë²½ì— ë¶™ì—ˆì„ ì‹œì— ì›€ì§ì´ëŠ” ë°©í–¥ ë³€ê²½ì„ ìœ„í•œ ì¬ì •ì˜
     protected override void MoveActivate(Vector2 input)
     {
         if (!isClimb)
@@ -173,7 +173,7 @@ public class GaramCharacterCat : Characterbase
         }
     }
 
-    //º®¿¡ ºÙ¾îÀÖ´Â »óÈ²¿¡ ¾Ö´Ï¸ŞÀÌ¼Ç ¿ÀÀÛµ¿À» ¸·±âÀ§ÇØ ÀçÁ¤ÀÇÇÏ¿© ¿¹¿ÜÃ³¸® Ãß°¡
+    //ë²½ì— ë¶™ì–´ìˆëŠ” ìƒí™©ì— ì• ë‹ˆë©”ì´ì…˜ ì˜¤ì‘ë™ì„ ë§‰ê¸°ìœ„í•´ ì¬ì •ì˜í•˜ì—¬ ì˜ˆì™¸ì²˜ë¦¬ ì¶”ê°€
     protected override void HandleJumpAnim()
     {
 
@@ -195,12 +195,12 @@ public class GaramCharacterCat : Characterbase
         }
     }
 
-    //º®Å¸±â Áß Á¡ÇÁ ¸·±â À§ÇØ ÀçÁ¤ÀÇ dogÃ³·³ ¾÷µ¥ÀÌÆ®¿¡¼­ ¸·´Â°Ô ³´³ª?
-    protected override void JumpCall()//Á¡ÇÁÅ° ÀÔ·Â °¨Áö
-    {   //Å° ÀÔ·Â, Á¡ÇÁ È½¼ö°¡ ÃÖ´ë Á¡ÇÁº¸´Ù ÀÛÀ» ¶§,º®Å¸±â ÁßÀÌ ¾Æ´Ò ¶§ 
+    //ë²½íƒ€ê¸° ì¤‘ ì í”„ ë§‰ê¸° ìœ„í•´ ì¬ì •ì˜ dogì²˜ëŸ¼ ì—…ë°ì´íŠ¸ì—ì„œ ë§‰ëŠ”ê²Œ ë‚«ë‚˜?
+    protected override void JumpCall()//ì í”„í‚¤ ì…ë ¥ ê°ì§€
+    {   //í‚¤ ì…ë ¥, ì í”„ íšŸìˆ˜ê°€ ìµœëŒ€ ì í”„ë³´ë‹¤ ì‘ì„ ë•Œ,ë²½íƒ€ê¸° ì¤‘ì´ ì•„ë‹ ë•Œ 
         if ((Input.GetKeyDown(jumpKey) && currentJumpCount < maxJumpCount) && !isClimb)
         {
-            // ´Ü¼ø ³«ÇÏÁß¿¡ Á¡ÇÁ ¹æÁö
+            // ë‹¨ìˆœ ë‚™í•˜ì¤‘ì— ì í”„ ë°©ì§€
             if (currentJumpCount == 0 && !IsGrounded())
             { return; }
 
@@ -208,7 +208,7 @@ public class GaramCharacterCat : Characterbase
         }
     }
 
-    //º®¿¡ ºÙ¾îÀÖÀ» ¶§ ÂøÁöÆÇÁ¤ÀÌ ÀÏ¾î³ªÁö ¾Ê°Ô ÇÏ±âÀ§ÇØ ÀçÁ¤ÀÇÇÏ¿© ¿¹¿ÜÃ³¸®
+    //ë²½ì— ë¶™ì–´ìˆì„ ë•Œ ì°©ì§€íŒì •ì´ ì¼ì–´ë‚˜ì§€ ì•Šê²Œ í•˜ê¸°ìœ„í•´ ì¬ì •ì˜í•˜ì—¬ ì˜ˆì™¸ì²˜ë¦¬
     protected override bool IsGrounded()
     {
         if (!isClimb)
@@ -219,7 +219,7 @@ public class GaramCharacterCat : Characterbase
         else { return false; }
     }
     /*-------------------------------------etc.-----------------------------------------*/
-    //º® °¨Áö¿¡ »ç¿ëµÇ´Â raycast¿°»öÀ» À§ÇØ ÀçÁ¤ÀÇ 
+    //ë²½ ê°ì§€ì— ì‚¬ìš©ë˜ëŠ” raycastì—¼ìƒ‰ì„ ìœ„í•´ ì¬ì •ì˜ 
     protected override void OnDrawGizmosSelected()
     {
         if (groundCheck == null) return;
@@ -237,8 +237,8 @@ public class GaramCharacterCat : Characterbase
             Gizmos.DrawLine(wallCheck.position, wallCheck.position + Vector3.left * wallRayRange);
         }
     }
-    //º®¿¡¼­ ÀÌµ¿¹æÇâÀ¸·Î µÚÁı¾î º¸·Á´Ù ½ÇÆĞÇÑ ÈçÀû 
-    /*protected virtual void SpriteFlip() // ÁÂ¿ì¹İÀü À§ÇÑ ¸Å¼­µå
+    //ë²½ì—ì„œ ì´ë™ë°©í–¥ìœ¼ë¡œ ë’¤ì§‘ì–´ ë³´ë ¤ë‹¤ ì‹¤íŒ¨í•œ í”ì  
+    /*protected virtual void SpriteFlip() // ì¢Œìš°ë°˜ì „ ìœ„í•œ ë§¤ì„œë“œ
     {
         if (isClimb)
         {

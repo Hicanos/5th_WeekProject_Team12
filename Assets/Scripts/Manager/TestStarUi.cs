@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,13 +7,13 @@ public class TestStarUi : MonoBehaviour
     private UIManager uiManager;
     void Start()
     {
-        uiManager = FindObjectOfType<UIManager>();  // UIManager¸¦ Ã£½À´Ï´Ù
+        uiManager = FindObjectOfType<UIManager>();  // UIManagerë¥¼ ì°¾ìŠµë‹ˆë‹¤
     }
 
-    // Å×½ºÆ®¿ëÀ¸·Î È£ÃâÇÒ ¸Ş¼­µå
+    // í…ŒìŠ¤íŠ¸ìš©ìœ¼ë¡œ í˜¸ì¶œí•  ë©”ì„œë“œ
     public void TestDisplayStars(int starCount)
     {
-        uiManager.DisplayStars(starCount);  // º°À» Ç¥½ÃÇÏ´Â ¸Ş¼­µå È£Ãâ
+        uiManager.DisplayStars(starCount);  // ë³„ì„ í‘œì‹œí•˜ëŠ” ë©”ì„œë“œ í˜¸ì¶œ
 
     }
 }

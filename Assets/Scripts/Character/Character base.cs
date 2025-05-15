@@ -1,16 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.Mathematics;
-using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.Playables;
 
 /// <summary>
-/// ��� ĳ����(�÷��̾�/���� ��)�� ���� ����� ����ϴ� �߻� ��Ʈ�ѷ�
-/// �̵�, ü�� ó��, ��������Ʈ ���� �� �⺻ �ൿ ����
+/// 기본 캐릭터(플레이어/적 등)의 공통 동작을 정의하는 추상 클래스
+/// 이동, 점프 처리, 스킬 처리 등 기본 행동 포함
 /// </summary>
-public enum PLAYERSTATE //���¸ӽ� enum (���� �̱���)
+public enum PLAYERSTATE // 캐릭터 상태 enum (움직임 상태)
 {
     IDLE,
     MOVE,
@@ -18,43 +12,45 @@ public enum PLAYERSTATE //���¸ӽ� enum (���� �̱���)
     DASH,
     WALL
 }
-//TilemapCollider�� CompositeCollider �Բ� ���� �߻��ϴ� ���׶����� �÷��װ� �����ϰ� ���͹��Ƚ��ϴ�. (velocity.x �� �����ص� y�� ���� ���� �ٲ�ϴ�. )
-//���� �ӽ� �����ؾ߰ڽ��ϴ�. 
+
+// TilemapCollider와 CompositeCollider 조합으로 충돌이 발생할 때 플레이어가 끼이거나 튕겨나가는 현상 방지를 위해
+// 수평 속도 유지하면서 수직 이동만 반영하도록 수정 필요
 
 public abstract class Characterbase : MonoBehaviour
 {
-    protected Rigidbody2D rb;                    // �̵��� ���� ������ٵ�
-    protected SpriteRenderer spriteRenderer;     // �¿� ������ ���� ��������Ʈ ������
+    protected Rigidbody2D rb;                    // 이동을 위한 물리 컴포넌트
+    protected SpriteRenderer spriteRenderer;     // 외형 표현용 스프라이트 렌더러
     protected MyAnimationController Anim;
-   
 
-    /// <summary> �ʱ�ȭ: ������ٵ�, ��������Ʈ ã�� ���� �ʱ�ȭ </summary>
+    /// <summary> 초기화: 물리, 렌더러, 애니메이션 컴포넌트 초기 설정 </summary>
     protected virtual void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         Anim = GetComponentInChildren<MyAnimationController>();
     }
-   
-    
+
     protected PLAYERSTATE currentState;
-    //���º��� �Լ� �̱���
+
+    // 상태 전환 메서드
     protected void ChangeState(PLAYERSTATE newState)
     {
         if (currentState == newState) return;
 
-        Debug.Log($"���� ����: {currentState} -> {newState}");
+        Debug.Log($"상태 변경: {currentState} -> {newState}");
         currentState = newState;
     }
 
-    //���� ��Ÿ�� enum
+    // 캐릭터 타입 enum
     protected enum CHAR
     {
         DOG,
         CAT
     }
-    [Header("���� ��Ÿ��")]
+
+    [Header("캐릭터 타입")]
     [SerializeField] protected CHAR enumChar;
+
     protected void ControlKey()
     {
         switch (enumChar)
@@ -73,122 +69,112 @@ public abstract class Characterbase : MonoBehaviour
                 skillKey = KeyCode.S;
                 break;
         }
-
     }
 
-    /*---------------------------------------ĳ���� ���� ����---------------------------------------*/
-    
-    // �Է°� ����
+    /*---------------------------------------캐릭터 이동 관련---------------------------------------*/
+
     protected float moveX;
     protected float moveY;
     protected Vector2 moveInput;
-  
-    [Header("�̸�")]
+
+    [Header("이름")]
     [SerializeField] protected string Name = string.Empty;
 
-    [Header("����Ű ����")]
+    [Header("조작 키 설정")]
     [SerializeField] protected KeyCode leftKey;
     [SerializeField] protected KeyCode rightKey;
     [SerializeField] protected KeyCode jumpKey;
     [SerializeField] protected KeyCode skillKey;
     [SerializeField] protected int moveSpeed = 5;
 
-    [Header("Ⱦ��ũ�� ���� ��� ���� �ý���")]
-    [SerializeField] protected Transform groundCheck;      // �ٴ� ���� ��ġ
-    [SerializeField] protected float groundRayRange = 0.1f; // �ٴ� üũ ����(raycast����)
-    [SerializeField] protected LayerMask groundLayer;      // �ٴ� ���̾�
-    [SerializeField] protected float jumpPower = 5f;       // ���� ��
-    [SerializeField] protected int maxJumpCount = 2;//�������� �ִ� Ƚ��
-    protected int currentJumpCount = 0;//���� ������ ���� �� ����
+    [Header("점프 체크 관련 설정")]
+    [SerializeField] protected Transform groundCheck;      // 땅 체크용 기준 위치
+    [SerializeField] protected float groundRayRange = 0.1f; // 바닥 체크 레이 범위
+    [SerializeField] protected LayerMask groundLayer;      // 바닥으로 인식할 레이어
+    [SerializeField] protected float jumpPower = 5f;       // 점프 파워
+    [SerializeField] protected int maxJumpCount = 2;       // 최대 점프 횟수
+    protected int currentJumpCount = 0;
 
-    [Header("��� �ǹ�")]
+    [Header("헬멧 착용 위치")]
     [SerializeField] protected Transform headPivot;
     protected GameObject helmet;
 
-    [Header("��ų ��Ÿ��")]
+    [Header("스킬 쿨타임")]
     [SerializeField] protected float skillCoolTime = 1f;
-    
-    /*---------------------------------------�ܹ߼� ��ų ����---------------------------------------*/
-    //��ų ��û�� ��
+
+    /*---------------------------------------단발형 스킬 처리---------------------------------------*/
     protected bool skillReq = false;
 
-    // ��ų �Է� ���� �ż���
+    // 단발형 스킬 입력 감지
     protected virtual void InstantSkillCall()
     {
         if (Input.GetKeyDown(skillKey) && skillReady)
         {
-            //��Ÿ�� ���� 
             StartCoroutine(SkillCoolDown(skillCoolTime));
             skillReq = true;
-            Debug.Log($"{Name}��ų Ű �Է�");
+            Debug.Log($"{Name} 스킬 키 입력");
         }
     }
 
-    //�ܹ߼� ��ųȣ��
+    // 단발형 스킬 실행
     protected virtual void InstantSkillActivate()
     {
         if (skillReq)
         {
             skillReq = false;
             InstantSkill();
-
-            Debug.Log($"{Name}��ų�ߵ�");
+            Debug.Log($"{Name} 스킬 발동");
         }
     }
-    // �����ǿ� �ܹ߼� ��ų �Լ�
+
     protected virtual void InstantSkill() { }
 
-    /*---------------------------------------����� ��ų ����---------------------------------------*/
-    //��۽�ų�� �Ұ�
+    /*---------------------------------------토글형 스킬 처리---------------------------------------*/
     protected bool isToggled = false;
 
-    //����� ��ų �Է� ����
+    // 토글형 스킬 입력 감지
     protected virtual void ToggleSkillCall()
     {
         if (Input.GetKeyDown(skillKey) && !isToggled)
         {
-            //��Ÿ�� ���� 
             StartCoroutine(SkillCoolDown(skillCoolTime));
             isToggled = true;
             ToggleSkillOn();
-            Debug.Log($"{Name}��ų Ű �Է�");
-            Debug.Log($"{Name}��۽�ų�ߵ�");
+            Debug.Log($"{Name} 스킬 키 입력");
+            Debug.Log($"{Name} 토글 스킬 ON");
         }
         else if (Input.GetKeyDown(skillKey) && isToggled)
         {
             isToggled = false;
             ToggleSkillOff();
-            Debug.Log($"{Name}��ų Ű �Է�");
-            Debug.Log($"{Name}��۽�ų����");
+            Debug.Log($"{Name} 스킬 키 입력");
+            Debug.Log($"{Name} 토글 스킬 OFF");
         }
     }
 
-    //�����ǿ� ��� ��ų On�Լ�
     protected virtual void ToggleSkillOn() { }
-
-    //�����ǿ� ��� ��ų Off�Լ�
     protected virtual void ToggleSkillOff() { }
 
-    /*---------------------------------------��Ÿ�� �ڷ�ƾ---------------------------------------*/
-    //��ų ��Ÿ�ӿ� ��
+    /*---------------------------------------쿨타임 처리---------------------------------------*/
     protected bool skillReady = true;
 
-    //��ų ��Ÿ�ӿ� �ڷ�ƾ
     protected virtual IEnumerator SkillCoolDown(float cooldown)
     {
-        Debug.Log("��Ÿ�� �ߵ�");
+        Debug.Log("쿨타임 시작");
         cooldown = skillCoolTime;
         skillReady = false;
         yield return new WaitForSeconds(cooldown);
         skillReady = true;
-        Debug.Log("��Ÿ�� ��");
+        Debug.Log("쿨타임 종료");
     }
-    /*---------------------------------------�ִϸ��̼ǿ� �Լ�---------------------------------------*/
+
+    /*---------------------------------------애니메이션 처리---------------------------------------*/
     protected virtual void HandleJumpAnim()
     {
         bool isJump = currentJumpCount > 0 || (currentJumpCount == 0 && !IsGrounded());
         Anim.SetJump(isJump);
     }
+
     protected virtual void HandleSkillAnim()
     {
         bool isSkill = skillReq;
@@ -199,108 +185,95 @@ public abstract class Characterbase : MonoBehaviour
     {
         Anim.SetCrash();
     }
+
     protected virtual void HandleMoveAnim()
     {
         bool isMoving = moveX != 0;
         Anim.SetMove(isMoving);
     }
+
     /// <summary>
-    /// ĳ���� �¿� ���� (flipX) ó��
-    /// ���⿡�� �������� ����
+    /// 캐릭터 좌우 반전 (flipX 처리)
     /// </summary>
     protected virtual void SpriteFlip()
     {
         if (moveX != 0)
             Anim.SetFlip(moveX < 0);
-        if (moveX != 0)
-            if (headPivot != null)
-            {
-                headPivot.localScale = new Vector3(moveX < 0 ? -1f : 1f, 1f, 1f);
-            }
+
+        if (moveX != 0 && headPivot != null)
+            headPivot.localScale = new Vector3(moveX < 0 ? -1f : 1f, 1f, 1f);
     }
-    /*---------------------------------------�����Ӱ��� �Լ�---------------------------------------*/
-    //���� ���� ���� ��
+
+    /*---------------------------------------점프 관련 함수---------------------------------------*/
     protected bool jumpReq = false;
-    //���� �پ��ִ��� ������ �ҹ�ȯ �Լ�
+
     protected virtual bool IsGrounded()
     {
         RaycastHit2D hit = Physics2D.Raycast(groundCheck.position, Vector2.down, groundRayRange, groundLayer);
         return hit.collider != null;
     }
-    /// <summary>
-    /// �̵� Ű �Է��� �޾� ���� ���� ���
-    /// </summary>
+
+    /// <summary> 이동 입력 감지 </summary>
     protected virtual void MoveCall()
     {
         moveX = 0;
         if (Input.GetKey(leftKey)) moveX -= 1;
         if (Input.GetKey(rightKey)) moveX += 1;
-        //�Է°��� ���� ���� ���ϱ�
         moveInput = new Vector2(moveX, moveY).normalized;
     }
 
-    /// <summary> �̵� ó��: �ӵ� ���� </summary>
+    /// <summary> 이동 처리 </summary>
     protected virtual void MoveActivate(Vector2 input)
     {
         Vector2 velocity = rb.velocity;
-        // �̵��ӵ��� ���⿡ �����ֱ�
         velocity.x = input.x * moveSpeed;
         rb.velocity = velocity;
     }
 
-    /// <summary>
-    /// ���� Ű �Է� ���� �� ��Ÿ�� Ȯ�� �� ���� ����
-    /// </summary>
-    protected virtual void JumpCall()//����Ű �Է� ����
-    {   //Ű �Է�, ���� Ƚ���� �ִ� �������� ���� ��,��Ÿ�� ���� �ƴ� �� 
-        if ((Input.GetKeyDown(jumpKey) && currentJumpCount < maxJumpCount))
+    /// <summary> 점프 입력 감지 </summary>
+    protected virtual void JumpCall()
+    {
+        if (Input.GetKeyDown(jumpKey) && currentJumpCount < maxJumpCount)
         {
-            // �ܼ� �����߿� ���� ����
             if (currentJumpCount == 0 && !IsGrounded())
-            { return; }
+                return;
 
             jumpReq = true;
         }
     }
 
-    //���� ȣ��
     protected virtual void JumpAtivate()
     {
         if (jumpReq)
-        {   // Y �ӵ� �ʱ�ȭ
+        {
             rb.velocity = new Vector2(rb.velocity.x, 0f);
-            //up�������� �����Ŀ���ŭ ���޽� ��������
             rb.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
             if (currentJumpCount < maxJumpCount)
             {
                 currentJumpCount++;
-                //���� Ƚ�� ���� �� ������ �α� 
-                Debug.Log($"{Name}���� {currentJumpCount}/{maxJumpCount}");
+                Debug.Log($"{Name} 점프 {currentJumpCount}/{maxJumpCount}");
             }
             jumpReq = false;
         }
     }
 
-    //���� �����ߴ��� �����ϴ� �ż���
     protected void CheckLanding()
     {
         if (Mathf.Abs(rb.velocity.y) < 0.01f && currentJumpCount > 0 && IsGrounded())
         {
             currentJumpCount = 0;
             Anim.SetJump(false);
-
-            Debug.Log($"{Name}����!");
+            Debug.Log($"{Name} 착지!");
         }
     }
-    /*---------------------------------------ect.---------------------------------------*/
 
-    //raycast ����� �ð�ȭ�ϱ� ���� �ż���
+    /*---------------------------------------기타---------------------------------------*/
+
+    // 바닥 체크 Ray를 Scene에서 시각화
     protected virtual void OnDrawGizmosSelected()
     {
         if (groundCheck == null) return;
         Gizmos.color = Color.green;
         Gizmos.DrawLine(groundCheck.position, groundCheck.position + Vector3.down * groundRayRange);
-
     }
 }
-
