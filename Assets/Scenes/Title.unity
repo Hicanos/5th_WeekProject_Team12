@@ -1517,7 +1517,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _mainBGMs:
-  - {fileID: 8300000, guid: 9e5b0bf405fa943438ccf0765c756722, type: 3}
+  - {fileID: 8300000, guid: a434cadac0d360c4f88457a49c0eb447, type: 3}
   - {fileID: 8300000, guid: 045e1c632b85341cbb9ff07009d2e975, type: 3}
   - {fileID: 8300000, guid: 9e5b0bf405fa943438ccf0765c756722, type: 3}
   - {fileID: 8300000, guid: e8203794c6cb24c19841abff1127b916, type: 3}
